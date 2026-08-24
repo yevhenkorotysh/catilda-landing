@@ -3,6 +3,11 @@ region: sfo
 alerts:
 - rule: DEPLOYMENT_FAILED
 - rule: DOMAIN_FAILED
+domains:
+- domain: catilda.com
+  type: PRIMARY
+- domain: www.catilda.com
+  type: ALIAS
 static_sites:
 - name: web
   environment_slug: html

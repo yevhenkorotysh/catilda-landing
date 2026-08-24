@@ -1,0 +1,222 @@
+/* ABOUTME: Space-themed visual system for the Catilda landing page. */
+/* ABOUTME: Deep indigo void, warm copper signal, porthole rings, starfield canvas. */
+
+:root {
+  --void: #06060f;
+  --hull: #0c0c1a;
+  --mist: #a89bc8;
+  --star: #f2eef8;
+  --signal: #d4a35c;
+  --signal-soft: rgba(212, 163, 92, 0.35);
+  --ring: rgba(168, 155, 200, 0.28);
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Outfit", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  color: var(--star);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #1a1433 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 90%, #12102a 0%, transparent 50%),
+    var(--void);
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.top,
+.stage,
+.foot {
+  position: relative;
+  z-index: 2;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 1.75rem;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--star);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mark:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 4px;
+}
+
+.mark-orb {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 12px var(--signal), 0 0 28px var(--signal-soft);
+  animation: pulse 3.2s ease-in-out infinite;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: calc(100vh - 8rem);
+  padding: 2rem 1.5rem 4rem;
+}
+
+.porthole {
+  position: relative;
+  width: min(18rem, 70vw);
+  height: min(18rem, 70vw);
+  margin-bottom: 2.25rem;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--ring);
+}
+
+.ring-a {
+  inset: 8%;
+  border-color: rgba(212, 163, 92, 0.22);
+  animation: spin 48s linear infinite;
+  border-top-color: var(--signal);
+  border-right-color: transparent;
+}
+
+.ring-b {
+  inset: 18%;
+  animation: spin 72s linear infinite reverse;
+  border-bottom-color: rgba(242, 238, 248, 0.45);
+  border-left-color: transparent;
+}
+
+.ring-c {
+  inset: 32%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(242, 238, 248, 0.14), transparent 45%),
+    radial-gradient(circle at 60% 65%, rgba(212, 163, 92, 0.12), transparent 40%),
+    rgba(12, 12, 26, 0.55);
+  border-color: rgba(168, 155, 200, 0.4);
+  box-shadow: inset 0 0 40px rgba(6, 6, 15, 0.8);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--mist);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 6.5rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  text-shadow: 0 0 60px rgba(168, 155, 200, 0.25);
+}
+
+.lede {
+  max-width: 28rem;
+  margin: 1.35rem 0 0;
+  color: rgba(242, 238, 248, 0.78);
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.status {
+  margin: 2rem 0 0;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--signal-soft);
+  border-radius: 999px;
+  color: var(--signal);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: rgba(212, 163, 92, 0.06);
+}
+
+.foot {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 1.5rem 2rem;
+  color: rgba(168, 155, 200, 0.55);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-orb,
+  .ring-a,
+  .ring-b {
+    animation: none;
+  }
+}

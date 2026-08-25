@@ -1,5 +1,9 @@
+# ABOUTME: Ignore local preview and Python test artifacts for the static landing.
+.DS_Store
 __pycache__/
 *.py[cod]
-.DS_Store
 .pytest_cache/
-tests/landing-preview.png
+.venv/
+venv/
+*.log
+.playwright-mcp/

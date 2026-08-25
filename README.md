@@ -1,12 +1,15 @@
+<!-- ABOUTME: How to preview, test, and deploy the Catilda marketing landing. -->
+<!-- ABOUTME: Static site from the Famulatus marketing design, rebranded to Catilda. -->
+
 # Catilda landing
 
-Space-themed static landing page for Catilda.
+Marketing site for Catilda (digital employees for small business). Single-file HTML/CSS/JS plus `assets/`.
 
 ## Local
 
 ```bash
-python3 -m http.server 8080
-# open http://127.0.0.1:8080
+python3 -m http.server 8080 --bind ::
+# open http://localhost:8080
 ```
 
 ## Tests
@@ -17,4 +20,11 @@ python3 -m unittest discover -s tests -v
 
 ## Deploy
 
-Pushed to `main`. Enable GitHub Pages: **Settings → Pages → Deploy from branch → main / (root)**.
+DigitalOcean App Platform uses `.do/app.yaml` (`catilda.com` / `www.catilda.com`).
+Push to `main` with `deploy_on_push: true`.
+
+GitHub Pages alternative: **Settings → Pages → Deploy from branch → main / (root)**.
+
+## Source
+
+Based on [UliKorotysh/famulatus-website](https://github.com/UliKorotysh/famulatus-website), rebranded Famulatus → Catilda.

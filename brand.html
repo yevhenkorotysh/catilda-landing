@@ -6,7 +6,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Catilda Brand Guidelines: Logo, Colors, Voice</title>
-<meta name="description" content="Catilda brand book: wordmark, monogram, color system, typography, and voice guidelines." />
+<meta name="description" content="Catilda brand book: the cat mark, wordmark, color system, typography, and voice guidelines." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -87,6 +87,9 @@ section{padding:72px 0;border-top:1px solid var(--line-2)}
 .t-light{background:var(--ivory)}      .t-light .fm{color:var(--ink-teal)}  .t-light .tag{color:var(--moss)}
 .t-dark{background:var(--ink-teal)}    .t-dark .fm{color:var(--ivory)}      .t-dark .tag{color:var(--sage-gray)}
 .t-mint{background:var(--deep-teal)}   .t-mint .fm{color:var(--turq)}       .t-mint .tag{color:var(--mint)}
+/* captions on dark tiles need full opacity and a light colour to clear 4.5:1 */
+.t-dark .tag{color:var(--ivory);opacity:1}
+.t-mint .tag{opacity:1}
 .t-flat{background:var(--turq)}        .t-flat .fm{color:var(--ink-teal)}   .t-flat .tag{color:var(--deep-teal)}
 .logo-note{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:100px;padding:9px 18px;font-size:.88rem;font-weight:600;color:var(--ink-teal);background:#fff}
@@ -251,7 +254,7 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
       <div class="sec-head">
         <span class="eyebrow">01 · Logo</span>
         <h2>Wordmark</h2>
-        <p>The lowercase Space Grotesk wordmark is the primary logo. Give it clear space equal to the height of the “c” on all sides, keep contrast high, and never set it in a colour outside the palette.</p>
+        <p>The primary logo is the cat sitting to the left of the lowercase Space Grotesk wordmark (see 02 · The cat). The wordmark alone is for quiet, typographic contexts. Give it clear space equal to the height of the “c” on all sides, keep contrast high, and never set it in a colour outside the palette.</p>
       </div>
       <div class="grid logo-grid">
         <div class="logo-tile t-light"><span class="fm">catilda</span><span class="tag">Light</span></div>
@@ -274,32 +277,84 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
     </div>
   </section>
 
-  <!-- ================= MONOGRAM ================= -->
-  <section id="monogram">
+  <!-- ================= THE CAT ================= -->
+  <section id="the-cat">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">02 · Monogram</span>
-        <h2>The “c” tile</h2>
-        <p>The monogram is not the logo. It exists for the places a seven-letter wordmark can’t live: favicons, app icons, avatar circles, social profile pictures. Pick the wordmark or the tile, never both together.</p>
+        <span class="eyebrow">02 · The cat</span>
+        <h2>The Catilda cat</h2>
+        <p>The mark, drawn from the original sketch: round head, one ear straight and one cocked, pill eyes, triangle nose, whiskers that run past the face. Marmalade fur (<b>#E8913F</b>) with ink lines is the primary colourway. The line-only ink cat is for quiet contexts; mint lines live on dark panels. The cat sits to the left of the wordmark at roughly 1.5× its cap height.</p>
+      </div>
+      <!-- The mark. Inline var() styling because CSS can’t reach <use> shadow content. -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="cat" viewBox="0 0 128 128">
+          <g style="fill:var(--cat-fur,none);stroke:var(--cat-line,#171A23);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round">
+            <path d="M40 41 L45 11 L66 29 Z"/>
+            <path d="M85 32 L111 17 L102 51 Z"/>
+            <circle cx="64" cy="72" r="40"/>
+          </g>
+          <g style="fill:var(--cat-line,#171A23)">
+            <rect x="49" y="53" width="7.5" height="16" rx="3.75" transform="rotate(-5 52.75 61)"/>
+            <rect x="71" y="51.5" width="7.5" height="16" rx="3.75" transform="rotate(5 74.75 59.5)"/>
+          </g>
+          <path style="fill:var(--cat-line,#171A23);stroke:var(--cat-line,#171A23);stroke-width:4;stroke-linejoin:round" d="M59 81 L69.5 81 L64.5 88.5 Z"/>
+          <g style="fill:none;stroke:var(--cat-line,#171A23);stroke-width:3;stroke-linecap:round">
+            <path d="M45 73 L8 61"/>
+            <path d="M44 80 L5 77"/>
+            <path d="M45 87 L12 94"/>
+            <path d="M83 75 L121 82"/>
+            <path d="M83 82 L118 94"/>
+            <path d="M81 89 L110 105"/>
+          </g>
+        </symbol>
+        <symbol id="catface" viewBox="0 0 128 128">
+          <g style="fill:none;stroke:var(--cat-line,#E8913F);stroke-width:9;stroke-linecap:round;stroke-linejoin:round">
+            <path d="M38 44 L44 8 L70 28 Z"/>
+            <path d="M84 30 L115 13 L104 52 Z"/>
+            <circle cx="64" cy="74" r="42"/>
+          </g>
+          <g style="fill:var(--cat-line,#E8913F)">
+            <rect x="46" y="56" width="10" height="20" rx="5"/>
+            <rect x="71" y="56" width="10" height="20" rx="5"/>
+          </g>
+          <path style="fill:var(--cat-line,#E8913F);stroke:var(--cat-line,#E8913F);stroke-width:6;stroke-linejoin:round" d="M57 90 L71 90 L64 99 Z"/>
+          <g style="fill:none;stroke:var(--cat-line,#E8913F);stroke-width:6;stroke-linecap:round">
+            <path d="M40 82 L14 76"/>
+            <path d="M40 92 L16 98"/>
+            <path d="M88 82 L114 76"/>
+            <path d="M88 92 L112 98"/>
+          </g>
+        </symbol>
+      </svg>
+      <div class="grid logo-grid">
+        <div class="logo-tile t-light"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="110" height="110"><use href="#cat"/></svg><span class="tag">Marmalade · primary</span></div>
+        <div class="logo-tile t-light"><svg aria-hidden="true" style="--cat-line:#171A23" width="110" height="110"><use href="#cat"/></svg><span class="tag">Ink line · quiet</span></div>
+        <div class="logo-tile t-mint"><svg aria-hidden="true" style="--cat-line:#8DD8C5" width="110" height="110"><use href="#cat"/></svg><span class="tag">Mint on deep teal</span></div>
+        <div class="logo-tile t-dark"><svg aria-hidden="true" style="--cat-line:#E8913F" width="110" height="110"><use href="#cat"/></svg><span class="tag">Marmalade on dark</span></div>
+      </div>
+      <div class="sec-head" style="margin-top:56px">
+        <h2 style="font-size:1.6rem">Favicon &amp; small sizes</h2>
+        <p>Below roughly 48px the full mark smears, so favicons, app icons, and avatars use the simplified cat face: thicker line, two whiskers a side, on the ink tile. This replaces the old “c” monogram everywhere.</p>
       </div>
       <div class="grid mono-grid">
-        <div class="mono-tile m-a"><div class="mono-mark">c</div></div>
-        <div class="mono-tile m-b"><div class="mono-mark">c</div></div>
+        <!-- Light surround so the ink icon tile itself is visible (the .m-a dark surround matches the tile colour). -->
+        <div class="mono-tile m-a" style="background:var(--ivory)"><div class="mono-mark" style="background:#171A23"><svg aria-hidden="true" style="--cat-line:#E8913F" width="64" height="64"><use href="#catface"/></svg></div></div>
+        <div class="mono-tile m-b"><div class="mono-mark" style="background:#F3B15A"><svg aria-hidden="true" style="--cat-line:#171A23" width="64" height="64"><use href="#catface"/></svg></div></div>
         <div class="dodont">
           <div class="dd do">
             <h4>Do</h4>
             <ul>
-              <li>Favicon, OS app icon, messaging avatars.</li>
-              <li>Square and circular crops at small sizes.</li>
-              <li>Mint-on-ink, ink-on-mint, or ink-on-amber.</li>
+              <li>Favicon, OS app icon, messaging avatars: the simplified cat face.</li>
+              <li>Marmalade-on-ink first; ink-on-amber where the tile must be light.</li>
+              <li>Keep the whiskers crossing past the face on the full mark.</li>
             </ul>
           </div>
           <div class="dd dont">
             <h4>Don’t</h4>
             <ul>
-              <li>Don’t pair the tile with the wordmark.</li>
-              <li>Don’t recolor, outline, rotate, or add effects.</li>
-              <li>Don’t use the tile as an inline “logo”.</li>
+              <li>Don’t redraw, outline, add a mouth, or straighten the cocked ear.</li>
+              <li>Don’t use fur colours outside marmalade, or lines outside the palette.</li>
+              <li>Don’t use the full whiskered mark below 48px; use the cat face.</li>
             </ul>
           </div>
         </div>
@@ -313,9 +368,10 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
       <div class="sec-head">
         <span class="eyebrow">03 · Color</span>
         <h2>Palette</h2>
-        <p>Six colours with one job each, plus two greys for text. Cobalt does the work, amber is the warm pop, mint lights the dark panels, and deep teal and ink build the depth. Under them sit the tint ramps, and six gradients carry the brand across surfaces, from the warm band to the dark panels.</p>
+        <p>Seven colours with one job each, plus two greys for text. Cobalt does the work, amber is the warm pop, marmalade belongs to the cat, mint lights the dark panels, and deep teal and ink build the depth. Under them sit the tint ramps, and six gradients carry the brand across surfaces, from the warm band to the dark panels.</p>
       </div>
       <div class="grid swatch-grid">
+        <div class="swatch"><div class="fill" style="background:#E8913F"></div><div class="meta"><b>Marmalade</b><span class="hex">#E8913F</span></div><div class="role">The cat’s fur, nothing else. Deeper than amber so she reads as an orange cat, not a cream one.</div></div>
         <div class="swatch"><div class="fill" style="background:#F3B15A"></div><div class="meta"><b>Amber</b><span class="hex">#F3B15A</span></div><div class="role">The warm pop. Backgrounds and highlights, always with ink text. Never white on it.</div></div>
         <div class="swatch"><div class="fill" style="background:#8DD8C5"></div><div class="meta"><b>Mint</b><span class="hex">#8DD8C5</span></div><div class="role">Light accent. Ticks and marks on dark panels, and the on-dark button.</div></div>
         <div class="swatch"><div class="fill" style="background:#1F5FD6"></div><div class="meta"><b>Cobalt</b><span class="hex">#1F5FD6</span></div><div class="role">THE working accent. Buttons and links. 5.7:1 with white.</div></div>
@@ -477,7 +533,7 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
           <ul>
             <li>Don’t place the wordmark on low-contrast or busy backgrounds.</li>
             <li>Don’t stretch, rotate, or restyle the wordmark or tile.</li>
-            <li>Don’t introduce colors outside the nine-swatch palette in official material.</li>
+            <li>Don’t introduce colors outside the ten-swatch palette in official material.</li>
           </ul>
         </div>
       </div>
@@ -492,7 +548,7 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
       <div class="sec-head">
         <span class="eyebrow">08 · Using the colours</span>
         <h2>What each colour is for</h2>
-        <p>Nine colours, one job each. If you are unsure which to reach for, the recipe table at the bottom answers it.</p>
+        <p>Ten colours, one job each. If you are unsure which to reach for, the recipe table at the bottom answers it.</p>
       </div>
 
       <div class="use-block">
@@ -582,6 +638,7 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
           <tr><td>Dark sections</td><td>Deep teal into ink</td></tr>
           <tr><td>Button on dark</td><td>Mint <code>#8DD8C5</code> fill, ink text</td></tr>
           <tr><td>Ticks, badges on dark</td><td>Mint at 18 to 22% fill, mint mark</td></tr>
+          <tr><td>The cat</td><td>Marmalade <code>#E8913F</code> fur with ink lines; mint or marmalade lines on dark. Nothing else wears marmalade.</td></tr>
           <tr><td>Dividers on cloud</td><td><code>rgba(23,26,35,.13)</code></td></tr>
           <tr><td>Dividers on dark</td><td><code>rgba(255,255,255,.12)</code></td></tr>
           <tr><td>Headline accent</td><td>Gradient bright cobalt to cobalt to deep teal</td></tr>

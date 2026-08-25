@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ABOUTME: Catilda marketing landing — static HTML/CSS/JS (no build). -->
-<!-- ABOUTME: Launch page from UliKorotysh/catilda-site; Book-a-call CTA + brand book link. -->
+<!-- ABOUTME: Cat mark branding (logo, favicon, living hero cat); Book-a-call CTA + brand book link. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -9,7 +9,17 @@
 <meta name="description" content="Catilda is a digital employee for your company. She does anything a person with a computer can do, works around the clock, and is best at the repetitive work your business already runs on." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23171A23'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Verdana,sans-serif' font-size='36' font-weight='700' fill='%238DD8C5'%3Ec%3C/text%3E%3C/svg%3E">
+<!-- Favicon: the Catilda cat, marmalade on ink. Simplified face (thick line, short whiskers) so it reads at 16px.
+     PNG fallback listed first for Safari (no SVG rel=icon support); Chrome/Firefox pick the SVG. -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23171A23'/%3E%3Cg transform='translate(9,7) scale(0.86)'%3E%3Cg fill='none' stroke='%23E8913F' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M38 44 L44 8 L70 28 Z'/%3E%3Cpath d='M84 30 L115 13 L104 52 Z'/%3E%3Ccircle cx='64' cy='74' r='42'/%3E%3C/g%3E%3Cg fill='%23E8913F'%3E%3Crect x='46' y='56' width='10' height='20' rx='5'/%3E%3Crect x='71' y='56' width='10' height='20' rx='5'/%3E%3C/g%3E%3Cpath fill='%23E8913F' stroke='%23E8913F' stroke-width='6' stroke-linejoin='round' d='M57 90 L71 90 L64 99 Z'/%3E%3Cg fill='none' stroke='%23E8913F' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M40 82 L14 76'/%3E%3Cpath d='M40 92 L16 98'/%3E%3Cpath d='M88 82 L114 76'/%3E%3Cpath d='M88 92 L112 98'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<!-- Social cards. og:image still needs a real 1200x630 PNG asset before launch (cat + wordmark on cloud). -->
+<meta property="og:title" content="Catilda · Your digital employee">
+<meta property="og:description" content="Catilda is a digital employee for your company. She does anything a person with a computer can do, works around the clock, and is best at the repetitive work your business already runs on.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://catilda.com/">
+<meta name="twitter:card" content="summary">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
@@ -19,12 +29,13 @@
    Voice: docs/00-vision.md (plain, second person, no em dashes)
    ============================================================ */
 :root{
-  /* CATILDA brand palette. Six colours, one job each.
+  /* CATILDA brand palette. Seven colours, one job each.
      Cobalt is the working accent; bright cobalt is for gradients and glow only. */
   --cobalt:    #1F5FD6;  /* THE accent: buttons, links. 5.7:1 with white */
   --cobalt-br: #4D8CFF;  /* bright cobalt: gradients, glow, highlights on dark */
   --mint:      #8DD8C5;  /* light accent: ticks and marks on dark panels */
   --amber:     #F3B15A;  /* the warm pop, used sparingly */
+  --orange:    #E8913F;  /* marmalade: the cat's fur, nothing else */
   --teal:      #0D3B52;  /* dark panels, emphasis text on cloud */
   --ink:       #171A23;  /* headings, deepest surface */
   --cloud:     #F7F6F2;  /* the page */
@@ -76,6 +87,36 @@ img,svg{display:block}
   .header-bar{padding:0 10px 0 18px;gap:12px}
 }
 
+/* ============ the cat ============ */
+/* One mark, recoloured by two vars. Inline styles on the symbol shapes
+   use var() because document CSS cannot reach <use> shadow content. */
+.cat{display:block;flex-shrink:0}
+.lockup{display:flex;align-items:center;gap:10px}
+
+/* The hero cat is alive. The head is flat SVG; life is three layered
+   transforms driven from JS: the head group turns a little, the face
+   cluster shifts more, the whiskers a bit less. The parallax between
+   them reads as a 3D head turn. Blink and ear twitch are CSS-only. */
+/* Base tilt sits on .cat-head, NOT on .herocat: riseIn animates .herocat's
+   transform, and a base transform there would snap back in when it ends.
+   The JS gaze loop bakes the same -6deg into its head rotation. */
+.herocat{width:104px;height:104px;overflow:visible}
+.herocat .cat-head{transform:rotate(-6deg);transform-origin:64px 72px}
+.herocat .cat-face,.herocat .cat-whiskers{will-change:transform}
+.herocat .eye{transform-box:fill-box;transform-origin:center;animation:catblink 7s ease-in-out infinite}
+@keyframes catblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.herocat .ear-r{transform-origin:93px 42px;animation:eartwitch 9s ease-in-out infinite}
+@keyframes eartwitch{0%,96%,100%{transform:rotate(0)}97.4%{transform:rotate(-8deg)}98.7%{transform:rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.herocat .eye,.herocat .ear-r{animation:none}}
+
+/* how it works: three plain steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:980px;margin:0 auto}
+.step{text-align:center;padding:10px 8px}
+.step .n{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);width:44px;height:44px;border-radius:50%;background:rgba(243,177,90,.35);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px}
+.step h3{font-size:1.12rem;margin-bottom:6px}
+.step p{font-size:.96rem;max-width:250px;margin:0 auto}
+@media (max-width:860px){.steps{grid-template-columns:1fr;max-width:420px;gap:30px}}
+
 /* ============ header (floating rounded bar) ============ */
 body > header{position:fixed;top:12px;left:14px;right:14px;z-index:100}
 .header-bar{display:flex;align-items:center;justify-content:space-between;gap:28px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line-2);border-radius:100px;padding:0 12px 0 30px;height:62px;max-width:1220px;margin:0 auto;box-shadow:0 6px 24px rgba(23,26,35,.07)}
@@ -114,13 +155,14 @@ body > header{position:fixed;top:12px;left:14px;right:14px;z-index:100}
 @keyframes grow{0%{transform:scaleY(.22)}55%,100%{transform:scaleY(1)}}
 @keyframes riseIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes ringIn{from{opacity:0}to{opacity:1}}
-.hero-content > *{animation:riseIn .85s var(--ease) backwards}
-.hero-content h1{animation-delay:.06s}
-.hero-content .hero-sub{animation-delay:.20s}
-.hero-content .hero-ctas{animation-delay:.34s}
-.hero-content .hero-note{animation-delay:.46s}
+.hero-inner > *{animation:riseIn .85s var(--ease) backwards}
+.hero-inner .herocat{animation-delay:0s}
+.hero-inner h1{animation-delay:.10s}
+.hero-inner .hero-sub{animation-delay:.24s}
+.hero-inner .hero-ctas{animation-delay:.38s}
+.hero-inner .hero-note{animation-delay:.50s}
 @media (prefers-reduced-motion:reduce){
-  .hero-content > *{animation:none}
+  .hero-inner > *{animation:none}
 }
 
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
@@ -260,6 +302,10 @@ body > footer{padding:64px 0 46px}
   .hero{border-radius:0 0 26px 26px;
     background:var(--cloud)}
   .burger{display:flex}
+  /* mobile menu: nav collapses into a dropdown the burger toggles */
+  .nav{display:none;position:absolute;top:74px;left:0;right:0;flex-direction:column;align-items:stretch;gap:4px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border:1px solid var(--line-2);border-radius:24px;padding:12px;box-shadow:var(--shadow)}
+  .nav.open{display:flex}
+  .nav a{padding:13px 18px;font-size:1.02rem}
   .faq-grid{grid-template-columns:1fr;gap:24px}
 }
 @media (max-width:860px){
@@ -274,16 +320,44 @@ body > footer{padding:64px 0 46px}
 </head>
 <body>
 
+<!-- The cat mark. Referenced with <use>; recolour per instance with --cat-line / --cat-fur. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cat" viewBox="0 0 128 128">
+    <g style="fill:var(--cat-fur,none);stroke:var(--cat-line,#171A23);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M40 41 L45 11 L66 29 Z"/>
+      <path d="M85 32 L111 17 L102 51 Z"/>
+      <circle cx="64" cy="72" r="40"/>
+    </g>
+    <g style="fill:var(--cat-line,#171A23)">
+      <g transform="rotate(-5 52.75 61)"><rect class="eye" x="49" y="53" width="7.5" height="16" rx="3.75"/></g>
+      <g transform="rotate(5 74.75 59.5)"><rect class="eye" x="71" y="51.5" width="7.5" height="16" rx="3.75"/></g>
+    </g>
+    <path style="fill:var(--cat-line,#171A23);stroke:var(--cat-line,#171A23);stroke-width:4;stroke-linejoin:round" d="M59 81 L69.5 81 L64.5 88.5 Z"/>
+    <g style="fill:none;stroke:var(--cat-line,#171A23);stroke-width:3;stroke-linecap:round">
+      <path d="M45 73 L8 61"/>
+      <path d="M44 80 L5 77"/>
+      <path d="M45 87 L12 94"/>
+      <path d="M83 75 L121 82"/>
+      <path d="M83 82 L118 94"/>
+      <path d="M81 89 L110 105"/>
+    </g>
+  </symbol>
+</svg>
+
 <header>
   <div class="header-bar">
-    <a class="wordmark" href="#top">catilda</a>
+    <a class="lockup" href="#top" aria-label="Catilda home">
+      <svg class="cat" style="--cat-line:var(--ink);--cat-fur:var(--orange)" width="34" height="34"><use href="#cat"/></svg>
+      <span class="wordmark">catilda</span>
+    </a>
     <nav class="nav" id="nav">
       <a href="#what">What she does</a>
+      <a href="#how">How it works</a>
       <a href="#faq">Questions</a>
     </nav>
     <div class="header-cta">
       <a class="btn btn-primary btn-sm js-book" href="#book">Book a call</a>
-      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
     </div>
   </div>
 </header>
@@ -293,6 +367,31 @@ body > footer{padding:64px 0 46px}
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap hero-inner">
+      <!-- Inline (not <use>) so CSS and JS can reach the parts: shadow content inside <use> is unreachable. -->
+      <svg class="herocat" viewBox="0 0 128 128" role="img" aria-label="The Catilda cat, looking around">
+        <g class="cat-head">
+          <g fill="var(--orange)" stroke="var(--ink)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+            <path class="ear-l" d="M40 41 L45 11 L66 29 Z"/>
+            <path class="ear-r" d="M85 32 L111 17 L102 51 Z"/>
+            <circle cx="64" cy="72" r="40"/>
+          </g>
+          <g class="cat-face">
+            <g fill="var(--ink)">
+              <g transform="rotate(-5 52.75 61)"><rect class="eye" x="49" y="53" width="7.5" height="16" rx="3.75"/></g>
+              <g transform="rotate(5 74.75 59.5)"><rect class="eye" x="71" y="51.5" width="7.5" height="16" rx="3.75"/></g>
+            </g>
+            <path fill="var(--ink)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" d="M59 81 L69.5 81 L64.5 88.5 Z"/>
+          </g>
+          <g class="cat-whiskers" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round">
+            <path d="M45 73 L8 61"/>
+            <path d="M44 80 L5 77"/>
+            <path d="M45 87 L12 94"/>
+            <path d="M83 75 L121 82"/>
+            <path d="M83 82 L118 94"/>
+            <path d="M81 89 L110 105"/>
+          </g>
+        </g>
+      </svg>
       <h1>Meet Catilda,<br><span class="accent">your digital employee.</span></h1>
       <p class="hero-sub">She does anything a person with a computer can do, and she is best at the repetitive work your business already runs on. <b>Working 24/7.</b></p>
       <div class="hero-ctas">
@@ -340,6 +439,20 @@ body > footer{padding:64px 0 46px}
     </div>
   </section>
 
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head" style="text-align:center">
+        <h2>Working within the week.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n num">1</span><h3>Book a call</h3><p>Fifteen minutes. You tell us how your week runs, we listen.</p></div>
+        <div class="step"><span class="n num">2</span><h3>We plan it together</h3><p>We pick the first routine to hand over and agree a flat price. Nothing to set up on your side.</p></div>
+        <div class="step"><span class="n num">3</span><h3>She starts working</h3><p>Catilda learns your history and your rules, then produces work you approve.</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ SAFETY (hidden until claims are ready to publish) ============ -->
   <section id="safe" hidden>
     <div class="wrap">
@@ -380,6 +493,7 @@ body > footer{padding:64px 0 46px}
   <section class="final" id="book">
     <div class="wrap">
       <div class="panel">
+        <svg class="cat" aria-hidden="true" style="--cat-line:var(--mint);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
         <h2>Spend your time growing<br>the business.</h2>
         <p class="lead">Give the routine to Catilda and get your week back. Fifteen minutes on a call is all it takes to start.</p>
         <div class="ctas">
@@ -394,9 +508,10 @@ body > footer{padding:64px 0 46px}
 
 <footer>
   <div class="wrap foot">
-    <div class="fbrand"><span class="f-tile" style="width:34px;height:34px;border-radius:10px;font-size:1.1rem">c</span><a class="wordmark" href="#top" style="font-size:1.1rem">catilda</a></div>
+    <div class="fbrand"><svg class="cat" aria-hidden="true" style="--cat-line:var(--ink);--cat-fur:var(--orange)" width="30" height="30"><use href="#cat"/></svg><a class="wordmark" href="#top" style="font-size:1.1rem">catilda</a></div>
     <nav>
       <a href="#what">What she does</a>
+      <a href="#how">How it works</a>
       <a href="#faq">Questions</a>
       <a href="brand.html">Brand</a>
     </nav>
@@ -467,8 +582,24 @@ if (track) {
 /* mobile menu */
 const burger = document.getElementById('burger');
 const nav = document.getElementById('nav');
-burger.addEventListener('click', () => nav.classList.toggle('open'));
-nav.addEventListener('click', () => nav.classList.remove('open'));
+function setMenu(open) {
+  nav.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', String(open));
+}
+burger.addEventListener('click', () => {
+  const open = !nav.classList.contains('open');
+  setMenu(open);
+  /* the nav sits before the burger in the DOM, so hand focus to the first
+     link on open or forward-Tab would land behind the dropdown */
+  if (open) nav.querySelector('a').focus();
+});
+nav.addEventListener('click', () => setMenu(false));
+addEventListener('keydown', e => {
+  if (e.key === 'Escape' && nav.classList.contains('open')) {
+    setMenu(false);
+    burger.focus();
+  }
+});
 
 /* FAQ */
 const FAQ = [
@@ -504,6 +635,88 @@ list.addEventListener('click', e => {
 });
 const first = list.querySelector('.qa.open .qa-a');
 if (first) first.style.maxHeight = first.scrollHeight + 'px';
+
+/* ---- the living hero cat ----
+   She tracks the pointer; when it goes quiet she looks around on her
+   own; scrolling makes her glance down at the page moving. The engine
+   runs only while it can matter: it stops (and clears its inline
+   transforms, so the CSS base tilt takes over) whenever the cat is
+   scrolled off-screen, the tab is hidden, or the user has reduced
+   motion on — and the reduced-motion query is watched live, so
+   flipping the OS setting mid-session stops the head immediately,
+   matching the CSS blink/twitch guard. */
+const cat = document.querySelector('.herocat');
+if (cat) {
+  const head = cat.querySelector('.cat-head');
+  const face = cat.querySelector('.cat-face');
+  const whiskers = cat.querySelector('.cat-whiskers');
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let tx = 0, ty = 0;        // target gaze, each axis in [-1, 1]
+  let gx = 0, gy = 0;        // eased gaze
+  let idleAt = 0;            // when the pointer counts as gone
+  let wanderTimer = 0;
+  let rafId = 0;             // 0 = engine stopped
+  let lastT = 0;
+  let onScreen = true;
+
+  /* places a real cat checks: corners, the window, you, back to centre */
+  const GLANCES = [[-1,-.25],[1,-.3],[.7,.55],[-.6,.5],[0,-.7],[0,0],[1,.1],[-1,.05],[0,0]];
+  function wander() {
+    const g = GLANCES[Math.floor(Math.random() * GLANCES.length)];
+    tx = g[0]; ty = g[1];
+    wanderTimer = setTimeout(wander, 1200 + Math.random() * 2600);
+  }
+  function lookAt(x, y) {    // the user did something: follow them
+    if (!rafId) return;
+    clearTimeout(wanderTimer); wanderTimer = 0;
+    idleAt = Date.now() + 2600;
+    tx = Math.max(-1, Math.min(1, x));
+    ty = Math.max(-1, Math.min(1, y));
+  }
+  function tick(t) {
+    if (!wanderTimer && Date.now() > idleAt) wander();
+    /* time-based decay ≈ .07/frame at 60Hz, same feel at any refresh rate */
+    const dt = lastT ? Math.min(t - lastT, 100) : 16.7;
+    lastT = t;
+    const k = 1 - Math.pow(.93, dt / 16.7);
+    gx += (tx - gx) * k; gy += (ty - gy) * k;
+    head.style.transform = `rotate(${-6 + gx * 7}deg) translate(${gx * 2.5}px, ${gy * 1.5}px)`;
+    face.style.transform = `translate(${gx * 6.5}px, ${gy * 5}px)`;
+    whiskers.style.transform = `translate(${gx * 4.5}px, ${gy * 3.5}px)`;
+    rafId = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (rafId) return;
+    idleAt = Date.now() + 2200;
+    lastT = 0;
+    rafId = requestAnimationFrame(tick);
+  }
+  function stop() {
+    if (!rafId) return;
+    cancelAnimationFrame(rafId); rafId = 0;
+    clearTimeout(wanderTimer); wanderTimer = 0;
+    gx = gy = tx = ty = 0;
+    head.style.transform = face.style.transform = whiskers.style.transform = '';
+  }
+  function sync() {
+    if (mq.matches || document.hidden || !onScreen) stop(); else start();
+  }
+
+  addEventListener('pointermove', e => {
+    if (!rafId) return;
+    const r = cat.getBoundingClientRect();
+    lookAt((e.clientX - (r.left + r.width / 2)) / 260,
+           (e.clientY - (r.top + r.height / 2)) / 220);
+  }, { passive: true });
+  addEventListener('scroll', () => lookAt(0, 1), { passive: true });
+  mq.addEventListener('change', sync);
+  document.addEventListener('visibilitychange', sync);
+  new IntersectionObserver(entries => {
+    onScreen = entries[0].isIntersecting;
+    sync();
+  }).observe(cat);
+  sync();
+}
 </script>
 
 </body>

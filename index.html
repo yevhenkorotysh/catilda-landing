@@ -279,7 +279,6 @@ body > footer{padding:64px 0 46px}
     <a class="wordmark" href="#top">catilda</a>
     <nav class="nav" id="nav">
       <a href="#what">What she does</a>
-      <a href="#safe">Safety</a>
       <a href="#faq">Questions</a>
     </nav>
     <div class="header-cta">
@@ -341,13 +340,8 @@ body > footer{padding:64px 0 46px}
     </div>
   </section>
 
-  <!-- ============ SECURITY ============ -->
-  <!-- CLAIMS CHECK: every line below must be true of your real setup before this page
-       goes live. The encryption line in particular describes how your hosting and
-       database are actually configured, so confirm it with whoever runs your
-       infrastructure. Do not add certification badges until they are earned. -->
-    <!-- ============ SAFETY ============ -->
-  <section id="safe">
+  <!-- ============ SAFETY (hidden until claims are ready to publish) ============ -->
+  <section id="safe" hidden>
     <div class="wrap">
       <div class="sec-head" style="text-align:center">
         <h2>Safe by design.</h2>
@@ -403,7 +397,6 @@ body > footer{padding:64px 0 46px}
     <div class="fbrand"><span class="f-tile" style="width:34px;height:34px;border-radius:10px;font-size:1.1rem">c</span><a class="wordmark" href="#top" style="font-size:1.1rem">catilda</a></div>
     <nav>
       <a href="#what">What she does</a>
-      <a href="#safe">Safety</a>
       <a href="#faq">Questions</a>
       <a href="brand.html">Brand</a>
     </nav>
@@ -418,7 +411,7 @@ body > footer{padding:64px 0 46px}
    CONTACT_EMAIL = fallback, so the buttons still work before the link exists.
 */
 const BOOKING_URL = "";
-const CONTACT_EMAIL = "korotysh@gmail.com";
+const CONTACT_EMAIL = "info@catilda.com";
 
 /* wire the demo buttons (real link if set, working mailto fallback otherwise) */
 const DEMO_EMAIL = [
@@ -484,7 +477,7 @@ const FAQ = [
   ["Will she do something wrong in my name?",
    "Anything that leaves the building waits for your approval, and she raises a flag when a request looks like a mistake instead of carrying it out. You decide how much freedom she gets, and you can change that at any time."],
   ["Is my data safe?",
-   "She sees only the accounts you connect, with the narrowest access that does the job, and you can revoke any of it whenever you want. Your data is never sold and never used to train anything outside your business, your logins sit in a secrets vault she never reads, and you can have everything deleted on request."],
+   "She sees only the accounts you connect, with the narrowest access that does the job, and you can revoke any of it whenever you want. Your logins sit in a secrets vault she never reads, and you can have everything deleted on request."],
   ["How long until she is working?",
    "The first week. On the call we work out which job to hand over first, then we train her on your history and your rules, and she starts producing work you approve."],
   ["What does she cost?",

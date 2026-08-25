@@ -24,7 +24,10 @@ class TagCollector(HTMLParser):
         self._capture: str | None = None
         self.book_call_links = 0
         self.section_ids: set[str] = set()
+        self.hidden_section_ids: set[str] = set()
         self.has_brand_link = False
+        self.nav_hrefs: list[str] = []
+        self._in_nav = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_dict = dict(attrs)
@@ -32,10 +35,14 @@ class TagCollector(HTMLParser):
             self._capture = "title"
         elif tag == "h1":
             self._capture = "h1"
+        elif tag == "nav":
+            self._in_nav += 1
         elif tag == "section":
             section_id = attrs_dict.get("id")
             if section_id:
                 self.section_ids.add(section_id)
+                if "hidden" in attrs_dict or attrs_dict.get("hidden") is not None:
+                    self.hidden_section_ids.add(section_id)
         elif tag == "main" and attrs_dict.get("id") == "top":
             self.section_ids.add("top")
         elif tag == "a":
@@ -45,6 +52,8 @@ class TagCollector(HTMLParser):
                 self.book_call_links += 1
             if href.endswith("brand.html") or href == "brand.html":
                 self.has_brand_link = True
+            if self._in_nav:
+                self.nav_hrefs.append(href)
 
     def handle_data(self, data: str) -> None:
         if self._capture == "title":
@@ -55,6 +64,8 @@ class TagCollector(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if tag in {"title", "h1"}:
             self._capture = None
+        elif tag == "nav" and self._in_nav:
+            self._in_nav -= 1
 
 
 class LandingUnitTests(unittest.TestCase):
@@ -71,10 +82,16 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("Meet Catilda", parser.h1)
         self.assertGreaterEqual(parser.book_call_links, 1)
         self.assertTrue(parser.has_brand_link)
-        self.assertTrue({"what", "safe", "faq", "book"}.issubset(parser.section_ids))
+        self.assertTrue({"what", "faq", "book"}.issubset(parser.section_ids))
+        self.assertIn("safe", parser.hidden_section_ids)
+        self.assertNotIn("#safe", parser.nav_hrefs)
         self.assertNotIn("Famulatus", html)
         self.assertNotIn("Coming soon", html)
         self.assertIn("Book a call", html)
+        self.assertNotIn(
+            "Your data is never sold and never used to train anything outside your business",
+            html,
+        )
 
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
@@ -82,7 +99,8 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("--mint", html)
         self.assertIn("--cloud", html)
         self.assertIn("CONTACT_EMAIL", html)
-        self.assertIn("korotysh@gmail.com", html)
+        self.assertIn("info@catilda.com", html)
+        self.assertNotIn("korotysh@gmail.com", html)
 
 
 class LandingIntegrationTests(unittest.TestCase):

@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-ASSETS = ROOT / "assets"
+BRAND = ROOT / "brand.html"
 
 
 class TagCollector(HTMLParser):
@@ -22,10 +22,9 @@ class TagCollector(HTMLParser):
         self.title = ""
         self.h1 = ""
         self._capture: str | None = None
-        self.has_sand_canvas = False
-        self.book_demo_links = 0
-        self.external_stylesheets = 0
-        self.external_scripts = 0
+        self.book_call_links = 0
+        self.section_ids: set[str] = set()
+        self.has_brand_link = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_dict = dict(attrs)
@@ -33,20 +32,19 @@ class TagCollector(HTMLParser):
             self._capture = "title"
         elif tag == "h1":
             self._capture = "h1"
-        elif tag == "canvas" and attrs_dict.get("id") == "sandCanvas":
-            self.has_sand_canvas = True
+        elif tag == "section":
+            section_id = attrs_dict.get("id")
+            if section_id:
+                self.section_ids.add(section_id)
+        elif tag == "main" and attrs_dict.get("id") == "top":
+            self.section_ids.add("top")
         elif tag == "a":
             href = (attrs_dict.get("href") or "").lower()
             classes = attrs_dict.get("class") or ""
-            text_hint = "btn" in classes
-            if href.startswith("#book") or "calendly.com" in href:
-                self.book_demo_links += 1
-            elif text_hint and "book" in href:
-                self.book_demo_links += 1
-        elif tag == "link" and attrs_dict.get("rel") == "stylesheet":
-            self.external_stylesheets += 1
-        elif tag == "script" and attrs_dict.get("src"):
-            self.external_scripts += 1
+            if href.startswith("#book") or "js-book" in classes:
+                self.book_call_links += 1
+            if href.endswith("brand.html") or href == "brand.html":
+                self.has_brand_link = True
 
     def handle_data(self, data: str) -> None:
         if self._capture == "title":
@@ -62,8 +60,7 @@ class TagCollector(HTMLParser):
 class LandingUnitTests(unittest.TestCase):
     def test_required_files_exist(self) -> None:
         self.assertTrue(INDEX.is_file())
-        self.assertTrue(ASSETS.is_dir())
-        self.assertTrue((ASSETS / "logos").is_dir())
+        self.assertTrue(BRAND.is_file())
 
     def test_html_structure(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
@@ -71,29 +68,37 @@ class LandingUnitTests(unittest.TestCase):
         parser.feed(html)
         self.assertIn("Catilda", parser.title)
         self.assertIn("digital employee", parser.h1.lower())
-        self.assertTrue(parser.has_sand_canvas)
-        self.assertGreaterEqual(parser.book_demo_links, 1)
+        self.assertIn("Meet Catilda", parser.h1)
+        self.assertGreaterEqual(parser.book_call_links, 1)
+        self.assertTrue(parser.has_brand_link)
+        self.assertTrue({"what", "safe", "faq", "book"}.issubset(parser.section_ids))
         self.assertNotIn("Famulatus", html)
         self.assertNotIn("Coming soon", html)
-        self.assertIn("Book a free 15 minute demo", html)
+        self.assertIn("Book a call", html)
 
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
-        self.assertIn("--void", html)
-        self.assertIn("sandCanvas", html)
-        self.assertIn("hello@catilda.com", html)
+        self.assertIn("--cobalt", html)
+        self.assertIn("--mint", html)
+        self.assertIn("--cloud", html)
+        self.assertIn("CONTACT_EMAIL", html)
+        self.assertIn("korotysh@gmail.com", html)
 
 
 class LandingIntegrationTests(unittest.TestCase):
-    def test_assets_referenced_and_present(self) -> None:
+    def test_self_contained_page(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
-        self.assertIn("assets/", html)
-        # Marketing page is self-contained (no external site CSS/JS bundles).
+        # Marketing page is self-contained (inline CSS/JS, inline logo SVGs).
         self.assertNotIn('href="styles.css"', html)
         self.assertNotIn('src="script.js"', html)
-        self.assertTrue((ASSETS / "ribbon-poster.jpg").is_file() or any(ASSETS.glob("ribbon*")))
-        logo_count = len(list((ASSETS / "logos").iterdir()))
-        self.assertGreaterEqual(logo_count, 5)
+        self.assertNotIn("assets/", html)
+        self.assertIn("logoTrack", html)
+        self.assertIn("faqList", html)
+
+    def test_brand_page_present(self) -> None:
+        brand = BRAND.read_text(encoding="utf-8")
+        self.assertIn("Catilda Brand Guidelines", brand)
+        self.assertIn("--cobalt", brand)
 
 
 class _QuietHandler(http.server.SimpleHTTPRequestHandler):
@@ -125,13 +130,15 @@ class LandingE2ETests(unittest.TestCase):
         status, body = self._get("/")
         self.assertEqual(status, 200)
         self.assertIn("Catilda", body)
-        self.assertIn("Hire a digital employee", body)
-        self.assertIn('id="sandCanvas"', body)
-        self.assertIn("Book a free 15 minute demo", body)
+        self.assertIn("Meet Catilda", body)
+        self.assertIn("your digital employee", body)
+        self.assertIn("Book a call", body)
         self.assertNotIn("Coming soon", body)
 
-        asset_status, _ = self._get("/assets/ribbon-poster.jpg")
-        self.assertEqual(asset_status, 200)
+    def test_brand_page_serves(self) -> None:
+        status, body = self._get("/brand.html")
+        self.assertEqual(status, 200)
+        self.assertIn("Brand Guidelines", body)
 
 
 if __name__ == "__main__":

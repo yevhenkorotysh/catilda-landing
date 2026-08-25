@@ -1,9 +1,9 @@
 <!-- ABOUTME: How to preview, test, and deploy the Catilda marketing landing. -->
-<!-- ABOUTME: Static site from the Famulatus marketing design, rebranded to Catilda. -->
+<!-- ABOUTME: Static site from UliKorotysh/catilda-site; App Platform deploys from main. -->
 
 # Catilda landing
 
-Marketing site for Catilda (digital employees for small business). Single-file HTML/CSS/JS plus `assets/`.
+Marketing site for Catilda (your digital employee). Self-contained `index.html` plus `brand.html`.
 
 ## Local
 
@@ -27,4 +27,5 @@ GitHub Pages alternative: **Settings → Pages → Deploy from branch → main /
 
 ## Source
 
-Based on [UliKorotysh/famulatus-website](https://github.com/UliKorotysh/famulatus-website), rebranded Famulatus → Catilda.
+Imported from [UliKorotysh/catilda-site](https://github.com/UliKorotysh/catilda-site)
+(preview: https://ulikorotysh.github.io/catilda-site/).

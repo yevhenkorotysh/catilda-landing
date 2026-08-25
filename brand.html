@@ -334,18 +334,18 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
       </div>
       <div class="sec-head" style="margin-top:56px">
         <h2 style="font-size:1.6rem">Favicon &amp; small sizes</h2>
-        <p>Below roughly 48px the full mark smears, so favicons, app icons, and avatars use the simplified cat face: thicker line, two whiskers a side, on the ink tile. This replaces the old “c” monogram everywhere.</p>
+        <p>Below roughly 48px the full mark smears, so favicons, app icons, and avatars use the simplified cat face: thicker line, two whiskers a side, in ink on the marmalade tile. The tile is marmalade, not ink, so the icon keeps its own boundary on dark browser chrome instead of reading as an inverted image. This replaces the old “c” monogram everywhere.</p>
       </div>
       <div class="grid mono-grid">
-        <!-- Light surround so the ink icon tile itself is visible (the .m-a dark surround matches the tile colour). -->
-        <div class="mono-tile m-a" style="background:var(--ivory)"><div class="mono-mark" style="background:#171A23"><svg aria-hidden="true" style="--cat-line:#E8913F" width="64" height="64"><use href="#catface"/></svg></div></div>
-        <div class="mono-tile m-b"><div class="mono-mark" style="background:#F3B15A"><svg aria-hidden="true" style="--cat-line:#171A23" width="64" height="64"><use href="#catface"/></svg></div></div>
+        <!-- The same icon on dark and light surrounds: the marmalade tile holds its boundary on both. -->
+        <div class="mono-tile m-a"><div class="mono-mark" style="background:#E8913F"><svg aria-hidden="true" style="--cat-line:#171A23" width="64" height="64"><use href="#catface"/></svg></div></div>
+        <div class="mono-tile m-b"><div class="mono-mark" style="background:#E8913F"><svg aria-hidden="true" style="--cat-line:#171A23" width="64" height="64"><use href="#catface"/></svg></div></div>
         <div class="dodont">
           <div class="dd do">
             <h4>Do</h4>
             <ul>
               <li>Favicon, OS app icon, messaging avatars: the simplified cat face.</li>
-              <li>Marmalade-on-ink first; ink-on-amber where the tile must be light.</li>
+              <li>Ink-on-marmalade, always: the one colourway that reads on light and dark browser chrome alike.</li>
               <li>Keep the whiskers crossing past the face on the full mark.</li>
             </ul>
           </div>

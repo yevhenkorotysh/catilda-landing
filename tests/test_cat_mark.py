@@ -5,14 +5,66 @@ from __future__ import annotations
 
 import http.server
 import socketserver
+import struct
 import threading
 import unittest
 import urllib.request
+import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 BRAND = ROOT / "brand.html"
+
+
+def _png_pixels(path: Path) -> tuple[int, int, list[tuple[int, int, int, int]]]:
+    """Minimal PNG reader for the icon rasters: 8-bit RGB/RGBA, no interlace."""
+    data = path.read_bytes()
+    width, height, depth, ctype = struct.unpack(">IIBB", data[16:26])
+    if depth != 8 or ctype not in (2, 6):
+        raise AssertionError(f"{path.name}: expected 8-bit RGB/RGBA, got depth={depth} type={ctype}")
+    n = 4 if ctype == 6 else 3
+    idat = b""
+    off = 8
+    while off < len(data):
+        length, tag = struct.unpack(">I4s", data[off : off + 8])
+        if tag == b"IDAT":
+            idat += data[off + 8 : off + 8 + length]
+        off += 12 + length
+    raw = zlib.decompress(idat)
+    stride = width * n
+    pixels: list[tuple[int, int, int, int]] = []
+    prev = bytearray(stride)
+    pos = 0
+    for _ in range(height):
+        filt = raw[pos]
+        pos += 1
+        line = bytearray(raw[pos : pos + stride])
+        pos += stride
+        for i in range(stride):
+            left = line[i - n] if i >= n else 0
+            up = prev[i]
+            up_left = prev[i - n] if i >= n else 0
+            if filt == 1:
+                line[i] = (line[i] + left) & 255
+            elif filt == 2:
+                line[i] = (line[i] + up) & 255
+            elif filt == 3:
+                line[i] = (line[i] + (left + up) // 2) & 255
+            elif filt == 4:
+                p = left + up - up_left
+                pa, pb, pc = abs(p - left), abs(p - up), abs(p - up_left)
+                pred = left if pa <= pb and pa <= pc else (up if pb <= pc else up_left)
+                line[i] = (line[i] + pred) & 255
+        prev = line
+        for x in range(width):
+            px = line[x * n : x * n + n]
+            pixels.append((px[0], px[1], px[2], px[3] if n == 4 else 255))
+    return width, height, pixels
+
+
+def _near(px: tuple[int, int, int, int], rgb: tuple[int, int, int], tol: int = 14) -> bool:
+    return all(abs(px[i] - rgb[i]) <= tol for i in range(3))
 
 
 class CatMarkUnitTests(unittest.TestCase):
@@ -24,8 +76,14 @@ class CatMarkUnitTests(unittest.TestCase):
     def test_favicon_is_the_cat_not_the_monogram(self) -> None:
         icon_start = self.html.index('rel="icon" type="image/svg+xml"')
         icon = self.html[icon_start : self.html.index(">", icon_start)]
-        self.assertIn("%23E8913F", icon)  # marmalade lines
-        self.assertIn("%23171A23", icon)  # ink tile
+        # Marmalade tile with an ink face: an ink tile vanishes into dark
+        # browser chrome and reads as an inverted image.
+        self.assertIn("rx='28' fill='%23E8913F'", icon)
+        self.assertIn("stroke='%23171A23'", icon)
+        # Exactly one marmalade use (the tile) and five ink groups (outline,
+        # eyes, nose, whiskers): a half-swapped URI fails these counts.
+        self.assertEqual(icon.count("%23E8913F"), 1)
+        self.assertEqual(icon.count("%23171A23"), 5)
         self.assertIn("circle", icon)  # the head
         self.assertNotIn("Verdana", icon)  # the old "c" text monogram is gone
         self.assertNotIn("%3Ctext", icon)
@@ -36,6 +94,28 @@ class CatMarkUnitTests(unittest.TestCase):
         self.assertIn('rel="apple-touch-icon" href="apple-touch-icon.png"', self.html)
         self.assertTrue((ROOT / "favicon-32.png").is_file())
         self.assertTrue((ROOT / "apple-touch-icon.png").is_file())
+
+    MARMALADE = (232, 145, 63)
+    INK = (23, 26, 35)
+
+    def test_favicon_png_is_marmalade_tile_with_ink_face(self) -> None:
+        # Safari only sees the PNGs, so their pixels are pinned too: the tile
+        # must be marmalade (dominant), the face ink, the corners transparent.
+        width, height, pixels = _png_pixels(ROOT / "favicon-32.png")
+        self.assertEqual((width, height), (32, 32))
+        opaque = [p for p in pixels if p[3] > 200]
+        marmalade = sum(1 for p in opaque if _near(p, self.MARMALADE))
+        ink = sum(1 for p in opaque if _near(p, self.INK))
+        self.assertGreater(marmalade, ink)
+        self.assertGreater(ink, 0)
+        self.assertLess(pixels[0][3], 30)  # rounded corner stays transparent
+
+    def test_apple_touch_icon_is_full_bleed_marmalade(self) -> None:
+        width, height, pixels = _png_pixels(ROOT / "apple-touch-icon.png")
+        self.assertEqual((width, height), (180, 180))
+        self.assertTrue(_near(pixels[0], self.MARMALADE))  # corners full-bleed
+        self.assertTrue(_near(pixels[-1], self.MARMALADE))
+        self.assertGreater(sum(1 for p in pixels if _near(p, self.INK)), 0)
 
     def test_marmalade_token_defined(self) -> None:
         self.assertIn("--orange:", self.html)

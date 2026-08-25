@@ -1,5 +1,5 @@
-# ABOUTME: Unit, integration, and end-to-end checks for the Catilda landing page.
-# ABOUTME: Parses static HTML, serves it over HTTP, and asserts hero content.
+# ABOUTME: Unit, integration, and end-to-end checks for the Catilda marketing landing.
+# ABOUTME: Parses static HTML, serves it over HTTP, and asserts hero + CTA content.
 
 from __future__ import annotations
 
@@ -13,8 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-STYLES = ROOT / "styles.css"
-SCRIPT = ROOT / "script.js"
+BRAND = ROOT / "brand.html"
 
 
 class TagCollector(HTMLParser):
@@ -23,10 +22,12 @@ class TagCollector(HTMLParser):
         self.title = ""
         self.h1 = ""
         self._capture: str | None = None
-        self.links: list[str] = []
-        self.scripts: list[str] = []
-        self.has_starfield = False
-        self.status_text = ""
+        self.book_call_links = 0
+        self.section_ids: set[str] = set()
+        self.hidden_section_ids: set[str] = set()
+        self.has_brand_link = False
+        self.nav_hrefs: list[str] = []
+        self._in_nav = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_dict = dict(attrs)
@@ -34,66 +35,88 @@ class TagCollector(HTMLParser):
             self._capture = "title"
         elif tag == "h1":
             self._capture = "h1"
-        elif tag == "p" and attrs_dict.get("class") == "status":
-            self._capture = "status"
-        elif tag == "canvas" and attrs_dict.get("id") == "starfield":
-            self.has_starfield = True
-        elif tag == "link" and attrs_dict.get("rel") == "stylesheet":
-            href = attrs_dict.get("href")
-            if href:
-                self.links.append(href)
-        elif tag == "script":
-            src = attrs_dict.get("src")
-            if src:
-                self.scripts.append(src)
+        elif tag == "nav":
+            self._in_nav += 1
+        elif tag == "section":
+            section_id = attrs_dict.get("id")
+            if section_id:
+                self.section_ids.add(section_id)
+                if "hidden" in attrs_dict or attrs_dict.get("hidden") is not None:
+                    self.hidden_section_ids.add(section_id)
+        elif tag == "main" and attrs_dict.get("id") == "top":
+            self.section_ids.add("top")
+        elif tag == "a":
+            href = (attrs_dict.get("href") or "").lower()
+            classes = attrs_dict.get("class") or ""
+            if href.startswith("#book") or "js-book" in classes:
+                self.book_call_links += 1
+            if href.endswith("brand.html") or href == "brand.html":
+                self.has_brand_link = True
+            if self._in_nav:
+                self.nav_hrefs.append(href)
 
     def handle_data(self, data: str) -> None:
         if self._capture == "title":
             self.title += data
         elif self._capture == "h1":
             self.h1 += data
-        elif self._capture == "status":
-            self.status_text += data
 
     def handle_endtag(self, tag: str) -> None:
-        if tag in {"title", "h1", "p"}:
+        if tag in {"title", "h1"}:
             self._capture = None
+        elif tag == "nav" and self._in_nav:
+            self._in_nav -= 1
 
 
 class LandingUnitTests(unittest.TestCase):
     def test_required_files_exist(self) -> None:
         self.assertTrue(INDEX.is_file())
-        self.assertTrue(STYLES.is_file())
-        self.assertTrue(SCRIPT.is_file())
+        self.assertTrue(BRAND.is_file())
 
     def test_html_structure(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
         parser = TagCollector()
-        parser.feed(INDEX.read_text(encoding="utf-8"))
-        self.assertEqual(parser.title.strip(), "Catilda")
-        self.assertEqual(parser.h1.strip(), "Catilda")
-        self.assertIn("Coming soon", parser.status_text)
-        self.assertTrue(parser.has_starfield)
-        self.assertIn("styles.css", parser.links)
-        self.assertIn("script.js", parser.scripts)
+        parser.feed(html)
+        self.assertIn("Catilda", parser.title)
+        self.assertIn("digital employee", parser.h1.lower())
+        self.assertIn("Meet Catilda", parser.h1)
+        self.assertGreaterEqual(parser.book_call_links, 1)
+        self.assertTrue(parser.has_brand_link)
+        self.assertTrue({"what", "faq", "book"}.issubset(parser.section_ids))
+        self.assertIn("safe", parser.hidden_section_ids)
+        self.assertNotIn("#safe", parser.nav_hrefs)
+        self.assertNotIn("Famulatus", html)
+        self.assertNotIn("Coming soon", html)
+        self.assertIn("Book a call", html)
+        self.assertNotIn(
+            "Your data is never sold and never used to train anything outside your business",
+            html,
+        )
 
-    def test_css_has_space_tokens(self) -> None:
-        css = STYLES.read_text(encoding="utf-8")
-        self.assertIn("--void", css)
-        self.assertIn("--signal", css)
-        self.assertIn("porthole", css)
+    def test_inline_brand_tokens(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        self.assertIn("--cobalt", html)
+        self.assertIn("--mint", html)
+        self.assertIn("--cloud", html)
+        self.assertIn("CONTACT_EMAIL", html)
+        self.assertIn("info@catilda.com", html)
+        self.assertNotIn("korotysh@gmail.com", html)
 
 
 class LandingIntegrationTests(unittest.TestCase):
-    def test_assets_served_together(self) -> None:
+    def test_self_contained_page(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
-        css = STYLES.read_text(encoding="utf-8")
-        js = SCRIPT.read_text(encoding="utf-8")
-        self.assertIn('href="styles.css"', html)
-        self.assertIn('src="script.js"', html)
-        self.assertIn("starfield", js)
-        self.assertIn("Instrument+Serif", html)
-        self.assertIn("Instrument Serif", STYLES.read_text(encoding="utf-8"))
-        self.assertGreater(len(css), 200)
+        # Marketing page is self-contained (inline CSS/JS, inline logo SVGs).
+        self.assertNotIn('href="styles.css"', html)
+        self.assertNotIn('src="script.js"', html)
+        self.assertNotIn("assets/", html)
+        self.assertIn("logoTrack", html)
+        self.assertIn("faqList", html)
+
+    def test_brand_page_present(self) -> None:
+        brand = BRAND.read_text(encoding="utf-8")
+        self.assertIn("Catilda Brand Guidelines", brand)
+        self.assertIn("--cobalt", brand)
 
 
 class _QuietHandler(http.server.SimpleHTTPRequestHandler):
@@ -119,22 +142,21 @@ class LandingE2ETests(unittest.TestCase):
 
     def _get(self, path: str) -> tuple[int, str]:
         with urllib.request.urlopen(f"http://127.0.0.1:{self.port}{path}") as resp:
-            return resp.status, resp.read().decode("utf-8")
+            return resp.status, resp.read().decode("utf-8", errors="replace")
 
     def test_live_page_renders_hero(self) -> None:
         status, body = self._get("/")
         self.assertEqual(status, 200)
-        self.assertIn("<h1>Catilda</h1>", body)
-        self.assertIn("Coming soon", body)
-        self.assertIn('id="starfield"', body)
+        self.assertIn("Catilda", body)
+        self.assertIn("Meet Catilda", body)
+        self.assertIn("your digital employee", body)
+        self.assertIn("Book a call", body)
+        self.assertNotIn("Coming soon", body)
 
-        css_status, css_body = self._get("/styles.css")
-        self.assertEqual(css_status, 200)
-        self.assertIn("--signal", css_body)
-
-        js_status, js_body = self._get("/script.js")
-        self.assertEqual(js_status, 200)
-        self.assertIn("requestAnimationFrame", js_body)
+    def test_brand_page_serves(self) -> None:
+        status, body = self._get("/brand.html")
+        self.assertEqual(status, 200)
+        self.assertIn("Brand Guidelines", body)
 
 
 if __name__ == "__main__":

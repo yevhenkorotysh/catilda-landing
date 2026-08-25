@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<!-- ABOUTME: Catilda brand guidelines page (colors, wordmark, voice). -->
+<!-- ABOUTME: Linked from the marketing footer; static HTML, no build step. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Catilda Brand Guidelines: Logo, Colors, Voice</title>
+<meta name="description" content="Catilda brand book: wordmark, monogram, color system, typography, and voice guidelines." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CATILDA BRAND BOOK
+   Palette: "AI website" (Coolors export, 2026-08)
+   Structure modeled on modern brand-guideline pages
+   ============================================================ */
+:root{
+  /* CATILDA palette */
+  --cobalt:    #1F5FD6;
+  --cobalt-br: #4D8CFF;
+  --mint:      #8DD8C5;
+  --amber:     #F3B15A;
+  --teal:      #0D3B52;
+  --ink:       #171A23;
+  --cloud:     #F7F6F2;
+  --body:      #525C69;
+  --muted:     #5A6472;
+
+  /* legacy aliases kept so existing rules resolve */
+  --ink-teal:  #171A23;
+  --deep-teal: #0D3B52;
+  --forest:    #0D3B52;
+  --moss:      #525C69;
+  --sage-gray: #5A6472;
+  --ivory:     #F7F6F2;
+  --turq:      #8DD8C5;
+
+  --line: rgba(23,26,35,.13);
+  --line-2: rgba(23,26,35,.07);
+  --shadow: 0 2px 6px rgba(23,26,35,.06), 0 30px 60px -28px rgba(23,26,35,.26);
+  --radius: 20px;
+  --maxw: 1180px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ivory);
+  color:var(--moss);
+  font-family:"Inter",system-ui,sans-serif;
+  line-height:1.62;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Space Grotesk",sans-serif;color:var(--ink-teal);line-height:1.08;letter-spacing:-.02em;font-weight:600}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.mono{font-family:"JetBrains Mono",monospace}
+.eyebrow{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--forest);margin-bottom:16px}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,253,249,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-2)}
+.header-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+.wordmark{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.35rem;color:var(--ink-teal);letter-spacing:-.02em}
+.header-links{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:100px;cursor:pointer;border:1px solid transparent;transition:transform .2s var(--ease),box-shadow .3s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--ink-teal);color:var(--ivory)}
+.btn-ghost{border-color:var(--line);color:var(--ink-teal);background:transparent}
+
+/* hero */
+.hero{padding:96px 0 64px}
+.hero .eyebrow{color:var(--forest)}
+.hero h1{font-size:clamp(3rem,7vw,5.2rem);font-weight:700;margin-bottom:18px}
+.hero p{max-width:560px;font-size:1.1rem}
+
+section{padding:72px 0;border-top:1px solid var(--line-2)}
+.sec-head{max-width:640px;margin-bottom:44px}
+.sec-head h2{font-size:2.2rem;margin-bottom:12px}
+.grid{display:grid;gap:18px}
+
+/* logo tiles */
+.logo-grid{grid-template-columns:repeat(4,1fr)}
+.logo-tile{border-radius:var(--radius);border:1px solid var(--line-2);min-height:170px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.logo-tile .fm{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.7rem;letter-spacing:-.02em}
+.logo-tile .tag{position:absolute;left:14px;bottom:12px;font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.t-light{background:var(--ivory)}      .t-light .fm{color:var(--ink-teal)}  .t-light .tag{color:var(--moss)}
+.t-dark{background:var(--ink-teal)}    .t-dark .fm{color:var(--ivory)}      .t-dark .tag{color:var(--sage-gray)}
+.t-mint{background:var(--deep-teal)}   .t-mint .fm{color:var(--turq)}       .t-mint .tag{color:var(--mint)}
+.t-flat{background:var(--turq)}        .t-flat .fm{color:var(--ink-teal)}   .t-flat .tag{color:var(--deep-teal)}
+.logo-note{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:100px;padding:9px 18px;font-size:.88rem;font-weight:600;color:var(--ink-teal);background:#fff}
+
+/* monogram */
+.mono-grid{grid-template-columns:repeat(2,minmax(0,260px)) 1fr;align-items:start}
+.mono-tile{border-radius:var(--radius);min-height:200px;display:flex;align-items:center;justify-content:center;position:relative;border:1px solid var(--line-2)}
+.mono-mark{width:92px;height:92px;border-radius:26px;display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2.6rem}
+.m-a{background:var(--ink-teal)} .m-a .mono-mark{background:var(--turq);color:var(--ink-teal)}
+.m-b{background:var(--ivory)}    .m-b .mono-mark{background:var(--ink-teal);color:var(--turq)}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dd{border-radius:var(--radius);padding:26px 28px;border:1px solid var(--line-2);background:#fff}
+.dd h4{font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.dd.do h4::before{content:"✓";color:var(--cobalt);background:rgba(31,95,214,.18);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem}
+.dd.dont h4::before{content:"✕";color:#8C3B2E;background:rgba(140,59,46,.12);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem}
+.dd li{margin:8px 0 8px 2px;list-style:none;padding-left:18px;position:relative;font-size:.95rem}
+.dd li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--sage-gray)}
+
+/* colors */
+.swatch-grid{grid-template-columns:repeat(3,1fr)}
+.swatch{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line-2);background:#fff;box-shadow:0 1px 2px rgba(18,32,35,.04)}
+.swatch .fill{height:130px}
+.swatch .meta{padding:16px 18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.swatch .meta b{color:var(--ink-teal);font-size:.98rem}
+.swatch .meta .hex{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--moss)}
+.swatch .role{padding:0 18px 16px;font-size:.84rem;color:var(--moss)}
+.grad-row{grid-template-columns:repeat(3,1fr);margin-top:18px}
+.grad-tile{border-radius:var(--radius);min-height:150px;position:relative;overflow:hidden;border:1px solid var(--line-2)}
+.grad-tile .tag{position:absolute;left:16px;bottom:14px;font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ivory);opacity:.85}
+.grad-tile .tag.dk{color:var(--ink-teal);opacity:.72}
+.g-1{background:linear-gradient(135deg, var(--amber) 0%, var(--mint) 100%)}
+.g-2{background:linear-gradient(135deg, var(--mint) 0%, var(--cobalt-br) 100%)}
+.g-3{background:linear-gradient(135deg, var(--cobalt-br) 0%, var(--cobalt) 48%, var(--teal) 100%)}
+.g-4{background:linear-gradient(150deg, var(--teal) 0%, #0A2B3C 58%, var(--ink) 100%)}
+.g-5{background:linear-gradient(120deg, var(--amber) 0%, var(--mint) 46%, var(--cobalt-br) 100%)}
+.g-6{background:linear-gradient(135deg, #FFFFFF 0%, rgba(141,216,197,.42) 100%)}
+/* tint ramps */
+.ramps{display:grid;gap:14px;margin-top:8px}
+.ramp{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:16px}
+.ramp-name{font-weight:600;color:var(--ink-teal);font-size:.95rem}
+.ramp-bar{display:grid;grid-template-columns:repeat(5,1fr);border-radius:12px;overflow:hidden;border:1px solid var(--line-2);background:#fff}
+.ramp-bar i{height:58px;font-style:normal;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-teal)}
+.ramp-bar i.wt{color:#fff}
+/* wash chips */
+.washchip{display:inline-flex;flex-direction:column;gap:2px;border-radius:12px;padding:14px 18px;color:var(--ink-teal);font-weight:600;font-size:.9rem;border:1px solid var(--line-2)}
+.pair-note{margin-top:26px;border-radius:var(--radius);border:1px dashed var(--line);padding:22px 26px;font-size:.92rem;background:rgba(166,177,165,.08)}
+.pair-note b{color:var(--ink-teal)}
+.pair-note .mono{font-size:.82rem}
+
+
+/* using the colours */
+.use-block{margin-bottom:34px}
+.use-block h4{font-size:1.02rem;margin-bottom:4px}
+.use-block .hint{font-size:.88rem;color:var(--sage-gray);margin-bottom:16px}
+.demo{border-radius:var(--radius);border:1px solid var(--line-2);background:#fff;padding:26px 28px}
+.demo.on-dark{background:linear-gradient(150deg, var(--teal) 0%, #0A2B3C 58%, var(--ink) 100%);border:0}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.b{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:100px;font-weight:600;font-size:.95rem;border:1px solid transparent}
+.b-primary{background:var(--cobalt);color:#fff}
+.b-ghost{background:#fff;color:var(--ink-teal);border-color:var(--line)}
+.b-ondark{background:var(--mint);color:var(--ink-teal)}
+.b-ondark-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.b-dis{background:rgba(20,28,29,.08);color:rgba(20,28,29,.35)}
+.tk{font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--sage-gray);display:block;margin-top:8px}
+.on-dark .tk{color:rgba(255,255,255,.5)}
+
+.stack h5{font-family:"Space Grotesk",sans-serif;font-size:1.5rem;color:var(--ink-teal);margin-bottom:6px;letter-spacing:-.02em}
+.stack .lead-t{font-size:1.02rem;color:var(--moss);margin-bottom:6px}
+.stack .mut{font-size:.9rem;color:var(--sage-gray);margin-bottom:6px}
+.stack .lnk{color:var(--deep-teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.stack .emph{color:var(--deep-teal);font-weight:600}
+
+.surf-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.surf{border-radius:14px;min-height:96px;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;font-size:.8rem;font-weight:600}
+
+.dark-bits{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.d-tick{display:inline-flex;align-items:center;gap:9px;color:#fff;font-size:.92rem}
+.d-tick i{width:24px;height:24px;border-radius:50%;background:rgba(141,216,197,.22);color:var(--mint);display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:.72rem;font-weight:700}
+.d-badge{border-radius:100px;padding:7px 15px;font-size:.82rem;font-weight:600;background:rgba(141,216,197,.18);color:var(--mint)}
+
+.recipe{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:8px}
+.recipe th{text-align:left;font-family:"Space Grotesk",sans-serif;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-gray);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line)}
+.recipe td{padding:11px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+.recipe td:first-child{color:var(--ink-teal);font-weight:600;width:34%}
+.recipe code{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--deep-teal)}
+@media(max-width:820px){.surf-row{grid-template-columns:1fr 1fr}}
+
+/* typography */
+.type-grid{grid-template-columns:1fr 1fr 1fr}
+.type-card{border-radius:var(--radius);border:1px solid var(--line-2);background:#fff;padding:30px 30px 26px;box-shadow:0 1px 2px rgba(18,32,35,.04)}
+.type-card .specimen{font-size:4rem;line-height:1;color:var(--ink-teal);margin-bottom:18px}
+.type-card.display .specimen{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em}
+.type-card.body .specimen{font-family:"Inter",sans-serif;font-weight:500}
+.type-card.monos .specimen{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:3.2rem}
+.type-card h3{font-size:1.1rem;margin-bottom:4px}
+.type-card .use{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--forest);margin-bottom:14px}
+.type-card p{font-size:.92rem}
+.type-rules{margin-top:24px;font-size:.95rem}
+.type-rules li{list-style:none;padding-left:20px;position:relative;margin:7px 0}
+.type-rules li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--mint)}
+
+/* voice */
+.voice-grid{grid-template-columns:1fr 1fr}
+.voice-card{border-radius:var(--radius);padding:30px 32px}
+.voice-card.is{background:var(--ink-teal)}
+.voice-card.is h3{color:var(--mint)}
+.voice-card.is li{color:var(--ivory)}
+.voice-card.is li::before{background:var(--mint)}
+.voice-card.isnot{background:#fff;border:1px solid var(--line-2)}
+.voice-card.isnot h3{color:var(--ink-teal)}
+.voice-card.isnot li::before{background:var(--sage-gray)}
+.voice-card h3{font-size:1.25rem;margin-bottom:16px}
+.voice-card li{list-style:none;position:relative;padding-left:20px;margin:11px 0;font-size:.97rem}
+.voice-card li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%}
+.voice-card li b{color:inherit}
+
+/* dos & donts */
+.rules-cols{grid-template-columns:1fr 1fr;align-items:start}
+.rules-block h4{font-size:.95rem;margin:20px 0 8px;font-family:"JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--forest)}
+
+/* footer */
+footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
+.footer-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer-in small{font-size:.85rem}
+
+@media (max-width:960px){
+  .logo-grid{grid-template-columns:repeat(2,1fr)}
+  .mono-grid{grid-template-columns:1fr 1fr}
+  .mono-grid .dodont{grid-column:1/-1}
+  .swatch-grid{grid-template-columns:repeat(2,1fr)}
+  .type-grid{grid-template-columns:1fr}
+  .voice-grid,.rules-cols,.grad-row,.dodont{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .logo-grid,.swatch-grid,.mono-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-in">
+    <a class="wordmark" href="index.html">catilda</a>
+    <div class="header-links">
+      <a class="btn btn-ghost" href="index.html">Back to site</a>
+      <a class="btn btn-primary" href="#" title="placeholder">Download assets</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="wrap hero">
+    <span class="eyebrow">Brand usage</span>
+    <h1>Guidelines</h1>
+    <p>How Catilda looks, sounds, and shows up. Use this page as the source of truth for the wordmark, the color system, typography, and the way we talk about her. Catilda is the employee. She gets a name and a pronoun: she, never it.</p>
+  </div>
+
+  <!-- ================= LOGO ================= -->
+  <section id="logo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">01 · Logo</span>
+        <h2>Wordmark</h2>
+        <p>The lowercase Space Grotesk wordmark is the primary logo. Give it clear space equal to the height of the “c” on all sides, keep contrast high, and never set it in a colour outside the palette.</p>
+      </div>
+      <div class="grid logo-grid">
+        <div class="logo-tile t-light"><span class="fm">catilda</span><span class="tag">Light</span></div>
+        <div class="logo-tile t-dark"><span class="fm">catilda</span><span class="tag">Dark</span></div>
+        <div class="logo-tile t-mint"><span class="fm">catilda</span><span class="tag">Mint on deep teal</span></div>
+        <div class="logo-tile t-flat"><span class="fm">catilda</span><span class="tag">Flat</span></div>
+      </div>
+      <div class="sec-head" style="margin-top:56px">
+        <h2 style="font-size:1.6rem">Secondary lockup</h2>
+        <p>Use the <b>catilda.com</b> lockup where recognition and navigation matter more than elegance: ads, out-of-home, campaign assets.</p>
+      </div>
+      <div class="grid logo-grid">
+        <div class="logo-tile t-light"><span class="fm">catilda<span style="color:var(--moss)">.com</span></span><span class="tag">Light</span></div>
+        <div class="logo-tile t-dark"><span class="fm">catilda<span style="color:var(--sage-gray)">.com</span></span><span class="tag">Dark</span></div>
+      </div>
+      <div class="logo-note">
+        <span class="chip">⬇ Wordmark SVG (placeholder)</span>
+        <span class="chip">⬇ All variants ZIP (placeholder)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MONOGRAM ================= -->
+  <section id="monogram">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">02 · Monogram</span>
+        <h2>The “c” tile</h2>
+        <p>The monogram is not the logo. It exists for the places a seven-letter wordmark can’t live: favicons, app icons, avatar circles, social profile pictures. Pick the wordmark or the tile, never both together.</p>
+      </div>
+      <div class="grid mono-grid">
+        <div class="mono-tile m-a"><div class="mono-mark">c</div></div>
+        <div class="mono-tile m-b"><div class="mono-mark">c</div></div>
+        <div class="dodont">
+          <div class="dd do">
+            <h4>Do</h4>
+            <ul>
+              <li>Favicon, OS app icon, messaging avatars.</li>
+              <li>Square and circular crops at small sizes.</li>
+              <li>Mint-on-ink, ink-on-mint, or ink-on-amber.</li>
+            </ul>
+          </div>
+          <div class="dd dont">
+            <h4>Don’t</h4>
+            <ul>
+              <li>Don’t pair the tile with the wordmark.</li>
+              <li>Don’t recolor, outline, rotate, or add effects.</li>
+              <li>Don’t use the tile as an inline “logo”.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COLORS ================= -->
+  <section id="colors">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">03 · Color</span>
+        <h2>Palette</h2>
+        <p>Six colours with one job each, plus two greys for text. Cobalt does the work, amber is the warm pop, mint lights the dark panels, and deep teal and ink build the depth. Under them sit the tint ramps, and six gradients carry the brand across surfaces, from the warm band to the dark panels.</p>
+      </div>
+      <div class="grid swatch-grid">
+        <div class="swatch"><div class="fill" style="background:#F3B15A"></div><div class="meta"><b>Amber</b><span class="hex">#F3B15A</span></div><div class="role">The warm pop. Backgrounds and highlights, always with ink text. Never white on it.</div></div>
+        <div class="swatch"><div class="fill" style="background:#8DD8C5"></div><div class="meta"><b>Mint</b><span class="hex">#8DD8C5</span></div><div class="role">Light accent. Ticks and marks on dark panels, and the on-dark button.</div></div>
+        <div class="swatch"><div class="fill" style="background:#1F5FD6"></div><div class="meta"><b>Cobalt</b><span class="hex">#1F5FD6</span></div><div class="role">THE working accent. Buttons and links. 5.7:1 with white.</div></div>
+        <div class="swatch"><div class="fill" style="background:#4D8CFF"></div><div class="meta"><b>Bright Cobalt</b><span class="hex">#4D8CFF</span></div><div class="role">Gradients, glow and highlights only. Too light for text or buttons.</div></div>
+        <div class="swatch"><div class="fill" style="background:#0D3B52"></div><div class="meta"><b>Deep Teal</b><span class="hex">#0D3B52</span></div><div class="role">Dark panels and emphasis text on cloud. 11:1.</div></div>
+        <div class="swatch"><div class="fill" style="background:#171A23"></div><div class="meta"><b>Ink</b><span class="hex">#171A23</span></div><div class="role">Headings and the deepest surface. 16:1 on cloud.</div></div>
+        <div class="swatch"><div class="fill" style="background:#F7F6F2;border-bottom:1px solid var(--line-2)"></div><div class="meta"><b>Cloud</b><span class="hex">#F7F6F2</span></div><div class="role">The page. Warm off-white, never pure white.</div></div>
+        <div class="swatch"><div class="fill" style="background:#525C69"></div><div class="meta"><b>Body</b><span class="hex">#525C69</span></div><div class="role">Body copy. 6.3:1 on cloud.</div></div>
+        <div class="swatch"><div class="fill" style="background:#5A6472"></div><div class="meta"><b>Muted</b><span class="hex">#5A6472</span></div><div class="role">Quiet labels and notes. 5.6:1, clears AA.</div></div>
+      </div>
+      <div class="sec-head" style="margin-top:56px">
+        <h2 style="font-size:1.6rem">Tints</h2>
+        <p>Every core colour has a working ramp: soft washes for tiles, bands, chips and hover states, and the full strength for marks. A wash is the colour over white at the stated strength, written as rgba in code. Washes always carry ink text.</p>
+      </div>
+      <div class="ramps">
+        <div class="ramp"><span class="ramp-name">Cobalt</span><div class="ramp-bar"><i style="background:rgba(31,95,214,.08)">8</i><i style="background:rgba(31,95,214,.16)">16</i><i style="background:rgba(31,95,214,.32)">32</i><i style="background:rgba(31,95,214,.6)">60</i><i class="wt" style="background:#1F5FD6">100</i></div></div>
+        <div class="ramp"><span class="ramp-name">Mint</span><div class="ramp-bar"><i style="background:rgba(141,216,197,.08)">8</i><i style="background:rgba(141,216,197,.16)">16</i><i style="background:rgba(141,216,197,.32)">32</i><i style="background:rgba(141,216,197,.6)">60</i><i style="background:#8DD8C5">100</i></div></div>
+        <div class="ramp"><span class="ramp-name">Amber</span><div class="ramp-bar"><i style="background:rgba(243,177,90,.08)">8</i><i style="background:rgba(243,177,90,.16)">16</i><i style="background:rgba(243,177,90,.32)">32</i><i style="background:rgba(243,177,90,.6)">60</i><i style="background:#F3B15A">100</i></div></div>
+        <div class="ramp"><span class="ramp-name">Deep Teal</span><div class="ramp-bar"><i style="background:rgba(13,59,82,.08)">8</i><i style="background:rgba(13,59,82,.16)">16</i><i style="background:rgba(13,59,82,.32)">32</i><i class="wt" style="background:rgba(13,59,82,.6)">60</i><i class="wt" style="background:#0D3B52">100</i></div></div>
+      </div>
+      <div class="sec-head" style="margin-top:56px">
+        <h2 style="font-size:1.6rem">Gradients</h2>
+        <p>Six blends. Light gradients carry ink text and dark gradients carry cloud text. The tri-blend is for hero halos and celebration moments, behind content rather than under copy.</p>
+      </div>
+      <div class="grid grad-row">
+        <div class="grad-tile g-1"><span class="tag dk">Amber to Mint · the warm band</span></div>
+        <div class="grad-tile g-2"><span class="tag dk">Mint to Cobalt · the signature</span></div>
+        <div class="grad-tile g-3"><span class="tag">Cobalt to Deep Teal · headline accent</span></div>
+        <div class="grad-tile g-4"><span class="tag">Deep Teal to Ink · dark panels</span></div>
+        <div class="grad-tile g-5"><span class="tag dk">Tri-blend · hero halo</span></div>
+        <div class="grad-tile g-6"><span class="tag dk">Cloud to Mint · quiet wash</span></div>
+      </div>
+      <div class="pair-note">
+        <b>Contrast rules, all measured.</b> Cobalt buttons carry white text at 5.7:1. Amber and mint are light and carry ink text only, at 9.3:1 and 10.6:1; white on either is under 2:1 and unreadable. Bright cobalt is for gradients and glow, never text or buttons. Body is 6.3:1 on cloud and muted is 5.6:1, so both clear AA. Washes at 8 to 32% are backgrounds for ink text and nothing else.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TYPOGRAPHY ================= -->
+  <section id="type">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">04 · Typography</span>
+        <h2>Type system</h2>
+        <p>Three voices: a warm display face for headlines, a neutral workhorse for reading, and a mono for the machine-flavored details.</p>
+      </div>
+      <div class="grid type-grid">
+        <div class="type-card display">
+          <div class="specimen">AaBbCc</div>
+          <h3>Space Grotesk</h3>
+          <div class="use">Display · Headlines · Wordmark</div>
+          <p>Weights 500 to 700. Tracking −0.02em. Sentence case, never all-caps. Space Grotesk carries the headlines, the wordmark and the numbers.</p>
+        </div>
+        <div class="type-card body">
+          <div class="specimen">AaBbCc</div>
+          <h3>Inter Regular / Medium</h3>
+          <div class="use">Body · UI · Forms</div>
+          <p>Weights 400–600. Line-height ≈1.6 for paragraphs. Inter carries all reading text and interface labels.</p>
+        </div>
+        <div class="type-card monos" style="font-family:'Space Grotesk',sans-serif">
+          <div class="specimen" style="font-family:'Space Grotesk',sans-serif">0123</div>
+          <h3>Space Grotesk</h3>
+          <div class="use">Numbers · Stats · Figures</div>
+          <p>Weights 500–700. Every stat, metric, and dollar figure is set in Space Grotesk. JetBrains Mono appears only inside product-console mockups.</p>
+        </div>
+      </div>
+      <ul class="type-rules">
+        <li>Headlines: Space Grotesk 600 to 700, tight leading (1.02 to 1.1), Ink.</li>
+        <li>Numbers and stats: Space Grotesk. Mono is reserved for the diegetic product console.</li>
+        <li>Never mix a fourth typeface into product or marketing surfaces.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= VOICE ================= -->
+  <section id="voice">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">05 · Voice</span>
+        <h2>Catilda, herself</h2>
+        <p>Catilda is the employee, not the software. She has a name, so she gets a pronoun: she, never it, and never the bot. Write about her the way you would introduce a capable new colleague to a client: calm, concrete, and useful. Plain sentences, real examples, no hype.</p>
+      </div>
+      <div class="grid voice-grid" style="margin-bottom:18px">
+        <div class="voice-card is">
+          <h3>How Catilda sounds</h3>
+          <ul>
+            <li><b>Smart.</b> She brings clarity to complexity.</li>
+            <li><b>Reliable.</b> You can count on her to get things done.</li>
+            <li><b>Proactive.</b> She anticipates needs and drives results.</li>
+            <li><b>Humane.</b> She reads and writes like a person, not like software.</li>
+          </ul>
+        </div>
+        <div class="voice-card isnot">
+          <h3>In practice</h3>
+          <ul>
+            <li>Say what happened and what it means, then stop.</li>
+            <li>Name the real job, never the category. "Chased the invoice", not "automated a workflow".</li>
+            <li>Offer the next step before being asked.</li>
+            <li>Write the way a good colleague speaks, not the way software writes.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid voice-grid">
+        <div class="voice-card is">
+          <h3>Who Catilda is</h3>
+          <ul>
+            <li><b>A digital employee</b> for small and mid-size businesses. Hired, not installed.</li>
+            <li>She works inside the tools you already use: inbox, calendar, documents, CRM.</li>
+            <li>She reads, drafts, follows up, reconciles, reminds. The busywork, finished.</li>
+            <li>Human-in-the-loop: she prepares, you approve. Nothing irreversible without your sign-off.</li>
+            <li>Priced and pitched like a hire: one employee, a fraction of a salary.</li>
+          </ul>
+        </div>
+        <div class="voice-card isnot">
+          <h3>What Catilda is not</h3>
+          <ul>
+            <li>Not a chatbot and not “an assistant that answers questions”. She does the task.</li>
+            <li>Not another dashboard to learn. There is no new interface to live in.</li>
+            <li>Not unsupervised autopilot. You are always in the approval seat.</li>
+            <li>Not a replacement for your team. She clears the plate for them.</li>
+            <li>Not “AI-powered software”. Catilda is the employee, not the feature.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DOS & DONTS ================= -->
+  <section id="rules">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">06 · Rules</span>
+        <h2>DOs &amp; DON’Ts</h2>
+      </div>
+      <div class="grid rules-cols">
+        <div class="rules-block dd do">
+          <h4 style="margin-top:0">Do</h4>
+          <ul>
+            <li><b>Catilda is she, never it.</b> One employee, one name, one pronoun.</li>
+            <li>Always say <b>Catilda</b>, never “the Catilda bot”.</li>
+            <li>Lead with outcomes: hours saved, follow-ups sent, invoices chased.</li>
+            <li>Use hiring language: “hire”, “onboard”, “delegate”, “your new employee”.</li>
+            <li>Show the approval moment. The human deciding is part of the story.</li>
+            <li>Use concrete SMB scenarios: the salon, the agency, the workshop, the clinic.</li>
+            <li>End marketing surfaces with <b>Book a demo</b>.</li>
+          </ul>
+        </div>
+        <div class="rules-block dd dont">
+          <h4 style="margin-top:0">Don’t · messaging</h4>
+          <ul>
+            <li>Don’t call it a chatbot, copilot, or virtual assistant.</li>
+            <li>Don’t promise full autonomy or “set and forget”.</li>
+            <li>Don’t compare it to generic AI chat tools. Different category: an employee in your workflow.</li>
+            <li>Don’t use em dashes in copy. Short sentences instead.</li>
+            <li>Don’t show pricing on public surfaces. Pricing belongs to the demo call.</li>
+            <li>Don’t invent taglines or testimonials. Real proof only.</li>
+          </ul>
+          <h4>Don’t · logo &amp; color</h4>
+          <ul>
+            <li>Don’t place the wordmark on low-contrast or busy backgrounds.</li>
+            <li>Don’t stretch, rotate, or restyle the wordmark or tile.</li>
+            <li>Don’t introduce colors outside the nine-swatch palette in official material.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ================= USING THE COLOURS ================= -->
+  <section id="using">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">08 · Using the colours</span>
+        <h2>What each colour is for</h2>
+        <p>Nine colours, one job each. If you are unsure which to reach for, the recipe table at the bottom answers it.</p>
+      </div>
+
+      <div class="use-block">
+        <h4>Buttons</h4>
+        <p class="hint">Cobalt is the only button fill on light backgrounds, and it takes white text.</p>
+        <div class="demo">
+          <div class="btn-row">
+            <span><span class="b b-primary">Book a call</span><span class="tk">bg cobalt · text white · 5.7:1</span></span>
+            <span><span class="b b-ghost">See what it does</span><span class="tk">bg white · 1px line · text soft-black</span></span>
+            <span><span class="b b-dis">Unavailable</span><span class="tk">soft-black at 8% / 35%</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="use-block">
+        <h4>Buttons on dark</h4>
+        <p class="hint">On a deep teal panel the button flips to mint with ink text, because cobalt is not bright enough against it.</p>
+        <div class="demo on-dark">
+          <div class="btn-row">
+            <span><span class="b b-ondark">Book a call</span><span class="tk">bg mint · text ink · 10.6:1</span></span>
+            <span><span class="b b-ondark-ghost">Read more</span><span class="tk">transparent · white at 30% border</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="use-block">
+        <h4>Text</h4>
+        <p class="hint">Four levels and nothing else. Deep teal and cobalt are the only coloured text on cloud.</p>
+        <div class="demo stack">
+          <h5>Headings are soft-black</h5>
+          <p class="lead-t">Body copy is the mid grey-green, comfortable at length.</p>
+          <p class="mut">Muted grey for notes, captions and anything deliberately quiet.</p>
+          <p><a class="lnk" href="#using">Links are deep teal and underlined</a>, and <span class="emph">deep teal also carries emphasis</span> inside a sentence.</p>
+          <span class="tk">soft-black 16.6:1 · body 6.0:1 · muted 4.9:1 · deep teal 8.5:1</span>
+        </div>
+      </div>
+
+      <div class="use-block">
+        <h4>Surfaces, lightest to darkest</h4>
+        <p class="hint">Stack them in this order. Never put a card directly on another card of the same value.</p>
+        <div class="demo" style="padding:20px">
+          <div class="surf-row">
+            <div class="surf" style="background:#FBFAF7;border:1px solid var(--line-2);color:var(--ink-teal)">Paper<span class="tk">#FBFAF7 · the page</span></div>
+            <div class="surf" style="background:#fff;border:1px solid var(--line-2);color:var(--ink-teal)">White<span class="tk">#FFFFFF · cards</span></div>
+            <div class="surf" style="background:#0D3B52;color:#fff">Deep Teal<span class="tk">#0D3B52 · dark sections</span></div>
+            <div class="surf" style="background:#171A23;color:#fff">Ink<span class="tk">#171A23 · deepest</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="use-block">
+        <h4>Washes</h4>
+        <p class="hint">The soft strengths of the core colours, for tiles, chips, bands and highlights. Always ink text on a wash.</p>
+        <div class="demo">
+          <div class="btn-row">
+            <span class="washchip" style="background:rgba(141,216,197,.16)">Mint wash<span class="tk">rgba(141,216,197,.16)</span></span>
+            <span class="washchip" style="background:rgba(243,177,90,.16)">Amber wash<span class="tk">rgba(243,177,90,.16)</span></span>
+            <span class="washchip" style="background:rgba(31,95,214,.08)">Cobalt wash<span class="tk">rgba(31,95,214,.08)</span></span>
+            <span class="washchip" style="background:rgba(13,59,82,.08)">Teal wash<span class="tk">rgba(13,59,82,.08)</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="use-block">
+        <h4>Accents on dark</h4>
+        <p class="hint">This is where mint earns its place. It appears nowhere else at full strength.</p>
+        <div class="demo on-dark">
+          <div class="dark-bits">
+            <span class="d-tick"><i>✓</i> Waits for your yes</span>
+            <span class="d-badge">Now onboarding</span>
+            <span class="tk" style="margin:0">mint at 18 to 22% for the fill, full strength for the mark</span>
+          </div>
+        </div>
+      </div>
+
+      <table class="recipe">
+        <thead><tr><th>Element</th><th>Colour</th></tr></thead>
+        <tbody>
+          <tr><td>Page background</td><td>Cloud <code>#F7F6F2</code></td></tr>
+          <tr><td>Card background</td><td>White <code>#FFFFFF</code>, 1px border at <code>rgba(23,26,35,.075)</code></td></tr>
+          <tr><td>Headings</td><td>Ink <code>#171A23</code></td></tr>
+          <tr><td>Body copy</td><td>Body <code>#525C69</code></td></tr>
+          <tr><td>Notes, captions</td><td>Muted <code>#5A6472</code></td></tr>
+          <tr><td>Links and emphasis</td><td>Cobalt <code>#1F5FD6</code> or Deep Teal <code>#0D3B52</code></td></tr>
+          <tr><td>Primary button</td><td>Cobalt <code>#1F5FD6</code> fill, white text, hover <code>#1A54BE</code></td></tr>
+          <tr><td>Secondary button</td><td>White fill, soft-black text, 1px line</td></tr>
+          <tr><td>Dark sections</td><td>Deep teal into ink</td></tr>
+          <tr><td>Button on dark</td><td>Mint <code>#8DD8C5</code> fill, ink text</td></tr>
+          <tr><td>Ticks, badges on dark</td><td>Mint at 18 to 22% fill, mint mark</td></tr>
+          <tr><td>Dividers on cloud</td><td><code>rgba(23,26,35,.13)</code></td></tr>
+          <tr><td>Dividers on dark</td><td><code>rgba(255,255,255,.12)</code></td></tr>
+          <tr><td>Headline accent</td><td>Gradient bright cobalt to cobalt to deep teal</td></tr>
+          <tr><td>Full-bleed band</td><td>Amber to mint gradient with ink text</td></tr>
+          <tr><td>Wash tiles and chips</td><td>Core colour at 8 to 32% over white, ink text</td></tr>
+          <tr><td>Hero halo</td><td>Tri-blend amber to mint to bright cobalt, soft, behind content</td></tr>
+          <tr><td>Card top bars</td><td>The gradient set, 6 to 8px tall</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pair-note" style="margin-top:26px">
+        <b>The two mistakes to avoid.</b> Amber or mint with white text on them: both are light and need ink, or they vanish. And bright cobalt anywhere that carries meaning: it is a gradient and glow colour only, too pale for a button or a link. On cloud, reach for cobalt.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RULES ================= -->
+  <section id="rules-hard">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">09 · House rules</span>
+        <h2>Things we never do</h2>
+        <p>Learned the hard way while building the site. Each one exists because breaking it made the work worse.</p>
+      </div>
+      <div class="grid rules-cols">
+        <div class="rules-block dd do">
+          <h4 style="margin-top:0">Colour and form</h4>
+          <ul>
+            <li><b>This palette only.</b> The swatches above are the whole system. No borrowed accent colours.</li>
+            <li><b>No emojis anywhere.</b> Custom line icons instead, in mint on a pale tile.</li>
+            <li><b>One heading per section.</b> No label pills above headings, no subheadings that restate the heading.</li>
+            <li><b>Uniform geometry.</b> Matching widths and even gaps. Uneven sizing reads as unfinished.</li>
+            <li><b>Depth from shadow and light.</b> Washes are welcome at the documented 8 to 32% strengths with ink text. Saturating whole cards is not.</li>
+          </ul>
+        </div>
+        <div class="rules-block dd dont">
+          <h4 style="margin-top:0">Words</h4>
+          <ul>
+            <li><b>No em dashes.</b> Short sentences instead.</li>
+            <li><b>No invented numbers.</b> No customer counts, no hours-saved figures, no "most customers" claims until they are real.</li>
+            <li><b>No certification claims.</b> Never write certified, compliant, audited, SOC 2, ISO 27001, GDPR or CCPA until a report exists.</li>
+            <li><b>No aphorisms.</b> If a line sounds meaningful but names nothing, cut it. Name real jobs instead.</li>
+            <li><b>Plain over clever.</b> A busy owner should follow every sentence in one pass.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pair-note" style="margin-top:26px">
+        <b>The safety promises are load-bearing.</b> The site tells visitors what Catilda can and cannot do. Every one of those statements has to be literally true of the build. If one stops being true, cut it from the site rather than soften the wording.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span class="wordmark" style="font-size:1.1rem">catilda</span>
+    <small>Brand book v6 · the Catilda palette, gradients and tints · Space Grotesk / Inter</small>
+  </div>
+</footer>
+
+</body>
+</html>

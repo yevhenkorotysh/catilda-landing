@@ -93,6 +93,19 @@ class LandingUnitTests(unittest.TestCase):
             html,
         )
 
+    def test_header_has_login_button_before_book_a_call(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        cta_start = html.index('class="header-cta"')
+        cta_end = html.index("</div>", cta_start)
+        header_cta = html[cta_start:cta_end]
+        login_pos = header_cta.index(
+            '<a class="btn btn-ghost btn-sm" href="https://account.catilda.com/login">Log in</a>'
+        )
+        book_pos = header_cta.index('js-book" href="#book">Book a call</a>')
+        burger_pos = header_cta.index('id="burger"')
+        self.assertLess(login_pos, book_pos)
+        self.assertLess(book_pos, burger_pos)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)

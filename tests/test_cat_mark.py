@@ -21,14 +21,17 @@ class CatMarkUnitTests(unittest.TestCase):
     def setUp(self) -> None:
         self.html = INDEX.read_text(encoding="utf-8")
 
-    def test_favicon_is_the_cat_not_the_monogram(self) -> None:
+    def test_favicon_is_the_full_cat_mark(self) -> None:
         icon_start = self.html.index('rel="icon" type="image/svg+xml"')
         icon = self.html[icon_start : self.html.index(">", icon_start)]
-        self.assertIn("%23E8913F", icon)  # marmalade lines
-        self.assertIn("%23171A23", icon)  # ink tile
-        self.assertIn("circle", icon)  # the head
-        self.assertNotIn("Verdana", icon)  # the old "c" text monogram is gone
-        self.assertNotIn("%3Ctext", icon)
+        self.assertIn('href="favicon.svg"', icon)
+        favicon_path = ROOT / "favicon.svg"
+        self.assertTrue(favicon_path.is_file())
+        svg = favicon_path.read_text(encoding="utf-8")
+        self.assertIn('fill="#F7F6F2"', svg)  # cloud tile
+        self.assertIn("#E8913F", svg)  # marmalade fur
+        self.assertIn("#171A23", svg)  # ink lines
+        self.assertIn('r="40"', svg)  # the full mark's head, not the simplified face
 
     def test_favicon_raster_fallbacks_for_safari(self) -> None:
         # Safari ignores SVG rel=icon; a PNG fallback and apple-touch-icon must exist.
@@ -146,10 +149,14 @@ class BrandBookIntegrationTests(unittest.TestCase):
         self.assertIn("#E8913F", self.brand)
         self.assertIn("marmalade", self.brand.lower())
         self.assertIn('symbol id="cat"', self.brand)
-        # The favicon rule now belongs to the cat face, not the "c" monogram —
-        # and the old monogram tiles must stay removed.
-        self.assertIn("cat face", self.brand.lower())
+        # The favicon rule now belongs to the full cat mark on a cloud tile,
+        # not the simplified cat face, and not the old "c" monogram.
+        self.assertIn("full cat mark", self.brand.lower())
         self.assertNotIn('<div class="mono-mark">c</div>', self.brand)
+        tiles_start = self.brand.index("Favicon &amp; small sizes")
+        tiles_end = self.brand.index("</section>", tiles_start)
+        favicon_tiles = self.brand[tiles_start:tiles_end]
+        self.assertNotIn("catface", favicon_tiles)
 
     def test_brand_book_palette_counts_are_consistent(self) -> None:
         # The Marmalade swatch made it ten; no passage may still say nine.

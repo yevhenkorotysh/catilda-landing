@@ -307,13 +307,15 @@ body > footer{padding:64px 0 46px}
   .nav.open{display:flex}
   .nav a{padding:13px 18px;font-size:1.02rem}
   .faq-grid{grid-template-columns:1fr;gap:24px}
+  /* Log in hides at the same width the nav collapses, so it never sits
+     alone next to Book a call once the nav links are gone. */
+  .header-cta .btn-ghost{display:none}
 }
 @media (max-width:860px){
   .cards4{grid-template-columns:1fr}
   .stats .row{grid-template-columns:1fr;max-width:420px;gap:26px}
   .panel{padding:52px 26px}
   section{padding:54px 0}
-  .header-cta .btn-ghost{display:none}
   .hero{border-radius:0 0 24px 24px}
 }
 </style>

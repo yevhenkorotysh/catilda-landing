@@ -158,6 +158,15 @@ class BrandBookIntegrationTests(unittest.TestCase):
         favicon_tiles = self.brand[tiles_start:tiles_end]
         self.assertNotIn("catface", favicon_tiles)
 
+    def test_favicon_tiles_show_light_and_dark_surrounds(self) -> None:
+        tiles_start = self.brand.index("Favicon &amp; small sizes")
+        tiles_end = self.brand.index("</section>", tiles_start)
+        favicon_tiles = self.brand[tiles_start:tiles_end]
+        # One example tile sits on a light surround, the other on a dark one,
+        # so the mark is shown reading the same in both settings.
+        self.assertIn("background:var(--ivory)", favicon_tiles)
+        self.assertIn("background:var(--ink-teal)", favicon_tiles)
+
     def test_brand_book_palette_counts_are_consistent(self) -> None:
         # The Marmalade swatch made it ten; no passage may still say nine.
         self.assertNotIn("nine-swatch", self.brand)

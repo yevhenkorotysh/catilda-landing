@@ -106,6 +106,16 @@ class LandingUnitTests(unittest.TestCase):
         self.assertLess(login_pos, book_pos)
         self.assertLess(book_pos, burger_pos)
 
+    def test_login_button_hides_with_the_nav(self) -> None:
+        # The nav collapses into the burger at max-width:900px; Log in must
+        # hide at the same breakpoint so it never sits alone next to
+        # Book a call once the nav links are already gone (861-900px gap).
+        html = INDEX.read_text(encoding="utf-8")
+        query_start = html.index("@media (max-width:900px)")
+        query_end = html.index("}\n@media", query_start)
+        query_900 = html[query_start:query_end]
+        self.assertIn(".header-cta .btn-ghost{display:none}", query_900)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)

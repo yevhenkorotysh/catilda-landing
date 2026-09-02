@@ -337,9 +337,9 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
         <p>Favicons and app icons use the full cat mark, marmalade fur with ink lines, on a cloud tile. The owner rejected line-only marks on a dark tile, so the same full mark is chosen at every size: it reads the same in a browser tab, on a home screen, and on the wordmark lockup.</p>
       </div>
       <div class="grid mono-grid">
-        <!-- Light surround, then dark surround: the full mark on its cloud tile in both settings. -->
-        <div class="mono-tile m-a" style="background:var(--ivory)"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div>
-        <div class="mono-tile m-b"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div>
+        <!-- The favicon's own cloud tile, shown against a light surround, then a dark surround: same mark reads in both. -->
+        <div class="mono-tile m-a" style="background:var(--ivory)"><div class="mono-mark" style="background:#F7F6F2"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div></div>
+        <div class="mono-tile m-b" style="background:var(--ink-teal)"><div class="mono-mark" style="background:#F7F6F2"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div></div>
         <div class="dodont">
           <div class="dd do">
             <h4>Do</h4>

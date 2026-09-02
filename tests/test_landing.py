@@ -115,6 +115,17 @@ class LandingUnitTests(unittest.TestCase):
         query_end = html.index("}\n@media", query_start)
         query_900 = html[query_start:query_end]
         self.assertIn(".header-cta .btn-ghost{display:none}", query_900)
+        # ...but the burger nav must still carry a Log in entry, or a phone
+        # visitor has no way into the app at all.
+        nav_start = html.index('<nav class="nav" id="nav">')
+        nav_end = html.index("</nav>", nav_start)
+        nav = html[nav_start:nav_end]
+        self.assertIn('href="https://account.catilda.com/login"', nav)
+        self.assertIn("Log in", nav)
+        self.assertIn('class="nav-login"', nav)
+        # The nav entry is desktop-hidden and shown only at the burger width.
+        self.assertIn(".nav .nav-login{display:none}", html)
+        self.assertIn(".nav .nav-login{display:block}", query_900)
 
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")

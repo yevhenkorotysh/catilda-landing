@@ -93,6 +93,40 @@ class LandingUnitTests(unittest.TestCase):
             html,
         )
 
+    def test_header_has_login_button_before_book_a_call(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        cta_start = html.index('class="header-cta"')
+        cta_end = html.index("</div>", cta_start)
+        header_cta = html[cta_start:cta_end]
+        login_pos = header_cta.index(
+            '<a class="btn btn-ghost btn-sm" href="https://account.catilda.com/login">Log in</a>'
+        )
+        book_pos = header_cta.index('js-book" href="#book">Book a call</a>')
+        burger_pos = header_cta.index('id="burger"')
+        self.assertLess(login_pos, book_pos)
+        self.assertLess(book_pos, burger_pos)
+
+    def test_login_button_hides_with_the_nav(self) -> None:
+        # The nav collapses into the burger at max-width:900px; Log in must
+        # hide at the same breakpoint so it never sits alone next to
+        # Book a call once the nav links are already gone (861-900px gap).
+        html = INDEX.read_text(encoding="utf-8")
+        query_start = html.index("@media (max-width:900px)")
+        query_end = html.index("}\n@media", query_start)
+        query_900 = html[query_start:query_end]
+        self.assertIn(".header-cta .btn-ghost{display:none}", query_900)
+        # ...but the burger nav must still carry a Log in entry, or a phone
+        # visitor has no way into the app at all.
+        nav_start = html.index('<nav class="nav" id="nav">')
+        nav_end = html.index("</nav>", nav_start)
+        nav = html[nav_start:nav_end]
+        self.assertIn('href="https://account.catilda.com/login"', nav)
+        self.assertIn("Log in", nav)
+        self.assertIn('class="nav-login"', nav)
+        # The nav entry is desktop-hidden and shown only at the burger width.
+        self.assertIn(".nav .nav-login{display:none}", html)
+        self.assertIn(".nav .nav-login{display:block}", query_900)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)

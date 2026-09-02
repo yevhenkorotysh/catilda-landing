@@ -334,18 +334,18 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
       </div>
       <div class="sec-head" style="margin-top:56px">
         <h2 style="font-size:1.6rem">Favicon &amp; small sizes</h2>
-        <p>Below roughly 48px the full mark smears, so favicons, app icons, and avatars use the simplified cat face: thicker line, two whiskers a side, on the ink tile. This replaces the old “c” monogram everywhere.</p>
+        <p>Favicons and app icons use the full cat mark, marmalade fur with ink lines, on a cloud tile. The owner rejected line-only marks on a dark tile, so the same full mark is chosen at every size: it reads the same in a browser tab, on a home screen, and on the wordmark lockup.</p>
       </div>
       <div class="grid mono-grid">
-        <!-- Light surround so the ink icon tile itself is visible (the .m-a dark surround matches the tile colour). -->
-        <div class="mono-tile m-a" style="background:var(--ivory)"><div class="mono-mark" style="background:#171A23"><svg aria-hidden="true" style="--cat-line:#E8913F" width="64" height="64"><use href="#catface"/></svg></div></div>
-        <div class="mono-tile m-b"><div class="mono-mark" style="background:#F3B15A"><svg aria-hidden="true" style="--cat-line:#171A23" width="64" height="64"><use href="#catface"/></svg></div></div>
+        <!-- The favicon's own cloud tile, shown against a light surround, then a dark surround: same mark reads in both. -->
+        <div class="mono-tile m-a" style="background:var(--ivory)"><div class="mono-mark" style="background:#F7F6F2"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div></div>
+        <div class="mono-tile m-b" style="background:var(--ink-teal)"><div class="mono-mark" style="background:#F7F6F2"><svg aria-hidden="true" style="--cat-line:#171A23;--cat-fur:#E8913F" width="64" height="64"><use href="#cat"/></svg></div></div>
         <div class="dodont">
           <div class="dd do">
             <h4>Do</h4>
             <ul>
-              <li>Favicon, OS app icon, messaging avatars: the simplified cat face.</li>
-              <li>Marmalade-on-ink first; ink-on-amber where the tile must be light.</li>
+              <li>Favicon, OS app icon, messaging avatars: the full cat mark on a cloud tile.</li>
+              <li>Marmalade fur with ink lines everywhere the mark appears as an icon.</li>
               <li>Keep the whiskers crossing past the face on the full mark.</li>
             </ul>
           </div>
@@ -354,7 +354,7 @@ footer{border-top:1px solid var(--line-2);padding:40px 0 56px;margin-top:40px}
             <ul>
               <li>Don’t redraw, outline, add a mouth, or straighten the cocked ear.</li>
               <li>Don’t use fur colours outside marmalade, or lines outside the palette.</li>
-              <li>Don’t use the full whiskered mark below 48px; use the cat face.</li>
+              <li>Don’t swap in a line-only mark on a dark tile; the owner rejected that version.</li>
             </ul>
           </div>
         </div>

@@ -101,7 +101,7 @@ class LandingUnitTests(unittest.TestCase):
         login_pos = header_cta.index(
             '<a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>'
         )
-        book_pos = header_cta.index('js-book" href="#book">Book a call</a>')
+        book_pos = header_cta.index('js-signup" href="https://catilda.com/cabinet/signup">Start free</a>')
         burger_pos = header_cta.index('id="burger"')
         self.assertLess(login_pos, book_pos)
         self.assertLess(book_pos, burger_pos)

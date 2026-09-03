@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ABOUTME: Catilda marketing landing — static HTML/CSS/JS (no build). -->
-<!-- ABOUTME: Cat mark branding (logo, favicon, living hero cat); Book-a-call CTA + brand book link. -->
+<!-- ABOUTME: Cat mark branding (logo, favicon, living hero cat); public plans, Start free CTA, Book a call for larger teams. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -364,7 +364,7 @@ body > footer{padding:64px 0 46px}
     </nav>
     <div class="header-cta">
       <a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>
-      <a class="btn btn-primary btn-sm js-book" href="#book">Book a call</a>
+      <a class="btn btn-primary btn-sm js-signup" href="https://catilda.com/cabinet/signup">Start free</a>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
     </div>
   </div>
@@ -403,10 +403,10 @@ body > footer{padding:64px 0 46px}
       <h1>Meet Catilda,<br><span class="accent">your digital employee.</span></h1>
       <p class="hero-sub">She does anything a person with a computer can do, and she is best at the repetitive work your business already runs on. <b>Working 24/7.</b></p>
       <div class="hero-ctas">
-        <a class="btn btn-primary js-book" href="#book">Book a call</a>
-        <a class="btn btn-ghost" href="#what">See what she does</a>
+        <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup">Start free</a>
+        <a class="btn btn-ghost js-book" href="#book">Book a call</a>
       </div>
-      <p class="hero-note"><b>Book a call, we plan it together, then she starts working.</b> Nothing to set up on your side.</p>
+      <p class="hero-note"><b>Pick a plan, hire her, and her first month is on us.</b> Card on file, nothing charged for 30 days, cancel any time.</p>
     </div>
   </section>
 
@@ -454,8 +454,8 @@ body > footer{padding:64px 0 46px}
         <h2>Working within the week.</h2>
       </div>
       <div class="steps">
-        <div class="step"><span class="n num">1</span><h3>Book a call</h3><p>Fifteen minutes. You tell us how your week runs, we listen.</p></div>
-        <div class="step"><span class="n num">2</span><h3>We plan it together</h3><p>We pick the first routine to hand over and agree a flat price. Nothing to set up on your side.</p></div>
+        <div class="step"><span class="n num">1</span><h3>Pick a plan</h3><p>Three plans, one shared pool of work for your whole team. The first month is free.</p></div>
+        <div class="step"><span class="n num">2</span><h3>Hand over a routine</h3><p>Choose her first routine from the library, or describe your own. Nothing to set up on your side.</p></div>
         <div class="step"><span class="n num">3</span><h3>She starts working</h3><p>Catilda learns your history and your rules, then produces work you approve.</p></div>
       </div>
     </div>
@@ -503,11 +503,12 @@ body > footer{padding:64px 0 46px}
       <div class="panel">
         <svg class="cat" aria-hidden="true" style="--cat-line:var(--mint);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
         <h2>Spend your time growing<br>the business.</h2>
-        <p class="lead">Give the routine to Catilda and get your week back. Fifteen minutes on a call is all it takes to start.</p>
+        <p class="lead">Give the routine to Catilda and get your week back. Her first month is on us.</p>
         <div class="ctas">
-          <a class="btn btn-mint js-book" href="#book">Book a call</a>
+          <a class="btn btn-mint js-signup" href="https://catilda.com/cabinet/signup">Start free</a>
+          <a class="btn btn-white js-book" href="#book">Book a call</a>
         </div>
-        <p class="micro">We agree the plan and the price on the call, before you pay anything.</p>
+        <p class="micro">Card required. Nothing is charged for 30 days. Cancel any time. Six or more employees? Book a call.</p>
       </div>
     </div>
   </section>
@@ -617,9 +618,9 @@ const FAQ = [
   ["Is my data safe?",
    "She sees only the accounts you connect, with the narrowest access that does the job, and you can revoke any of it whenever you want. Your logins sit in a secrets vault she never reads, and you can have everything deleted on request."],
   ["How long until she is working?",
-   "The first week. On the call we work out which job to hand over first, then we train her on your history and your rules, and she starts producing work you approve."],
+   "The first week. You pick a plan, hire her, and hand over the first routine from the library. Bigger routines we plan with you on a call."],
   ["What does she cost?",
-   "A flat monthly rate, a fraction of a part-time hire. We work out what you are handing over on the call and agree the number there, so you know exactly what it costs before you pay anything. No meters and no per-task pricing."],
+   "Three plans: Bronze $200, Silver $500 and Gold $900 a month, each with one shared pool of work for all your employees. Your first month is free, and the cabinet shows one bar with how much of the month's work is used."],
 ];
 const list = document.getElementById('faqList');
 FAQ.forEach(([q, a], i) => {

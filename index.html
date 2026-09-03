@@ -330,6 +330,11 @@ body > footer{padding:64px 0 46px}
 .plan .btn{margin-top:auto;align-self:flex-start}
 .plans-note{text-align:center;color:var(--muted);margin:26px 0 0}
 .plans-note a{color:var(--cobalt);font-weight:600}
+.offer{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:1080px;margin:40px auto 0}
+.offer-item{border:1px solid var(--line-2);border-radius:var(--radius);padding:22px 24px;background:rgba(255,255,255,.6)}
+.offer-item h3{margin:0 0 6px;font-size:1.05rem}
+.offer-item p{margin:0;color:var(--body)}
+.capacity{text-align:center;color:var(--teal);font-weight:600;margin:26px 0 0}
 @media (max-width:860px){
   .cards4{grid-template-columns:1fr}
   .stats .row{grid-template-columns:1fr;max-width:420px;gap:26px}
@@ -337,6 +342,7 @@ body > footer{padding:64px 0 46px}
   section{padding:54px 0}
   .hero{border-radius:0 0 24px 24px}
   .plans{grid-template-columns:1fr}
+  .offer{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -518,6 +524,13 @@ body > footer{padding:64px 0 46px}
         </article>
       </div>
       <p class="plans-note">Six or more employees, or a bigger pool? <a class="js-book" href="#book">Talk to us</a>.</p>
+      <div class="offer">
+        <div class="offer-item"><h3>First month on us</h3><p>Pick a plan, put a card on file, pay nothing for 30 days. Cancel any time before the first charge.</p></div>
+        <div class="offer-item"><h3>Working in the first week</h3><p>The hire flow ends with her first routine handed over from the library.</p></div>
+        <div class="offer-item"><h3>Salary-back guarantee</h3><p>Her value ledger lives in the cabinet. If a paid month shows less value than her salary, ask within 14 days and that month is refunded.</p></div>
+        <div class="offer-item"><h3>Founder price</h3><p>Early accounts keep today's price for as long as they stay subscribed.</p></div>
+      </div>
+      <p class="capacity" id="capacity" hidden></p>
     </div>
   </section>
 
@@ -597,6 +610,11 @@ body > footer{padding:64px 0 46px}
 const BOOKING_URL = "";
 const CONTACT_EMAIL = "info@catilda.com";
 
+/* Onboarding capacity: real numbers only (brand book: no invented numbers).
+   Leave both null and the line stays hidden. */
+const CAPACITY_PER_MONTH = null;
+const CAPACITY_LEFT = null;
+
 /* wire the demo buttons (real link if set, working mailto fallback otherwise) */
 const DEMO_EMAIL = [
   "Hi Catilda,",
@@ -619,6 +637,12 @@ document.querySelectorAll('.js-book').forEach(a => {
       "&body=" + encodeURIComponent(DEMO_EMAIL);
   }
 });
+
+const capacity = document.getElementById('capacity');
+if (capacity && Number.isInteger(CAPACITY_PER_MONTH) && Number.isInteger(CAPACITY_LEFT)) {
+  capacity.textContent = `We onboard ${CAPACITY_PER_MONTH} new companies a month. ${CAPACITY_LEFT} places left this month.`;
+  capacity.hidden = false;
+}
 
 /* ---- integration logo strip ----
    Simplified brand marks drawn in-page, so the strip loads instantly and

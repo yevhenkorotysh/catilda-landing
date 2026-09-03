@@ -128,3 +128,27 @@ class PricingE2ETests(unittest.TestCase):
         for price in ("$200", "$500", "$900"):
             self.assertIn(price, body)
         self.assertIn("Start free", body)
+
+
+class OfferUnitTests(unittest.TestCase):
+    def test_offer_stack_has_the_four_pieces(self):
+        sec = section(INDEX, "pricing")
+        for piece in ("First month on us", "Working in the first week", "Salary-back guarantee", "Founder price"):
+            self.assertIn(f"<h3>{piece}</h3>", sec)
+        self.assertIn("within 14 days", sec)
+        self.assertIn("value ledger", sec)
+
+    def test_capacity_line_is_hidden_until_real_numbers_exist(self):
+        self.assertIn('<p class="capacity" id="capacity" hidden></p>', INDEX)
+        self.assertIn("const CAPACITY_PER_MONTH = null;", INDEX)
+        self.assertIn("const CAPACITY_LEFT = null;", INDEX)
+        self.assertIn("Number.isInteger(CAPACITY_PER_MONTH) && Number.isInteger(CAPACITY_LEFT)", INDEX)
+
+
+class BrandBookUnitTests(unittest.TestCase):
+    def test_brand_book_allows_public_plans(self):
+        self.assertNotIn("Don’t show pricing on public surfaces", BRAND)
+        self.assertIn("Bronze, Silver and Gold and the free month are public", BRAND)
+        self.assertIn("End marketing surfaces with <b>Start free</b>", BRAND)
+        self.assertNotIn("Book a demo", BRAND)
+        self.assertIn("No invented numbers", BRAND)

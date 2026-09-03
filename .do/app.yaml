@@ -2,6 +2,8 @@
 # ABOUTME: Landing at / , cabinet SPA at /cabinet , Django API at /api on catilda.com.
 name: catilda-prod
 region: sfo
+vpc:
+  id: da265f93-3cac-4ead-b801-03aa0828e03f
 alerts:
 - rule: DEPLOYMENT_FAILED
 - rule: DOMAIN_FAILED
@@ -60,7 +62,7 @@ services:
   source_dir: /
   http_port: 8080
   instance_count: 1
-  instance_size_slug: apps-s-1vcpu-0.5gb
+  instance_size_slug: apps-s-1vcpu-1gb
   health_check:
     http_path: /api/health/
     initial_delay_seconds: 10
@@ -68,7 +70,7 @@ services:
     timeout_seconds: 5
     success_threshold: 1
     failure_threshold: 3
-  run_command: python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8080 --workers 2 config.wsgi:application
+  run_command: python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8080 --workers 1 --timeout 0 -k uvicorn.workers.UvicornWorker config.asgi:application
   envs:
   - key: DJANGO_SETTINGS_MODULE
     scope: RUN_TIME
@@ -119,7 +121,49 @@ services:
     value: fake
   - key: CHAT_DELIVERY
     scope: RUN_TIME
-    value: echo
+    value: hermes
+  - key: HERMES_API_BASE
+    scope: RUN_TIME
+    value: http://10.124.0.12:8642
+  - key: HERMES_ALLOW_REMOTE
+    scope: RUN_TIME
+    value: "true"
+  - key: HERMES_MODEL
+    scope: RUN_TIME
+    value: grok-4.5
+  - key: HERMES_API_TIMEOUT
+    scope: RUN_TIME
+    value: "180"
+  - key: HERMES_API_KEY
+    scope: RUN_TIME
+    type: SECRET
+    value: REPLACE_AT_CREATE
+  - key: CONNECTIONS_FERNET_KEY
+    scope: RUN_TIME
+    type: SECRET
+    value: REPLACE_AT_CREATE
+  - key: DE_SSH_TUNNEL_ENABLED
+    scope: RUN_TIME
+    value: "false"
+  - key: DESKTOP_NOVNC_VIA_API
+    scope: RUN_TIME
+    value: "true"
+  - key: DESKTOP_PROXY_MODE
+    scope: RUN_TIME
+    value: live
+  - key: DESKTOP_PUBLIC_PROXY_BASE
+    scope: RUN_TIME
+    value: http://10.124.0.12:6080
+  - key: DESKTOP_NOVNC_URL
+    scope: RUN_TIME
+    value: http://10.124.0.12:6080
+  - key: DESKTOP_VNC_PASSWORD
+    scope: RUN_TIME
+    type: SECRET
+    value: REPLACE_AT_CREATE
+  - key: HEALTH_PROBE_TIMEOUT
+    scope: RUN_TIME
+    value: "5"
   - key: EMAIL_BACKEND
     scope: RUN_TIME
     value: django.core.mail.backends.console.EmailBackend

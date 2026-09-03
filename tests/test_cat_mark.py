@@ -137,7 +137,7 @@ class PageStructureUnitTests(unittest.TestCase):
     def test_how_it_works_strip(self) -> None:
         self.assertIn('id="how"', self.html)
         self.assertIn('href="#how"', self.html)
-        for step in ("Book a call", "We plan it together", "She starts working"):
+        for step in ("Pick a plan", "Hand over a routine", "She starts working"):
             self.assertIn(step, self.html)
 
 

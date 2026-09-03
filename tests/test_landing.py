@@ -93,7 +93,7 @@ class LandingUnitTests(unittest.TestCase):
             html,
         )
 
-    def test_header_has_login_button_before_book_a_call(self) -> None:
+    def test_header_has_login_button_before_start_free(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         cta_start = html.index('class="header-cta"')
         cta_end = html.index("</div>", cta_start)
@@ -101,10 +101,10 @@ class LandingUnitTests(unittest.TestCase):
         login_pos = header_cta.index(
             '<a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>'
         )
-        book_pos = header_cta.index('js-signup" href="https://catilda.com/cabinet/signup">Start free</a>')
+        start_pos = header_cta.index('js-signup" href="https://catilda.com/cabinet/signup">Start free</a>')
         burger_pos = header_cta.index('id="burger"')
-        self.assertLess(login_pos, book_pos)
-        self.assertLess(book_pos, burger_pos)
+        self.assertLess(login_pos, start_pos)
+        self.assertLess(start_pos, burger_pos)
 
     def test_login_button_hides_with_the_nav(self) -> None:
         # The nav collapses into the burger at max-width:900px; Log in must

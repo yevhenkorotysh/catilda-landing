@@ -312,7 +312,7 @@ body > footer{padding:64px 0 46px}
   .nav .nav-login{display:block}
   .faq-grid{grid-template-columns:1fr;gap:24px}
   /* Log in hides at the same width the nav collapses, so it never sits
-     alone next to Book a call once the nav links are gone. */
+     alone next to Start free once the nav links are gone. */
   .header-cta .btn-ghost{display:none}
 }
 
@@ -500,7 +500,7 @@ body > footer{padding:64px 0 46px}
             <li>Standard pool of work</li>
             <li>Auto model plus the full model menu</li>
           </ul>
-          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=bronze">Start free</a>
+          <a aria-label="Start free on Bronze" class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=bronze">Start free</a>
         </article>
         <article class="plan plan-featured" data-plan="silver">
           <h3>Silver</h3>
@@ -510,7 +510,7 @@ body > footer{padding:64px 0 46px}
             <li>2.5× the Bronze pool</li>
             <li>Auto model plus the full model menu</li>
           </ul>
-          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=silver">Start free</a>
+          <a aria-label="Start free on Silver" class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=silver">Start free</a>
         </article>
         <article class="plan" data-plan="gold">
           <h3>Gold</h3>
@@ -520,7 +520,7 @@ body > footer{padding:64px 0 46px}
             <li>4.5× the Bronze pool</li>
             <li>Auto model plus the full model menu</li>
           </ul>
-          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=gold">Start free</a>
+          <a aria-label="Start free on Gold" class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=gold">Start free</a>
         </article>
       </div>
       <p class="plans-note">Six or more employees, or a bigger pool? <a class="js-book" href="#book">Talk to us</a>.</p>
@@ -604,7 +604,8 @@ body > footer{padding:64px 0 46px}
 <script>
 /* ================= CONFIG =================
    BOOKING_URL   = where every "Book a call" button goes (Calendly / Cal.com).
-                   THE one to set: the whole funnel is book a call, we plan, you pay.
+                   Only the residual Book a call / Talk to us anchors use it;
+                   the primary funnel is Start free.
    CONTACT_EMAIL = fallback, so the buttons still work before the link exists.
 */
 const BOOKING_URL = "";

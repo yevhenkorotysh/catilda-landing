@@ -22,7 +22,7 @@ def section(html: str, section_id: str) -> str:
 
 class FunnelUnitTests(unittest.TestCase):
     def test_every_signup_link_points_at_the_cabinet_signup(self):
-        hrefs = re.findall(r'js-signup" href="([^"]+)"', INDEX)
+        hrefs = re.findall(r'class="[^"]*js-signup[^"]*" href="([^"]+)"', INDEX)
         self.assertGreaterEqual(len(hrefs), 3)
         for href in hrefs:
             self.assertTrue(href.startswith(SIGNUP), href)

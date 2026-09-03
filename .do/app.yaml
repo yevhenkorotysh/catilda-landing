@@ -85,10 +85,10 @@ services:
     value: "*"
   - key: CORS_ALLOWED_ORIGINS
     scope: RUN_TIME
-    value: https://catilda.com,https://www.catilda.com,${web.PUBLIC_URL},${cabinet.PUBLIC_URL}
+    value: https://catilda.com,https://www.catilda.com
   - key: CSRF_TRUSTED_ORIGINS
     scope: RUN_TIME
-    value: https://catilda.com,https://www.catilda.com,${web.PUBLIC_URL},${cabinet.PUBLIC_URL}
+    value: https://catilda.com,https://www.catilda.com
   - key: POSTGRES_DB
     scope: RUN_TIME
     value: ${db.DATABASE}

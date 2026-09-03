@@ -315,12 +315,28 @@ body > footer{padding:64px 0 46px}
      alone next to Book a call once the nav links are gone. */
   .header-cta .btn-ghost{display:none}
 }
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+.plan{background:#fff;border:1px solid var(--line);border-radius:var(--r-panel);padding:30px 28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:14px}
+.plan-featured{border-color:var(--cobalt);box-shadow:var(--shadow)}
+.plan h3{font-size:1.15rem;margin:0}
+.plan .price{margin:0;color:var(--ink)}
+.plan .price b{font-size:2.1rem;font-weight:700;letter-spacing:-.02em}
+.plan .price span{color:var(--muted);font-size:.95rem}
+.plan ul{list-style:none;padding:0;margin:0 0 6px;display:grid;gap:8px;color:var(--body)}
+.plan ul li{padding-left:22px;position:relative}
+.plan ul li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:50%;background:var(--mint)}
+.plan .btn{margin-top:auto;align-self:flex-start}
+.plans-note{text-align:center;color:var(--muted);margin:26px 0 0}
+.plans-note a{color:var(--cobalt);font-weight:600}
 @media (max-width:860px){
   .cards4{grid-template-columns:1fr}
   .stats .row{grid-template-columns:1fr;max-width:420px;gap:26px}
   .panel{padding:52px 26px}
   section{padding:54px 0}
   .hero{border-radius:0 0 24px 24px}
+  .plans{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -359,6 +375,7 @@ body > footer{padding:64px 0 46px}
     <nav class="nav" id="nav">
       <a href="#what">What she does</a>
       <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
       <a href="#faq">Questions</a>
       <a class="nav-login" href="https://catilda.com/cabinet/login">Log in</a>
     </nav>
@@ -461,6 +478,49 @@ body > footer{padding:64px 0 46px}
     </div>
   </section>
 
+  <!-- pricing -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>One salary. Three sizes.</h2>
+        <p>Every plan covers your whole team with one shared pool of work. Your first month is on us.</p>
+      </div>
+      <div class="plans">
+        <article class="plan" data-plan="bronze">
+          <h3>Bronze</h3>
+          <p class="price"><b>$200</b><span> / month</span></p>
+          <ul>
+            <li>1 employee</li>
+            <li>Standard pool of work</li>
+            <li>Auto model plus the full model menu</li>
+          </ul>
+          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=bronze">Start free</a>
+        </article>
+        <article class="plan plan-featured" data-plan="silver">
+          <h3>Silver</h3>
+          <p class="price"><b>$500</b><span> / month</span></p>
+          <ul>
+            <li>Up to 3 employees</li>
+            <li>2.5× the Bronze pool</li>
+            <li>Auto model plus the full model menu</li>
+          </ul>
+          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=silver">Start free</a>
+        </article>
+        <article class="plan" data-plan="gold">
+          <h3>Gold</h3>
+          <p class="price"><b>$900</b><span> / month</span></p>
+          <ul>
+            <li>Up to 5 employees</li>
+            <li>4.5× the Bronze pool</li>
+            <li>Auto model plus the full model menu</li>
+          </ul>
+          <a class="btn btn-primary js-signup" href="https://catilda.com/cabinet/signup?plan=gold">Start free</a>
+        </article>
+      </div>
+      <p class="plans-note">Six or more employees, or a bigger pool? <a class="js-book" href="#book">Talk to us</a>.</p>
+    </div>
+  </section>
+
   <!-- ============ SAFETY (hidden until claims are ready to publish) ============ -->
   <section id="safe" hidden>
     <div class="wrap">
@@ -521,6 +581,7 @@ body > footer{padding:64px 0 46px}
     <nav>
       <a href="#what">What she does</a>
       <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
       <a href="#faq">Questions</a>
     </nav>
     <small>© 2026 Catilda. All rights reserved.</small>

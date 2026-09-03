@@ -64,3 +64,61 @@ class FunnelUnitTests(unittest.TestCase):
             "Fifteen minutes on a call is all it takes",
         ):
             self.assertNotIn(stale, INDEX)
+
+
+class PricingUnitTests(unittest.TestCase):
+    def test_pricing_section_lists_the_three_plans(self):
+        sec = section(INDEX, "pricing")
+        for name, price, seats, pool in (
+            ("Bronze", "$200", "1 employee", "Standard pool of work"),
+            ("Silver", "$500", "Up to 3 employees", "2.5× the Bronze pool"),
+            ("Gold", "$900", "Up to 5 employees", "4.5× the Bronze pool"),
+        ):
+            self.assertIn(f'data-plan="{name.lower()}"', sec)
+            self.assertIn(f"<h3>{name}</h3>", sec)
+            self.assertIn(price, sec)
+            self.assertIn(seats, sec)
+            self.assertIn(pool, sec)
+        self.assertIn("Talk to us", sec)
+        self.assertNotIn("$750", INDEX)
+        self.assertNotIn("$1000", INDEX)
+        self.assertNotIn("$1,000", INDEX)
+
+    def test_plan_buttons_deep_link_to_signup_with_the_plan(self):
+        for plan in ("bronze", "silver", "gold"):
+            self.assertIn(f'class="btn btn-primary js-signup" href="{SIGNUP}?plan={plan}">Start free</a>', INDEX)
+
+    def test_nav_and_footer_link_to_pricing(self):
+        nav = INDEX[INDEX.index('<nav class="nav" id="nav">') :]
+        nav = nav[: nav.index("</nav>")]
+        self.assertIn('href="#pricing"', nav)
+        footer = INDEX[INDEX.index("<footer") :]
+        self.assertIn('href="#pricing"', footer)
+
+    def test_pricing_section_has_one_heading(self):
+        sec = section(INDEX, "pricing")
+        self.assertEqual(sec.count("<h2>"), 1)
+
+
+class PricingE2ETests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
+        cls.server = socketserver.TCPServer(("127.0.0.1", 0), handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+
+    def test_live_page_serves_the_plans(self):
+        with urllib.request.urlopen(f"http://127.0.0.1:{self.port}/") as resp:
+            self.assertEqual(resp.status, 200)
+            body = resp.read().decode("utf-8")
+        self.assertIn('id="pricing"', body)
+        for price in ("$200", "$500", "$900"):
+            self.assertIn(price, body)
+        self.assertIn("Start free", body)

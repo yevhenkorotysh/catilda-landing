@@ -98,6 +98,10 @@ class PricingUnitTests(unittest.TestCase):
         sec = section(INDEX, "pricing")
         self.assertEqual(sec.count("<h2>"), 1)
 
+    def test_pricing_head_is_centered(self):
+        sec = section(INDEX, "pricing")
+        self.assertIn('<div class="sec-head" style="text-align:center">', sec)
+
 
 class _QuietHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -135,7 +139,7 @@ class OfferUnitTests(unittest.TestCase):
         sec = section(INDEX, "pricing")
         for piece in ("First month on us", "Working in the first week", "Salary-back guarantee", "Founder price"):
             self.assertIn(f"<h3>{piece}</h3>", sec)
-        self.assertIn("within 14 days", sec)
+        self.assertIn("within 14 days of the month ending", sec)
         self.assertIn("value ledger", sec)
 
     def test_capacity_line_is_hidden_until_real_numbers_exist(self):

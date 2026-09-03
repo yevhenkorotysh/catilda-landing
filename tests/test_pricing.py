@@ -1,7 +1,6 @@
 # ABOUTME: Guards the public pricing section, the Start free funnel, and the brand book's pricing rule.
 # ABOUTME: Static checks on index.html and brand.html plus a live-server check of the pricing section.
 
-import functools
 import http.server
 import re
 import socketserver
@@ -100,11 +99,18 @@ class PricingUnitTests(unittest.TestCase):
         self.assertEqual(sec.count("<h2>"), 1)
 
 
+class _QuietHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(ROOT), **kwargs)
+
+    def log_message(self, format: str, *args) -> None:  # noqa: A003
+        return
+
+
 class PricingE2ETests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
-        cls.server = socketserver.TCPServer(("127.0.0.1", 0), handler)
+        cls.server = socketserver.TCPServer(("127.0.0.1", 0), _QuietHandler)
         cls.port = cls.server.server_address[1]
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()

@@ -3,7 +3,7 @@
 
 # Catilda landing
 
-Marketing site for Catilda (your digital employee). Self-contained `index.html` plus `brand.html`.
+Marketing site for Catilda (your digital employee). Self-contained `index.html`. `brand.html` is an internal brand book, not linked from the public page.
 
 ## Local
 
@@ -20,8 +20,15 @@ python3 -m unittest discover -s tests -v
 
 ## Deploy
 
-DigitalOcean App Platform uses `.do/app.yaml` (`catilda.com` / `www.catilda.com`).
-Push to `main` with `deploy_on_push: true`.
+DigitalOcean App Platform app `catilda-prod` (`.do/app.yaml`):
+
+| Path | Component |
+|------|-----------|
+| `https://catilda.com/` | this landing |
+| `https://catilda.com/cabinet/` | cabinet SPA (`de-frontend`) |
+| `https://catilda.com/api/` | Django API (`de-backend`) |
+
+Push to `main` with `deploy_on_push: true`. Log in on this page points at `/cabinet/login`.
 
 GitHub Pages alternative: **Settings → Pages → Deploy from branch → main / (root)**.
 

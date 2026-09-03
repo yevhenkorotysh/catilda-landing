@@ -52,6 +52,15 @@ class AppSpecTests(unittest.TestCase):
         self.assertIn("yevhenkorotysh/de-frontend", self.spec)
         self.assertIn("yevhenkorotysh/de-backend", self.spec)
 
+    def test_cors_origins_are_host_only(self) -> None:
+        # ${cabinet.PUBLIC_URL} is https://catilda.com/cabinet — corsheaders E014.
+        self.assertNotIn("${cabinet.PUBLIC_URL}", self.spec)
+        self.assertNotIn("${web.PUBLIC_URL}", self.spec)
+        self.assertIn(
+            "https://catilda.com,https://www.catilda.com",
+            self.spec,
+        )
+
     def _component_block(self, name: str) -> str:
         """Slice from `- name: <name>` (or `name: <name>` under a list item) to the next sibling."""
         match = re.search(rf"(?m)^- name: {name}\n", self.spec)

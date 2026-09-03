@@ -81,7 +81,7 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("digital employee", parser.h1.lower())
         self.assertIn("Meet Catilda", parser.h1)
         self.assertGreaterEqual(parser.book_call_links, 1)
-        self.assertTrue(parser.has_brand_link)
+        self.assertFalse(parser.has_brand_link)
         self.assertTrue({"what", "faq", "book"}.issubset(parser.section_ids))
         self.assertIn("safe", parser.hidden_section_ids)
         self.assertNotIn("#safe", parser.nav_hrefs)
@@ -99,7 +99,7 @@ class LandingUnitTests(unittest.TestCase):
         cta_end = html.index("</div>", cta_start)
         header_cta = html[cta_start:cta_end]
         login_pos = header_cta.index(
-            '<a class="btn btn-ghost btn-sm" href="https://account.catilda.com/login">Log in</a>'
+            '<a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>'
         )
         book_pos = header_cta.index('js-book" href="#book">Book a call</a>')
         burger_pos = header_cta.index('id="burger"')
@@ -120,7 +120,7 @@ class LandingUnitTests(unittest.TestCase):
         nav_start = html.index('<nav class="nav" id="nav">')
         nav_end = html.index("</nav>", nav_start)
         nav = html[nav_start:nav_end]
-        self.assertIn('href="https://account.catilda.com/login"', nav)
+        self.assertIn('href="https://catilda.com/cabinet/login"', nav)
         self.assertIn("Log in", nav)
         self.assertIn('class="nav-login"', nav)
         # The nav entry is desktop-hidden and shown only at the burger width.

@@ -106,21 +106,25 @@ class LandingUnitTests(unittest.TestCase):
         self.assertLess(login_pos, book_pos)
         self.assertLess(book_pos, burger_pos)
 
-    def test_login_button_stays_visible_at_every_width(self) -> None:
-        # Log in lives once, in the header bar, and never hides behind the
-        # burger: a phone visitor sees the way into the app without opening
-        # the menu. Under 620px the bar tightens so lockup, Log in, Book a
-        # call and the burger share one row on a 375px phone, and under
-        # 380px the cat carries the brand alone.
+    def test_login_lives_once_in_the_header_bar(self) -> None:
+        # Log in never hides behind the burger: a phone visitor sees the way
+        # into the app without opening the menu, and the menu holds section
+        # links only.
         html = INDEX.read_text(encoding="utf-8")
         self.assertNotIn(".header-cta .btn-ghost{display:none}", html)
         self.assertNotIn("nav-login", html)
         nav_start = html.index('<nav class="nav" id="nav">')
         nav_end = html.index("</nav>", nav_start)
         self.assertNotIn("Log in", html[nav_start:nav_end])
+
+    def test_phone_header_rules_fit_one_row(self) -> None:
+        # Under 620px the bar tightens so lockup, Log in, Book a call and the
+        # burger share one row on a 375px phone, and under 380px the cat
+        # carries the brand alone. The phone rules share specificity with
+        # the base header rules, so they must come later in the sheet to
+        # win the cascade.
+        html = INDEX.read_text(encoding="utf-8")
         query_start = html.index("@media (max-width:620px)")
-        # The phone rules share specificity with the base header rules, so
-        # they must come later in the sheet to win the cascade.
         self.assertGreater(query_start, html.index(".header-bar{display:flex"))
         self.assertGreater(query_start, html.index(".header-cta{display:flex"))
         query_620 = html[query_start : html.index("\n}\n", query_start)]

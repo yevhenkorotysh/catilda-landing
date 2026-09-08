@@ -234,7 +234,10 @@ class TermsUnitTests(unittest.TestCase):
         # The effective date line names the version the backend records.
         effective_start = html.index('class="effective"')
         effective = html[effective_start : html.index("</p>", effective_start)]
-        self.assertIn("2026-09-07", effective)
+        self.assertIn("2026-09-08", effective)
+        # Section 2 defines a Routine and section 8 says how data may be copied out.
+        self.assertIn('A "Routine" is', html)
+        self.assertIn("Copying your data", html)
 
     def test_terms_footer_nav_links_to_terms(self) -> None:
         html = TERMS.read_text(encoding="utf-8")

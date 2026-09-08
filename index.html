@@ -199,6 +199,8 @@ section{padding:72px 0}
 
 /* four cards */
 .cards4{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1080px;margin:0 auto}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+.price-big{font-family:"Space Grotesk",sans-serif;font-size:2rem;letter-spacing:-.02em;color:var(--ink);margin:8px 0 12px}
 /* conversation mockups inside the feature cards */
 .thread{padding:15px;display:flex;flex-direction:column;gap:11px}
 .bub{max-width:88%;padding:11px 14px;border-radius:16px;font-size:.9rem;line-height:1.46}
@@ -303,6 +305,7 @@ body > footer{padding:64px 0 46px}
 }
 @media (max-width:860px){
   .cards4{grid-template-columns:1fr}
+  .cards3{grid-template-columns:1fr}
   .stats .row{grid-template-columns:1fr;max-width:420px;gap:26px}
   .panel{padding:52px 26px}
   section{padding:54px 0}
@@ -358,6 +361,7 @@ body > footer{padding:64px 0 46px}
     <nav class="nav" id="nav">
       <a href="#what">What she does</a>
       <a href="#how">How it works</a>
+      <a href="#pricing">Plans</a>
       <a href="#faq">Questions</a>
     </nav>
     <div class="header-cta">
@@ -485,6 +489,36 @@ body > footer{padding:64px 0 46px}
     </div>
   </section>
 
+  <!-- ============ PRICING ============ -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sec-head" style="text-align:center">
+        <h2>Plans for a workspace, not a seat.</h2>
+        <p>Pay by bank at this price. Cards include 3% processing.</p>
+      </div>
+      <div class="cards3">
+        <article class="pcard">
+          <h3>Bronze</h3>
+          <p class="price-big">$450 / month</p>
+          <p>3 connected accounts, 3 active workflows, one custom build every two months.</p>
+        </article>
+        <article class="pcard">
+          <h3>Silver</h3>
+          <p class="price-big">$900 / month</p>
+          <p>The connections your workflows need, 10 active workflows, one custom build a month.</p>
+        </article>
+        <article class="pcard">
+          <h3>Gold</h3>
+          <p class="price-big">$1,800 / month</p>
+          <p>20 active workflows, two custom builds a month, faster human response.</p>
+        </article>
+      </div>
+      <p class="center" style="margin-top:28px">
+        <a class="btn btn-primary" href="https://catilda.com/cabinet/signup">Start in the cabinet</a>
+      </p>
+    </div>
+  </section>
+
   <!-- ============ FAQ ============ -->
   <section id="faq">
     <div class="wrap">
@@ -518,6 +552,7 @@ body > footer{padding:64px 0 46px}
     <nav>
       <a href="#what">What she does</a>
       <a href="#how">How it works</a>
+      <a href="#pricing">Plans</a>
       <a href="#faq">Questions</a>
       <a href="/terms/">Terms</a>
     </nav>

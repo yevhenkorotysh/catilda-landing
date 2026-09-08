@@ -89,12 +89,17 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("Meet Catilda", parser.h1)
         self.assertGreaterEqual(parser.book_call_links, 1)
         self.assertFalse(parser.has_brand_link)
-        self.assertTrue({"what", "faq", "book"}.issubset(parser.section_ids))
+        self.assertTrue({"what", "faq", "book", "pricing"}.issubset(parser.section_ids))
         self.assertIn("safe", parser.hidden_section_ids)
         self.assertNotIn("#safe", parser.nav_hrefs)
         self.assertNotIn("Famulatus", html)
         self.assertNotIn("Coming soon", html)
         self.assertIn("Book a call", html)
+        self.assertIn("$450", html)
+        self.assertIn("$900", html)
+        self.assertIn("$1,800", html)
+        self.assertIn("3% processing", html)
+        self.assertIn("#pricing", parser.nav_hrefs)
         self.assertNotIn(
             "Your data is never sold and never used to train anything outside your business",
             html,
@@ -154,6 +159,11 @@ class LandingUnitTests(unittest.TestCase):
         what = html[what_start : html.index("</section>", what_start)]
         self.assertIn("<h3>Loves repeated work which nobody loves</h3>", what)
         self.assertNotIn("Best at the work you already repeat", html)
+
+    def test_brand_book_allows_public_pricing(self) -> None:
+        brand = BRAND.read_text(encoding="utf-8")
+        self.assertNotIn("Don’t show pricing on public surfaces", brand)
+        self.assertIn("Published plans live on the landing", brand)
 
     def test_faq_cost_answer_is_one_sentence(self) -> None:
         html = INDEX.read_text(encoding="utf-8")

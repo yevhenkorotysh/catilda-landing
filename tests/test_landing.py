@@ -106,26 +106,73 @@ class LandingUnitTests(unittest.TestCase):
         self.assertLess(login_pos, book_pos)
         self.assertLess(book_pos, burger_pos)
 
-    def test_login_button_hides_with_the_nav(self) -> None:
-        # The nav collapses into the burger at max-width:900px; Log in must
-        # hide at the same breakpoint so it never sits alone next to
-        # Book a call once the nav links are already gone (861-900px gap).
+    def test_login_lives_once_in_the_header_bar(self) -> None:
+        # Log in never hides behind the burger: a phone visitor sees the way
+        # into the app without opening the menu, and the menu holds section
+        # links only.
         html = INDEX.read_text(encoding="utf-8")
-        query_start = html.index("@media (max-width:900px)")
-        query_end = html.index("}\n@media", query_start)
-        query_900 = html[query_start:query_end]
-        self.assertIn(".header-cta .btn-ghost{display:none}", query_900)
-        # ...but the burger nav must still carry a Log in entry, or a phone
-        # visitor has no way into the app at all.
+        self.assertNotIn(".header-cta .btn-ghost{display:none}", html)
+        self.assertNotIn("nav-login", html)
         nav_start = html.index('<nav class="nav" id="nav">')
         nav_end = html.index("</nav>", nav_start)
-        nav = html[nav_start:nav_end]
-        self.assertIn('href="https://catilda.com/cabinet/login"', nav)
-        self.assertIn("Log in", nav)
-        self.assertIn('class="nav-login"', nav)
-        # The nav entry is desktop-hidden and shown only at the burger width.
-        self.assertIn(".nav .nav-login{display:none}", html)
-        self.assertIn(".nav .nav-login{display:block}", query_900)
+        self.assertNotIn("Log in", html[nav_start:nav_end])
+
+    def test_phone_header_rules_fit_one_row(self) -> None:
+        # Under 620px the bar tightens so lockup, Log in, Book a call and the
+        # burger share one row on a 375px phone, and under 380px the cat
+        # carries the brand alone. The phone rules share specificity with
+        # the base header rules, so they must come later in the sheet to
+        # win the cascade.
+        html = INDEX.read_text(encoding="utf-8")
+        query_start = html.index("@media (max-width:620px)")
+        self.assertGreater(query_start, html.index(".header-bar{display:flex"))
+        self.assertGreater(query_start, html.index(".header-cta{display:flex"))
+        query_620 = html[query_start : html.index("\n}\n", query_start)]
+        for rule in (
+            ".header-bar{padding:0 6px 0 12px;gap:8px}",
+            ".header-cta{gap:4px}",
+            ".header-cta .btn-sm{padding:0 12px}",
+            ".header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}",
+            ".lockup .cat{width:30px;height:30px}",
+            ".lockup .wordmark{font-size:1.1rem}",
+        ):
+            self.assertIn(rule, query_620)
+        query_start = html.index("@media (max-width:380px)")
+        query_380 = html[query_start : html.index("\n}\n", query_start)]
+        self.assertIn(".lockup .wordmark{display:none}", query_380)
+
+    def test_what_card_names_the_work_nobody_loves(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        what_start = html.index('<section id="what"')
+        what = html[what_start : html.index("</section>", what_start)]
+        self.assertIn("<h3>Loves repeated work which nobody loves</h3>", what)
+        self.assertNotIn("Best at the work you already repeat", html)
+
+    def test_faq_cost_answer_is_one_sentence(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        self.assertIn(
+            '["What does she cost?",\n   "A fraction of a part-time hire."]',
+            html,
+        )
+        self.assertNotIn("agree the number there", html)
+        self.assertNotIn("No meters", html)
+
+    def test_final_panel_is_light(self) -> None:
+        # The closing panel is a light surface like the rest of the page:
+        # ink text on a cloud-to-mint wash, cobalt button, marmalade cat.
+        html = INDEX.read_text(encoding="utf-8")
+        for dark in ("grad-dark", "btn-mint", ".panel .eyebrow", ".panel h2"):
+            self.assertNotIn(dark, html)
+        panel_start = html.index(".panel{")
+        panel = html[panel_start : html.index("}\n", panel_start)]
+        for rule in ("var(--cloud)", "border:1px solid var(--line-2)", "rgba(141,216,197,.28)"):
+            self.assertIn(rule, panel)
+        self.assertIn(".final .lead{color:var(--body)", html)
+        self.assertIn(".final .micro{font-size:.9rem;color:var(--muted)}", html)
+        book_start = html.index('<section class="final" id="book">')
+        book = html[book_start : html.index("</section>", book_start)]
+        self.assertIn('class="btn btn-primary js-book" href="#book">Book a call</a>', book)
+        self.assertIn("--cat-line:var(--ink);--cat-fur:var(--orange)", book)
 
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
@@ -186,6 +233,15 @@ class LandingE2ETests(unittest.TestCase):
         self.assertIn("your digital employee", body)
         self.assertIn("Book a call", body)
         self.assertNotIn("Coming soon", body)
+
+    def test_live_page_carries_the_review_copy(self) -> None:
+        status, body = self._get("/")
+        self.assertEqual(status, 200)
+        self.assertIn("Loves repeated work which nobody loves", body)
+        self.assertIn("A fraction of a part-time hire.", body)
+        book_start = body.index('<section class="final" id="book">')
+        book = body[book_start : body.index("</section>", book_start)]
+        self.assertIn('class="btn btn-primary js-book"', book)
 
     def test_brand_page_serves(self) -> None:
         status, body = self._get("/brand.html")

@@ -52,7 +52,6 @@
   --ease: cubic-bezier(.2,.7,.2,1);
 
   --grad-visual: linear-gradient(135deg, var(--amber) 0%, var(--mint) 38%, var(--cobalt-br) 72%, var(--teal) 100%);
-  --grad-dark:   linear-gradient(150deg, var(--teal) 0%, #0A2B3C 58%, var(--ink) 100%);
   --grad-text:   linear-gradient(102deg, var(--cobalt-br) 0%, var(--cobalt) 48%, var(--teal) 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -80,12 +79,8 @@ img,svg{display:block}
 .btn-primary{background:var(--cobalt);color:#fff;box-shadow:0 12px 30px -12px rgba(31,95,214,.5)}
 .btn-primary:hover{background:#1A54BE}
 .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
-.btn-mint{background:var(--mint);color:var(--ink)}
 .btn-white{background:var(--cloud);color:var(--ink)}
 .btn-sm{height:42px;padding:0 20px;font-size:.92rem}
-@media (max-width:620px){
-  .header-bar{padding:0 10px 0 18px;gap:12px}
-}
 
 /* ============ the cat ============ */
 /* One mark, recoloured by two vars. Inline styles on the symbol shapes
@@ -124,9 +119,6 @@ body > header{position:fixed;top:12px;left:14px;right:14px;z-index:100}
 .nav{display:flex;gap:4px;align-items:center}
 .nav a{padding:9px 16px;border-radius:100px;font-size:.96rem;font-weight:500;color:var(--ink);white-space:nowrap}
 .nav a:hover{background:rgba(23,26,35,.05)}
-/* Log in lives twice: the header button on desktop, the nav entry on mobile.
-   Exactly one shows at any width. */
-.nav .nav-login{display:none}
 .header-cta{display:flex;gap:8px;align-items:center}
 .burger{display:none;width:42px;height:42px;border-radius:50%;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line)}
 .burger span{width:16px;height:2px;background:var(--ink);border-radius:2px}
@@ -256,14 +248,12 @@ section{padding:72px 0}
 
 /* control */
 
-/* dark panels */
+/* closing panel */
 .panel{background:
-  radial-gradient(58% 78% at 10% 0%, rgba(77,140,255,.26), transparent 62%),
-  radial-gradient(48% 66% at 94% 100%, rgba(141,216,197,.18), transparent 60%),
-  var(--grad-dark);
-  border-radius:36px;color:var(--cloud);padding:58px 56px;box-shadow:var(--shadow)}
-.panel h2{color:var(--cloud)}
-.panel .eyebrow{color:var(--mint)}
+  radial-gradient(58% 78% at 10% 0%, rgba(77,140,255,.14), transparent 62%),
+  linear-gradient(150deg, #fff 0%, rgba(141,216,197,.28) 100%),
+  var(--cloud);
+  border:1px solid var(--line-2);border-radius:36px;color:var(--body);padding:58px 56px;box-shadow:var(--shadow)}
 
 /* guarantee panel styles: kept for reuse, section currently removed */
 .g-copy{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
@@ -287,9 +277,9 @@ section{padding:72px 0}
 /* final cta */
 .final .panel{text-align:center;padding:64px 40px}
 .final h2{font-size:clamp(2.1rem,4.6vw,3.2rem);margin-bottom:14px}
-.final .lead{color:rgba(255,253,249,.88);font-size:1.12rem;max-width:520px;margin:0 auto 34px}
+.final .lead{color:var(--body);font-size:1.12rem;max-width:520px;margin:0 auto 34px}
 .final .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
-.final .micro{font-size:.9rem;color:rgba(255,253,249,.6)}
+.final .micro{font-size:.9rem;color:var(--muted)}
 
 /* footer */
 body > footer{padding:64px 0 46px}
@@ -309,11 +299,7 @@ body > footer{padding:64px 0 46px}
   .nav{display:none;position:absolute;top:74px;left:0;right:0;flex-direction:column;align-items:stretch;gap:4px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border:1px solid var(--line-2);border-radius:24px;padding:12px;box-shadow:var(--shadow)}
   .nav.open{display:flex}
   .nav a{padding:13px 18px;font-size:1.02rem}
-  .nav .nav-login{display:block}
   .faq-grid{grid-template-columns:1fr;gap:24px}
-  /* Log in hides at the same width the nav collapses, so it never sits
-     alone next to Book a call once the nav links are gone. */
-  .header-cta .btn-ghost{display:none}
 }
 @media (max-width:860px){
   .cards4{grid-template-columns:1fr}
@@ -321,6 +307,19 @@ body > footer{padding:64px 0 46px}
   .panel{padding:52px 26px}
   section{padding:54px 0}
   .hero{border-radius:0 0 24px 24px}
+}
+@media (max-width:620px){
+  /* Phone bar: lockup, Log in, Book a call and the burger share one row,
+     so Log in drops its pill and the lockup takes the footer's sizes. */
+  .header-bar{padding:0 6px 0 12px;gap:8px}
+  .header-cta{gap:4px}
+  .header-cta .btn-sm{padding:0 12px}
+  .header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}
+  .lockup .cat{width:30px;height:30px}
+  .lockup .wordmark{font-size:1.1rem}
+}
+@media (max-width:380px){
+  .lockup .wordmark{display:none}
 }
 </style>
 </head>
@@ -360,7 +359,6 @@ body > footer{padding:64px 0 46px}
       <a href="#what">What she does</a>
       <a href="#how">How it works</a>
       <a href="#faq">Questions</a>
-      <a class="nav-login" href="https://catilda.com/cabinet/login">Log in</a>
     </nav>
     <div class="header-cta">
       <a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>
@@ -432,7 +430,7 @@ body > footer{padding:64px 0 46px}
           <p>Email, spreadsheets, invoices, your CRM, research, reports. If the job happens on a screen, she can do it.</p>
         </article>
         <article class="pcard">
-          <h3>Best at the work you already repeat</h3>
+          <h3>Loves repeated work which nobody loves</h3>
           <p>Hand her a routine your business already runs, and she runs it the same way every time.</p>
         </article>
         <article class="pcard">
@@ -501,11 +499,11 @@ body > footer{padding:64px 0 46px}
   <section class="final" id="book">
     <div class="wrap">
       <div class="panel">
-        <svg class="cat" aria-hidden="true" style="--cat-line:var(--mint);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
+        <svg class="cat" aria-hidden="true" style="--cat-line:var(--ink);--cat-fur:var(--orange);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
         <h2>Spend your time growing<br>the business.</h2>
         <p class="lead">Give the routine to Catilda and get your week back. Fifteen minutes on a call is all it takes to start.</p>
         <div class="ctas">
-          <a class="btn btn-mint js-book" href="#book">Book a call</a>
+          <a class="btn btn-primary js-book" href="#book">Book a call</a>
         </div>
         <p class="micro">We agree the plan and the price on the call, before you pay anything.</p>
       </div>
@@ -619,7 +617,7 @@ const FAQ = [
   ["How long until she is working?",
    "The first week. On the call we work out which job to hand over first, then we train her on your history and your rules, and she starts producing work you approve."],
   ["What does she cost?",
-   "A flat monthly rate, a fraction of a part-time hire. We work out what you are handing over on the call and agree the number there, so you know exactly what it costs before you pay anything. No meters and no per-task pricing."],
+   "A fraction of a part-time hire."],
 ];
 const list = document.getElementById('faqList');
 FAQ.forEach(([q, a], i) => {

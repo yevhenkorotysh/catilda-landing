@@ -149,6 +149,23 @@ class LandingUnitTests(unittest.TestCase):
         self.assertNotIn("agree the number there", html)
         self.assertNotIn("No meters", html)
 
+    def test_final_panel_is_light(self) -> None:
+        # The closing panel is a light surface like the rest of the page:
+        # ink text on a cloud-to-mint wash, cobalt button, marmalade cat.
+        html = INDEX.read_text(encoding="utf-8")
+        for dark in ("grad-dark", "btn-mint", ".panel .eyebrow", ".panel h2"):
+            self.assertNotIn(dark, html)
+        panel_start = html.index(".panel{")
+        panel = html[panel_start : html.index("}\n", panel_start)]
+        for rule in ("var(--cloud)", "border:1px solid var(--line-2)", "rgba(141,216,197,.28)"):
+            self.assertIn(rule, panel)
+        self.assertIn(".final .lead{color:var(--body)", html)
+        self.assertIn(".final .micro{font-size:.9rem;color:var(--muted)}", html)
+        book_start = html.index('<section class="final" id="book">')
+        book = html[book_start : html.index("</section>", book_start)]
+        self.assertIn('class="btn btn-primary js-book" href="#book">Book a call</a>', book)
+        self.assertIn("--cat-line:var(--ink);--cat-fur:var(--orange)", book)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)
@@ -214,6 +231,9 @@ class LandingE2ETests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn("Loves repeated work which nobody loves", body)
         self.assertIn("A fraction of a part-time hire.", body)
+        book_start = body.index('<section class="final" id="book">')
+        book = body[book_start : body.index("</section>", book_start)]
+        self.assertIn('class="btn btn-primary js-book"', book)
 
     def test_brand_page_serves(self) -> None:
         status, body = self._get("/brand.html")

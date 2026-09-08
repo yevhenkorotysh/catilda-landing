@@ -52,7 +52,6 @@
   --ease: cubic-bezier(.2,.7,.2,1);
 
   --grad-visual: linear-gradient(135deg, var(--amber) 0%, var(--mint) 38%, var(--cobalt-br) 72%, var(--teal) 100%);
-  --grad-dark:   linear-gradient(150deg, var(--teal) 0%, #0A2B3C 58%, var(--ink) 100%);
   --grad-text:   linear-gradient(102deg, var(--cobalt-br) 0%, var(--cobalt) 48%, var(--teal) 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -80,7 +79,6 @@ img,svg{display:block}
 .btn-primary{background:var(--cobalt);color:#fff;box-shadow:0 12px 30px -12px rgba(31,95,214,.5)}
 .btn-primary:hover{background:#1A54BE}
 .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
-.btn-mint{background:var(--mint);color:var(--ink)}
 .btn-white{background:var(--cloud);color:var(--ink)}
 .btn-sm{height:42px;padding:0 20px;font-size:.92rem}
 @media (max-width:620px){
@@ -263,14 +261,12 @@ section{padding:72px 0}
 
 /* control */
 
-/* dark panels */
+/* closing panel */
 .panel{background:
-  radial-gradient(58% 78% at 10% 0%, rgba(77,140,255,.26), transparent 62%),
-  radial-gradient(48% 66% at 94% 100%, rgba(141,216,197,.18), transparent 60%),
-  var(--grad-dark);
-  border-radius:36px;color:var(--cloud);padding:58px 56px;box-shadow:var(--shadow)}
-.panel h2{color:var(--cloud)}
-.panel .eyebrow{color:var(--mint)}
+  radial-gradient(58% 78% at 10% 0%, rgba(77,140,255,.14), transparent 62%),
+  linear-gradient(150deg, #fff 0%, rgba(141,216,197,.28) 100%),
+  var(--cloud);
+  border:1px solid var(--line-2);border-radius:36px;color:var(--body);padding:58px 56px;box-shadow:var(--shadow)}
 
 /* guarantee panel styles: kept for reuse, section currently removed */
 .g-copy{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
@@ -294,9 +290,9 @@ section{padding:72px 0}
 /* final cta */
 .final .panel{text-align:center;padding:64px 40px}
 .final h2{font-size:clamp(2.1rem,4.6vw,3.2rem);margin-bottom:14px}
-.final .lead{color:rgba(255,253,249,.88);font-size:1.12rem;max-width:520px;margin:0 auto 34px}
+.final .lead{color:var(--body);font-size:1.12rem;max-width:520px;margin:0 auto 34px}
 .final .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
-.final .micro{font-size:.9rem;color:rgba(255,253,249,.6)}
+.final .micro{font-size:.9rem;color:var(--muted)}
 
 /* footer */
 body > footer{padding:64px 0 46px}
@@ -503,11 +499,11 @@ body > footer{padding:64px 0 46px}
   <section class="final" id="book">
     <div class="wrap">
       <div class="panel">
-        <svg class="cat" aria-hidden="true" style="--cat-line:var(--mint);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
+        <svg class="cat" aria-hidden="true" style="--cat-line:var(--ink);--cat-fur:var(--orange);margin:0 auto 18px" width="52" height="52"><use href="#cat"/></svg>
         <h2>Spend your time growing<br>the business.</h2>
         <p class="lead">Give the routine to Catilda and get your week back. Fifteen minutes on a call is all it takes to start.</p>
         <div class="ctas">
-          <a class="btn btn-mint js-book" href="#book">Book a call</a>
+          <a class="btn btn-primary js-book" href="#book">Book a call</a>
         </div>
         <p class="micro">We agree the plan and the price on the call, before you pay anything.</p>
       </div>

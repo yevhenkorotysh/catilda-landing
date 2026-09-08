@@ -133,6 +133,13 @@ class LandingUnitTests(unittest.TestCase):
         query_380 = html[query_start : html.index("\n}\n", query_start)]
         self.assertIn(".lockup .wordmark{display:none}", query_380)
 
+    def test_what_card_names_the_work_nobody_loves(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        what_start = html.index('<section id="what"')
+        what = html[what_start : html.index("</section>", what_start)]
+        self.assertIn("<h3>Loves repeated work which nobody loves</h3>", what)
+        self.assertNotIn("Best at the work you already repeat", html)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)
@@ -192,6 +199,11 @@ class LandingE2ETests(unittest.TestCase):
         self.assertIn("your digital employee", body)
         self.assertIn("Book a call", body)
         self.assertNotIn("Coming soon", body)
+
+    def test_live_page_carries_the_review_copy(self) -> None:
+        status, body = self._get("/")
+        self.assertEqual(status, 200)
+        self.assertIn("Loves repeated work which nobody loves", body)
 
     def test_brand_page_serves(self) -> None:
         status, body = self._get("/brand.html")

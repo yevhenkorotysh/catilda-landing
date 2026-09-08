@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!-- ABOUTME: Catilda Terms of Service, the canonical legal page at /terms/ (static HTML, no build). -->
+<!-- ABOUTME: Shares the landing palette, fonts, header and footer; version 2026-09-07 is what signup records. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Catilda · Terms of Service</title>
+<meta name="description" content="The Catilda Terms of Service: what you agree to when you create an account and hire a Digital Employee from Aaron and His Brothers LLC, doing business as Catilda." />
+<link rel="canonical" href="https://catilda.com/terms/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Favicon: the full Catilda cat mark, absolute paths because this page lives one folder down.
+     PNG fallback listed first for Safari (no SVG rel=icon support); Chrome/Firefox pick the SVG. -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CATILDA · Terms of Service
+   Tokens, header and footer copied from index.html so the two pages
+   stay one site; the legal block below is the only page-specific CSS.
+   Voice: plain, second person, no em dashes.
+   ============================================================ */
+:root{
+  /* CATILDA brand palette. Seven colours, one job each.
+     Cobalt is the working accent; bright cobalt is for gradients and glow only. */
+  --cobalt:    #1F5FD6;  /* THE accent: buttons, links. 5.7:1 with white */
+  --cobalt-br: #4D8CFF;  /* bright cobalt: gradients, glow, highlights on dark */
+  --mint:      #8DD8C5;  /* light accent: ticks and marks on dark panels */
+  --amber:     #F3B15A;  /* the warm pop, used sparingly */
+  --orange:    #E8913F;  /* marmalade: the cat's fur, nothing else */
+  --teal:      #0D3B52;  /* dark panels, emphasis text on cloud */
+  --ink:       #171A23;  /* headings, deepest surface */
+  --cloud:     #F7F6F2;  /* the page */
+  --body:      #525C69;  /* body copy, 6.3:1 on cloud */
+  --muted:     #5A6472;  /* quiet labels, 5.6:1 on cloud */
+
+  --line:   rgba(23,26,35,.13);
+  --line-2: rgba(23,26,35,.075);
+  --shadow:    0 2px 6px rgba(23,26,35,.07), 0 30px 60px -28px rgba(23,26,35,.28);
+  --radius: 20px;
+  --maxw: 1180px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  background:var(--cloud);
+  color:var(--body);
+  font-family:"Inter",system-ui,sans-serif;
+  font-size:16.5px;line-height:1.68;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;color:var(--ink);line-height:1.08;letter-spacing:-.02em;font-weight:600}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img,svg{display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:600;font-size:1rem;padding:0 28px;height:54px;border-radius:100px;border:1px solid transparent;transition:transform .2s var(--ease),box-shadow .3s,background .25s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-sm{height:42px;padding:0 20px;font-size:.92rem}
+
+/* ============ the cat ============ */
+/* One mark, recoloured by two vars. Inline styles on the symbol shapes
+   use var() because document CSS cannot reach <use> shadow content. */
+.cat{display:block;flex-shrink:0}
+.lockup{display:flex;align-items:center;gap:10px}
+
+/* ============ header (floating rounded bar) ============ */
+body > header{position:fixed;top:12px;left:14px;right:14px;z-index:100}
+.header-bar{display:flex;align-items:center;justify-content:space-between;gap:28px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line-2);border-radius:100px;padding:0 12px 0 30px;height:62px;max-width:1220px;margin:0 auto;box-shadow:0 6px 24px rgba(23,26,35,.07)}
+.wordmark{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.35rem;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.header-cta{display:flex;gap:8px;align-items:center}
+
+/* ============ legal page ============ */
+/* One prose column, wide enough to read comfortably and narrow enough
+   that a line of legal text does not run away. The top padding clears
+   the floating header. */
+.legal{max-width:760px;margin:0 auto;padding:150px 26px 56px}
+.legal h1{font-size:clamp(2.2rem,5vw,3.1rem);font-weight:700;letter-spacing:-.03em;margin-bottom:14px}
+.legal .effective{color:var(--muted);font-size:.95rem;margin-bottom:28px}
+.legal .summary{background:#fff;border:1px solid var(--line-2);border-radius:var(--radius);padding:22px 26px;margin-bottom:34px;line-height:1.6}
+.legal h2{font-size:1.5rem;line-height:1.2;margin:48px 0 14px}
+.legal p{margin:0 0 16px}
+.legal ul{list-style:disc;padding-left:1.4em;margin:0 0 18px}
+.legal li{margin-bottom:6px}
+.legal strong{color:var(--ink);font-weight:600}
+.legal p a,.legal li a{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}
+.legal p a:hover,.legal li a:hover{color:var(--teal)}
+
+/* table of contents: two columns of section names, numbered by the list */
+.toc{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);padding:22px 0 18px;margin-bottom:8px}
+.toc h2{font-size:.84rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.toc ol{list-style:decimal;columns:2;column-gap:32px;padding-left:1.6em;font-size:.98rem}
+.toc li{margin-bottom:6px;break-inside:avoid}
+.legal .toc a{color:var(--ink);text-decoration:none}
+.legal .toc a:hover{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}
+
+/* footer */
+body > footer{padding:64px 0 46px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;padding-top:40px;position:relative}
+.foot::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px;background:linear-gradient(90deg, var(--amber), var(--mint) 34%, var(--cobalt-br) 68%, var(--teal))}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.foot nav{display:flex;gap:22px;flex-wrap:wrap;font-size:.94rem;color:var(--body)}
+.foot nav a:hover{color:var(--ink)}
+.foot small{color:var(--muted);font-size:.86rem}
+
+/* responsive */
+@media (max-width:620px){
+  .header-bar{padding:0 6px 0 12px;gap:8px}
+  .header-cta{gap:4px}
+  .header-cta .btn-sm{padding:0 12px}
+  .header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}
+  .lockup .cat{width:30px;height:30px}
+  .lockup .wordmark{font-size:1.1rem}
+  .legal{padding-top:124px}
+  .toc ol{columns:1}
+}
+</style>
+</head>
+<body>
+
+<!-- The cat mark. Referenced with <use>; recolour per instance with --cat-line / --cat-fur. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cat" viewBox="0 0 128 128">
+    <g style="fill:var(--cat-fur,none);stroke:var(--cat-line,#171A23);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M40 41 L45 11 L66 29 Z"/>
+      <path d="M85 32 L111 17 L102 51 Z"/>
+      <circle cx="64" cy="72" r="40"/>
+    </g>
+    <g style="fill:var(--cat-line,#171A23)">
+      <g transform="rotate(-5 52.75 61)"><rect class="eye" x="49" y="53" width="7.5" height="16" rx="3.75"/></g>
+      <g transform="rotate(5 74.75 59.5)"><rect class="eye" x="71" y="51.5" width="7.5" height="16" rx="3.75"/></g>
+    </g>
+    <path style="fill:var(--cat-line,#171A23);stroke:var(--cat-line,#171A23);stroke-width:4;stroke-linejoin:round" d="M59 81 L69.5 81 L64.5 88.5 Z"/>
+    <g style="fill:none;stroke:var(--cat-line,#171A23);stroke-width:3;stroke-linecap:round">
+      <path d="M45 73 L8 61"/>
+      <path d="M44 80 L5 77"/>
+      <path d="M45 87 L12 94"/>
+      <path d="M83 75 L121 82"/>
+      <path d="M83 82 L118 94"/>
+      <path d="M81 89 L110 105"/>
+    </g>
+  </symbol>
+</svg>
+
+<header>
+  <div class="header-bar">
+    <a class="lockup" href="/" aria-label="Catilda home">
+      <svg class="cat" style="--cat-line:var(--ink);--cat-fur:var(--orange)" width="34" height="34"><use href="#cat"/></svg>
+      <span class="wordmark">catilda</span>
+    </a>
+    <div class="header-cta">
+      <a class="btn btn-ghost btn-sm" href="https://catilda.com/cabinet/login">Log in</a>
+    </div>
+  </div>
+</header>
+
+<main class="legal" id="top">
+
+  <h1>Catilda Terms of Service</h1>
+  <p class="effective">Effective date: September 7, 2026. Version 2026-09-07.</p>
+
+  <p class="summary"><strong>Summary of important terms. Your subscription renews monthly on the card on file until you cancel, a free trial converts to a paid plan unless you cancel first, and fees are non-refundable except where law or a published guarantee requires (sections 6 and 7). You are responsible for what your Digital Employee does (section 4). We disclaim warranties, cap our liability, and require you to indemnify us (sections 10 to 12) and preserve consumer rights that cannot be waived (section 13). Disputes go to individual arbitration, with a class action and jury waiver and a thirty-day opt-out (section 14), under Washington law (section 15).</strong></p>
+
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#agreement">Agreement</a></li>
+      <li><a href="#service">The Service</a></li>
+      <li><a href="#account">Your account</a></li>
+      <li><a href="#digital-employees">Your digital employees act for you</a></li>
+      <li><a href="#acceptable-use">Acceptable use</a></li>
+      <li><a href="#fees">Fees</a></li>
+      <li><a href="#termination">Suspension and termination</a></li>
+      <li><a href="#ownership">Ownership</a></li>
+      <li><a href="#third-party">Third-party services</a></li>
+      <li><a href="#disclaimer">Disclaimer of warranties</a></li>
+      <li><a href="#liability">Limitation of liability</a></li>
+      <li><a href="#indemnity">Indemnity</a></li>
+      <li><a href="#consumer-rights">Consumer rights</a></li>
+      <li><a href="#disputes">Disputes</a></li>
+      <li><a href="#governing-law">Governing law</a></li>
+      <li><a href="#changes">Changes</a></li>
+      <li><a href="#general">General</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="agreement">1. Agreement</h2>
+
+  <p><strong>Who we are.</strong> "Catilda", "we", "us", and "our" mean Aaron and His Brothers LLC, doing business as Catilda.</p>
+
+  <p><strong>Who you are.</strong> "You" and "your" mean the person who creates the account and any organization that person signs up for and confirms authority to bind.</p>
+
+  <p><strong>Age.</strong> You must be at least eighteen years old.</p>
+
+  <p><strong>Acceptance.</strong> You accept these terms when you create an account; we record the version, time, and IP address. The current version is at <a href="https://catilda.com/terms/">https://catilda.com/terms/</a>.</p>
+
+  <h2 id="service">2. The Service</h2>
+
+  <p>The "Service" means the Catilda website, the web cabinet (the "cabinet"), the Digital Employees, and related software.</p>
+
+  <p>A "Digital Employee" is an AI agent you hire through the Service. It runs on a cloud server we provision, chats with you in the cabinet, can show you a remote desktop view of its work, and acts through the accounts and services you connect, or directly, such as by browsing the web.</p>
+
+  <p>A "Connected Account" is any account, credential, mailbox, browser session, or tool you give a Digital Employee access to. "Customer Data" means what you or your Digital Employees submit to or generate within the Service, including Connected Account contents. "Output" means anything a Digital Employee produces or does. You are a "consumer" if you are an individual using the Service primarily for personal, family, or household purposes.</p>
+
+  <p>We may change, add, or remove features. Beta or preview features come without any commitment and may change or be withdrawn at any time.</p>
+
+  <h2 id="account">3. Your account</h2>
+
+  <p>Verify a working email address and phone number, keep your details current, and keep your credentials secure.</p>
+
+  <p>You are responsible for all activity under your account, including by anyone using your credentials or devices. If you believe your account or a Connected Account has been accessed without permission, tell us right away at <a href="mailto:info@catilda.com">info@catilda.com</a> and revoke the affected credential at the provider. You are not responsible for unauthorized activity after we have had a reasonable time to act on your notice, or for activity caused by our own security failure; a Digital Employee acting on instructions or content it received is not our security failure.</p>
+
+  <h2 id="digital-employees">4. Your digital employees act for you</h2>
+
+  <p><strong>Subject to sections 3, 11, and 13, your Digital Employee acts only on your instructions and the routines you configure, and on your behalf. Every action it takes is your action, whether or not it matches what you intended, including actions influenced by content it reads, mistakes, and purchases, charges, commitments, messages, and disclosures made through a Connected Account, as if a person you had authorized had taken it.</strong></p>
+
+  <p><strong>You control what it can reach.</strong> Grant the narrowest access the work needs; we do not verify, limit, or audit what you connect. You confirm you have every right and consent needed for every Connected Account and every action you direct through it. You may at any time remove a Connected Account, disconnect a channel, stop a run, or archive a routine in the cabinet, or email <a href="mailto:info@catilda.com">info@catilda.com</a> to stop a Digital Employee. None of this is instant or undoes actions already taken, and a Digital Employee may keep copies of a credential, so also revoke it at the provider.</p>
+
+  <p><strong>AI makes mistakes.</strong> AI can produce inaccurate, incomplete, or unexpected results and take actions you did not intend, and content a Digital Employee reads, such as a web page, document, or email, can steer it, even into sending Customer Data or credentials to a third party. You accept these risks as inherent in the Service, subject to sections 11 and 13. Review every Output before relying on it; nothing a Digital Employee produces is professional advice.</p>
+
+  <p><strong>Keep a human in the loop.</strong> Configure each Digital Employee and limit its Connected Accounts so that a person approves any payment or financial transaction; any legal, tax, medical, or human resources decision; any quote, offer, contract, or other communication that binds you; any acceptance of terms or account creation in your name; any modification or deletion of data you cannot easily restore; and any other step that is hard to reverse.</p>
+
+  <h2 id="acceptable-use">5. Acceptable use</h2>
+
+  <p>Use Catilda lawfully, including under marketing, privacy, employment, and AI-disclosure laws. You must not, and must not direct a Digital Employee to:</p>
+
+  <ul>
+    <li>create or send content that is unlawful, infringing, harmful, deceptive, harassing, or abusive</li>
+    <li>send unsolicited messages in violation of anti-spam or telemarketing laws</li>
+    <li>breach the security of, reverse engineer (except where law permits), or disrupt the Service or any other system, or access any system or data without authorization</li>
+    <li>use a Connected Account, or scrape or extract data, in violation of law or the provider's terms</li>
+    <li>run any high-risk activity where a failure could cause death, personal injury, or severe harm</li>
+    <li>collect or process personal data of children under thirteen</li>
+  </ul>
+
+  <p><strong>Regulated data and activities.</strong> Do not use the Service for protected health information, payment card data, other specially regulated data, or licensed professional work such as law, medicine, or accounting unless we agree in writing.</p>
+
+  <p><strong>Enforcement.</strong> We may suspend or limit your account or a Digital Employee if we reasonably believe you have violated this section, with a warning first where practical.</p>
+
+  <h2 id="fees">6. Fees</h2>
+
+  <p><strong>What you pay.</strong> Fees are as shown on the pricing page when you subscribe, or as agreed in writing, in US dollars.</p>
+
+  <p><strong>Plans and usage.</strong> Plans are per account with a shared monthly usage pool that does not carry over. All usage counts as our meter records it, including mistakes, retries, and unattended routines. When the pool is used up, a short grace allowance follows; then your Digital Employees stop taking new work until the next billing period or an upgrade, without refund or extension. We are not responsible for work left undone while a Digital Employee is paused.</p>
+
+  <p><strong>When you pay.</strong> Your subscription renews monthly until you cancel under section 7. We bill on the same day of each month as your first charge, shown to you before you subscribe, and you authorize us to charge the card on file for the fees and taxes due.</p>
+
+  <p><strong>Free trial.</strong> We may offer a free trial or free first month. Before it starts we tell you its length, the plan and price that follow, and the first charge date; we email you before it ends, and billing starts unless you cancel first.</p>
+
+  <p><strong>Guarantees and refunds.</strong> A published guarantee, such as a salary-back guarantee, applies only on the terms stated where it is published. Otherwise fees are non-refundable except where law requires, or for the unused part of a billing period if we terminate your account without your breach or non-payment.</p>
+
+  <p><strong>Failed payment.</strong> If a charge fails, we may retry it and, after notice, suspend the Service and then terminate your account; amounts due remain payable.</p>
+
+  <p><strong>Taxes.</strong> Fees exclude taxes; you pay sales, use, value-added, and similar taxes, other than taxes on our income.</p>
+
+  <p><strong>Price changes.</strong> We may change fees or plans by emailing you at least thirty days before the change takes effect; it applies from your first billing period starting on or after the date in the notice, and you may cancel before then.</p>
+
+  <h2 id="termination">7. Suspension and termination</h2>
+
+  <p><strong>You can leave at any time.</strong> Cancel from the cabinet or by emailing <a href="mailto:info@catilda.com">info@catilda.com</a> from your account email; cancellation takes effect at the end of the current billing period.</p>
+
+  <p><strong>When we may suspend or end the Service.</strong> We may suspend or terminate your account or any Digital Employee for breach of these terms, non-payment, a security risk, a legal requirement, or ninety days of inactivity without a paid subscription, with notice where practical.</p>
+
+  <p><strong>What happens to your data.</strong> When your subscription ends or we terminate a Digital Employee, we may destroy its server and delete its Customer Data thirty days after the end date. If you delete a Digital Employee yourself, or never complete account verification, we may delete its server, Customer Data, and connected credentials at once, and deleted data cannot be recovered. Export what you want to keep first; we do not promise backups or a reminder.</p>
+
+  <p><strong>What survives.</strong> Sections 4, 6 (for amounts owed), and 7 through 17 survive termination.</p>
+
+  <h2 id="ownership">8. Ownership</h2>
+
+  <p><strong>What we own.</strong> Catilda owns the Service, including its software and brand, and gives you a limited, non-exclusive, non-transferable, revocable permission to use it during your subscription.</p>
+
+  <p><strong>What you own.</strong> You own Customer Data and, as between you and Catilda and to the extent permitted by law, the Outputs your Digital Employees produce for you.</p>
+
+  <p><strong>The license we need.</strong> You grant Catilda a worldwide, non-exclusive, royalty-free license to host, process, transmit, display, and modify Customer Data, including through the AI model and cloud providers we use, only as needed to provide, secure, and support the Service and comply with law; you confirm you have every right and consent needed to grant it.</p>
+
+  <p><strong>Feedback and usage data.</strong> We may use your suggestions without obligation, and aggregated or de-identified usage data, to operate, improve, and promote the Service.</p>
+
+  <h2 id="third-party">9. Third-party services</h2>
+
+  <p>Catilda depends on services we do not control, including cloud infrastructure, AI model providers, payment processors, and your Connected Account providers, whose terms govern your use of them. To the maximum extent permitted by applicable law, and subject to sections 11 and 13, we are not responsible for their acts, omissions, outages, or changes, or for any loss they cause, including the suspension or closure of a Connected Account because of a Digital Employee's use of it. We may change providers at any time.</p>
+
+  <h2 id="disclaimer">10. Disclaimer of warranties</h2>
+
+  <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SERVICE, THE DIGITAL EMPLOYEES, AND ALL OUTPUTS ARE PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND. CATILDA AND ITS SUPPLIERS DISCLAIM ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, SECURITY, AND UNINTERRUPTED OR ERROR-FREE OPERATION.</p>
+
+  <p>TO THE SAME EXTENT, CATILDA DOES NOT WARRANT THAT ANY OUTPUT WILL BE ACCURATE, LAWFUL, OR SUITABLE FOR ANY PURPOSE, OR THAT A DIGITAL EMPLOYEE WILL ACT ONLY AS YOU INTENDED. YOU RELY ON OUTPUTS AT YOUR OWN RISK.</p>
+
+  <h2 id="liability">11. Limitation of liability</h2>
+
+  <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL CATILDA OR ITS MEMBERS, MANAGERS, OFFICERS, EMPLOYEES, CONTRACTORS, OR SUPPLIERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO THESE TERMS, THE SERVICE, ANY OUTPUT, OR ANY CONNECTED ACCOUNT, UNDER ANY THEORY OF LIABILITY (CONTRACT, TORT INCLUDING NEGLIGENCE, STRICT LIABILITY, OR OTHERWISE), EVEN IF ADVISED OF THEIR POSSIBILITY.</p>
+
+  <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL LIABILITY OF CATILDA AND THE PERSONS LISTED ABOVE FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICE WILL NOT EXCEED THE GREATER OF (A) THE FEES YOU PAID TO CATILDA IN THE TWELVE MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM AND (B) ONE HUNDRED US DOLLARS (US$100).</p>
+
+  <p>NOTHING IN THESE TERMS EXCLUDES OR LIMITS OUR LIABILITY FOR FRAUD, GROSS NEGLIGENCE, WILLFUL MISCONDUCT, DEATH OR PERSONAL INJURY CAUSED BY OUR NEGLIGENCE, DAMAGES A STATUTE (INCLUDING THE WASHINGTON CONSUMER PROTECTION ACT) DOES NOT ALLOW US TO LIMIT, OR ANY OTHER LIABILITY THAT CANNOT LAWFULLY BE LIMITED.</p>
+
+  <p>THESE LIMITATIONS AND THE DISCLAIMERS IN SECTION 10 ARE AN ESSENTIAL BASIS OF THE BARGAIN BETWEEN YOU AND CATILDA AND APPLY EVEN IF ANY LIMITED REMEDY FAILS OF ITS ESSENTIAL PURPOSE.</p>
+
+  <h2 id="indemnity">12. Indemnity</h2>
+
+  <p>You will defend, indemnify, and hold harmless Catilda and the persons listed in section 11 against any third-party claim and all resulting losses, judgments, settlements, penalties, and costs, including reasonable attorneys' fees, arising out of or relating to your use of the Service; any action a Digital Employee takes for you; Customer Data or Output; your breach of these terms; or your violation of any law or third-party right. This does not apply to the extent a claim results from our breach of these terms, our negligence, gross negligence, or willful misconduct, and for consumers it applies only as far as the law permits.</p>
+
+  <p>We will notify you promptly of any claim we ask you to cover; you control the defense with lawyers reasonably acceptable to us, we cooperate at your expense, and you may not settle in a way that admits fault for us or binds us without our consent.</p>
+
+  <h2 id="consumer-rights">13. Consumer rights</h2>
+
+  <p>Nothing in these terms limits any right or remedy you cannot waive under mandatory consumer law that applies to you; where such law applies, the disclaimers, limitations, and exclusions in these terms apply only to the extent it permits.</p>
+
+  <h2 id="disputes">14. Disputes</h2>
+
+  <p><strong>This section affects your right to go to court and to bring or join a class action. Please read it carefully.</strong></p>
+
+  <p><strong>Talk to us first.</strong> Before starting arbitration or a court case, the one with the dispute sends the other a written notice (you to <a href="mailto:info@catilda.com">info@catilda.com</a>, we to your account email) giving the sender's name and account email, describing the dispute, and stating the relief sought. We then try in good faith to resolve it for thirty days before either of us may file. Any limitation period is paused while the thirty days run.</p>
+
+  <p><strong>Then, binding individual arbitration.</strong> If that fails, any dispute arising out of or relating to these terms or the Service will be resolved by binding individual arbitration administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules if you are a consumer and otherwise its Commercial Arbitration Rules. The persons listed in section 11 may enforce this section. The arbitrator, not a court, decides every dispute about the interpretation, applicability, enforceability, or formation of this agreement to arbitrate; a court decides whether the class and representative action waiver is enforceable and whether you opted out.</p>
+
+  <p><strong>Procedure, relief, and fees.</strong> Hearings take place in King County, Washington, by video conference, or, for consumers, where the AAA Consumer Arbitration Rules provide. The arbitrator may award any relief a court could award on an individual basis, applies these terms as a court would, and issues a final award. The AAA rules govern fees; a consumer pays no more than the consumer filing fee. If the AAA cannot or will not administer the arbitration, a court under section 15 appoints an arbitrator who follows the AAA rules as closely as practical.</p>
+
+  <p><strong>Small claims instead.</strong> After the notice step, either of us may instead bring an individual claim in small claims court if it qualifies; if it is moved or appealed to a court of general jurisdiction, either of us may then require arbitration. You may file where you live or in King County; we will file where you live.</p>
+
+  <p><strong>Court relief for misuse.</strong> Either of us may seek injunctive or other equitable relief in a court under section 15 against misuse of intellectual property or unauthorized access, without first sending a notice or arbitrating.</p>
+
+  <p><strong>No class or representative actions. You and Catilda bring claims against each other only individually, not as a plaintiff or class member in any class, collective, consolidated, private attorney general, or representative proceeding, and the arbitrator may not consolidate more than one person's claims. If a court finds this waiver unenforceable for a claim, that claim alone proceeds in court under section 15.</strong></p>
+
+  <p><strong>Jury waiver. To the fullest extent permitted by law, you and Catilda each waive the right to a jury trial for any dispute decided in court.</strong></p>
+
+  <p><strong>Your right to opt out.</strong> You may opt out of arbitration within thirty days after you first accept these terms, or after a material change to this section takes effect for you, by emailing <a href="mailto:info@catilda.com">info@catilda.com</a> from your account email with the subject "Arbitration opt-out". If you opt out, the agreement to arbitrate and the class action waiver do not apply to you under this or any later version; the rest of these terms still applies.</p>
+
+  <p><strong>Time limit.</strong> Any claim arising out of or relating to these terms or the Service must be started within one year after the claimant knew or should have known of the facts behind it, or it is barred. This does not apply to consumers or to a claim a statute does not allow the parties to shorten.</p>
+
+  <h2 id="governing-law">15. Governing law</h2>
+
+  <p>Washington law governs these terms and any related dispute, without regard to its conflict-of-laws rules. The Federal Arbitration Act governs section 14; if a court finds it does not apply, the Washington Uniform Arbitration Act, chapter 7.04A RCW, does.</p>
+
+  <p>Any dispute not subject to arbitration will be brought only in the state and federal courts in King County, Washington, and you and Catilda consent to their jurisdiction and venue, subject to section 13 and the small claims option in section 14.</p>
+
+  <h2 id="changes">16. Changes</h2>
+
+  <p>We may update these terms. A change is material if it affects fees, billing, your data, our liability, section 14, or any other right of yours in a way that is not clearly in your favor.</p>
+
+  <p>For a material change we email you at least fourteen days before it takes effect and may ask you to accept the updated terms at your next login. If you do not agree, cancel and export your Customer Data before the effective date without accepting; the version you last accepted applies until the end of the billing period in which the change takes effect. Otherwise a material change binds you when you accept it or, if earlier, when you next log in or actively use the Service after its effective date; a Digital Employee running routines on its own is not use, and logging in only to decline, cancel, or export is not acceptance or use. A change to section 14 does not apply to a dispute already noticed, or to a claim that arose before the change, unless you accept it expressly.</p>
+
+  <p>Other changes take effect when posted; continued use means you accept them.</p>
+
+  <h2 id="general">17. General</h2>
+
+  <p><strong>Entire agreement.</strong> These terms, the pricing page, any published guarantee, and any agreement signed by both parties are the entire agreement about the Service and replace all prior understandings; a signed agreement wins where it conflicts. Neither of us relies on any statement not in these documents; this does not limit liability for fraud.</p>
+
+  <p><strong>Severability and waiver.</strong> If any part of these terms is unenforceable, it is enforced to the maximum extent permitted and the rest stays in force. Not enforcing a part right away is not a waiver.</p>
+
+  <p><strong>Assignment.</strong> You may not assign these terms or your account without our written consent. We may assign them to a successor in a merger, acquisition, or asset sale that takes on our obligations to you.</p>
+
+  <p><strong>Force majeure.</strong> Neither of us is liable for a failure or delay caused by events beyond our reasonable control; this does not excuse payment for Service already received.</p>
+
+  <p><strong>Export controls and sanctions.</strong> You may not use the Service if you are, or act for, a person subject to US sanctions or in a country under a comprehensive US embargo, and you will comply with US export control and sanctions laws.</p>
+
+  <p><strong>Notices.</strong> We send notices to your account email, effective when sent, or in the cabinet if delivery fails. You send notices to us by email to <a href="mailto:info@catilda.com">info@catilda.com</a> or by mail to Aaron and His Brothers LLC at [registered address of Aaron and His Brothers LLC], effective when received.</p>
+
+  <p><strong>No third-party beneficiaries.</strong> No one other than you and Catilda has rights under these terms, except the persons named in sections 11, 12, and 14.</p>
+
+  <p><strong>Language and headings.</strong> The English version controls over any translation; headings do not affect interpretation.</p>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="fbrand"><svg class="cat" aria-hidden="true" style="--cat-line:var(--ink);--cat-fur:var(--orange)" width="30" height="30"><use href="#cat"/></svg><a class="wordmark" href="/" style="font-size:1.1rem">catilda</a></div>
+    <nav>
+      <a href="/#what">What she does</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">Questions</a>
+      <a href="/terms/">Terms</a>
+    </nav>
+    <small>© 2026 Catilda. All rights reserved.</small>
+  </div>
+</footer>
+
+</body>
+</html>

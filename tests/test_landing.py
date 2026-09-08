@@ -119,9 +119,13 @@ class LandingUnitTests(unittest.TestCase):
         nav_end = html.index("</nav>", nav_start)
         self.assertNotIn("Log in", html[nav_start:nav_end])
         query_start = html.index("@media (max-width:620px)")
+        # The phone rules share specificity with the base header rules, so
+        # they must come later in the sheet to win the cascade.
+        self.assertGreater(query_start, html.index(".header-bar{display:flex"))
+        self.assertGreater(query_start, html.index(".header-cta{display:flex"))
         query_620 = html[query_start : html.index("\n}\n", query_start)]
         for rule in (
-            ".header-bar{padding:0 8px 0 14px;gap:8px}",
+            ".header-bar{padding:0 6px 0 12px;gap:8px}",
             ".header-cta{gap:4px}",
             ".header-cta .btn-sm{padding:0 12px}",
             ".header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}",

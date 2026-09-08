@@ -81,19 +81,6 @@ img,svg{display:block}
 .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
 .btn-white{background:var(--cloud);color:var(--ink)}
 .btn-sm{height:42px;padding:0 20px;font-size:.92rem}
-@media (max-width:620px){
-  /* Phone bar: lockup, Log in, Book a call and the burger share one row,
-     so Log in drops its pill and the lockup takes the footer's sizes. */
-  .header-bar{padding:0 8px 0 14px;gap:8px}
-  .header-cta{gap:4px}
-  .header-cta .btn-sm{padding:0 12px}
-  .header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}
-  .lockup .cat{width:30px;height:30px}
-  .lockup .wordmark{font-size:1.1rem}
-}
-@media (max-width:380px){
-  .lockup .wordmark{display:none}
-}
 
 /* ============ the cat ============ */
 /* One mark, recoloured by two vars. Inline styles on the symbol shapes
@@ -320,6 +307,19 @@ body > footer{padding:64px 0 46px}
   .panel{padding:52px 26px}
   section{padding:54px 0}
   .hero{border-radius:0 0 24px 24px}
+}
+@media (max-width:620px){
+  /* Phone bar: lockup, Log in, Book a call and the burger share one row,
+     so Log in drops its pill and the lockup takes the footer's sizes. */
+  .header-bar{padding:0 6px 0 12px;gap:8px}
+  .header-cta{gap:4px}
+  .header-cta .btn-sm{padding:0 12px}
+  .header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}
+  .lockup .cat{width:30px;height:30px}
+  .lockup .wordmark{font-size:1.1rem}
+}
+@media (max-width:380px){
+  .lockup .wordmark{display:none}
 }
 </style>
 </head>

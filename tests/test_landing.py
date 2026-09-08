@@ -106,26 +106,32 @@ class LandingUnitTests(unittest.TestCase):
         self.assertLess(login_pos, book_pos)
         self.assertLess(book_pos, burger_pos)
 
-    def test_login_button_hides_with_the_nav(self) -> None:
-        # The nav collapses into the burger at max-width:900px; Log in must
-        # hide at the same breakpoint so it never sits alone next to
-        # Book a call once the nav links are already gone (861-900px gap).
+    def test_login_button_stays_visible_at_every_width(self) -> None:
+        # Log in lives once, in the header bar, and never hides behind the
+        # burger: a phone visitor sees the way into the app without opening
+        # the menu. Under 620px the bar tightens so lockup, Log in, Book a
+        # call and the burger share one row on a 375px phone, and under
+        # 380px the cat carries the brand alone.
         html = INDEX.read_text(encoding="utf-8")
-        query_start = html.index("@media (max-width:900px)")
-        query_end = html.index("}\n@media", query_start)
-        query_900 = html[query_start:query_end]
-        self.assertIn(".header-cta .btn-ghost{display:none}", query_900)
-        # ...but the burger nav must still carry a Log in entry, or a phone
-        # visitor has no way into the app at all.
+        self.assertNotIn(".header-cta .btn-ghost{display:none}", html)
+        self.assertNotIn("nav-login", html)
         nav_start = html.index('<nav class="nav" id="nav">')
         nav_end = html.index("</nav>", nav_start)
-        nav = html[nav_start:nav_end]
-        self.assertIn('href="https://catilda.com/cabinet/login"', nav)
-        self.assertIn("Log in", nav)
-        self.assertIn('class="nav-login"', nav)
-        # The nav entry is desktop-hidden and shown only at the burger width.
-        self.assertIn(".nav .nav-login{display:none}", html)
-        self.assertIn(".nav .nav-login{display:block}", query_900)
+        self.assertNotIn("Log in", html[nav_start:nav_end])
+        query_start = html.index("@media (max-width:620px)")
+        query_620 = html[query_start : html.index("\n}\n", query_start)]
+        for rule in (
+            ".header-bar{padding:0 8px 0 14px;gap:8px}",
+            ".header-cta{gap:4px}",
+            ".header-cta .btn-sm{padding:0 12px}",
+            ".header-cta .btn-ghost{background:transparent;border-color:transparent;padding:0 6px}",
+            ".lockup .cat{width:30px;height:30px}",
+            ".lockup .wordmark{font-size:1.1rem}",
+        ):
+            self.assertIn(rule, query_620)
+        query_start = html.index("@media (max-width:380px)")
+        query_380 = html[query_start : html.index("\n}\n", query_start)]
+        self.assertIn(".lockup .wordmark{display:none}", query_380)
 
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")

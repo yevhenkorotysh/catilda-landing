@@ -56,7 +56,7 @@ services:
 - name: api
   environment_slug: python
   github:
-    repo: yevhenkorotysh/de-backend
+    repo: yevhenkorotysh/catilda-backend
     branch: main
     deploy_on_push: true
   source_dir: /
@@ -182,7 +182,7 @@ static_sites:
 - name: cabinet
   environment_slug: node-js
   github:
-    repo: yevhenkorotysh/de-frontend
+    repo: yevhenkorotysh/catilda-frontend
     branch: main
     deploy_on_push: true
   source_dir: /

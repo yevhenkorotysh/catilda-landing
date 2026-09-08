@@ -25,8 +25,8 @@ DigitalOcean App Platform app `catilda-prod` (`.do/app.yaml`):
 | Path | Component |
 |------|-----------|
 | `https://catilda.com/` | this landing |
-| `https://catilda.com/cabinet/` | cabinet SPA (`de-frontend`) |
-| `https://catilda.com/api/` | Django API (`de-backend`) |
+| `https://catilda.com/cabinet/` | cabinet SPA (`catilda-frontend`) |
+| `https://catilda.com/api/` | Django API (`catilda-backend`) |
 
 Push to `main` with `deploy_on_push: true`. Log in on this page points at `/cabinet/login`.
 

@@ -49,8 +49,11 @@ class AppSpecTests(unittest.TestCase):
 
     def test_components_point_at_the_three_repos(self) -> None:
         self.assertIn("yevhenkorotysh/catilda-landing", self.spec)
-        self.assertIn("yevhenkorotysh/de-frontend", self.spec)
-        self.assertIn("yevhenkorotysh/de-backend", self.spec)
+        self.assertIn("yevhenkorotysh/catilda-frontend", self.spec)
+        self.assertIn("yevhenkorotysh/catilda-backend", self.spec)
+        self.assertNotIn("yevhenkorotysh/de-frontend", self.spec)
+        self.assertNotIn("yevhenkorotysh/de-backend", self.spec)
+        self.assertNotIn("yevhenkorotysh/de-mobile", self.spec)
 
     def test_cors_origins_are_host_only(self) -> None:
         # ${cabinet.PUBLIC_URL} is https://catilda.com/cabinet — corsheaders E014.

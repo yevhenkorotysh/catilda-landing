@@ -140,6 +140,15 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("<h3>Loves repeated work which nobody loves</h3>", what)
         self.assertNotIn("Best at the work you already repeat", html)
 
+    def test_faq_cost_answer_is_one_sentence(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        self.assertIn(
+            '["What does she cost?",\n   "A fraction of a part-time hire."]',
+            html,
+        )
+        self.assertNotIn("agree the number there", html)
+        self.assertNotIn("No meters", html)
+
     def test_inline_brand_tokens(self) -> None:
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn("--cobalt", html)
@@ -204,6 +213,7 @@ class LandingE2ETests(unittest.TestCase):
         status, body = self._get("/")
         self.assertEqual(status, 200)
         self.assertIn("Loves repeated work which nobody loves", body)
+        self.assertIn("A fraction of a part-time hire.", body)
 
     def test_brand_page_serves(self) -> None:
         status, body = self._get("/brand.html")

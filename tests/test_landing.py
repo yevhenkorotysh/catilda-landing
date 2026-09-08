@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 BRAND = ROOT / "brand.html"
+TERMS = ROOT / "terms" / "index.html"
 
 
 class TagCollector(HTMLParser):
@@ -21,6 +22,7 @@ class TagCollector(HTMLParser):
         super().__init__()
         self.title = ""
         self.h1 = ""
+        self.h2s: list[str] = []
         self._capture: str | None = None
         self.book_call_links = 0
         self.section_ids: set[str] = set()
@@ -35,6 +37,9 @@ class TagCollector(HTMLParser):
             self._capture = "title"
         elif tag == "h1":
             self._capture = "h1"
+        elif tag == "h2":
+            self._capture = "h2"
+            self.h2s.append("")
         elif tag == "nav":
             self._in_nav += 1
         elif tag == "section":
@@ -60,9 +65,11 @@ class TagCollector(HTMLParser):
             self.title += data
         elif self._capture == "h1":
             self.h1 += data
+        elif self._capture == "h2":
+            self.h2s[-1] += data
 
     def handle_endtag(self, tag: str) -> None:
-        if tag in {"title", "h1"}:
+        if tag in {"title", "h1", "h2"}:
             self._capture = None
         elif tag == "nav" and self._in_nav:
             self._in_nav -= 1
@@ -183,6 +190,74 @@ class LandingUnitTests(unittest.TestCase):
         self.assertIn("info@catilda.com", html)
         self.assertNotIn("korotysh@gmail.com", html)
 
+    def test_footer_nav_links_to_terms(self) -> None:
+        html = INDEX.read_text(encoding="utf-8")
+        foot_start = html.index("<footer>")
+        foot_nav = html[foot_start : html.index("</footer>", foot_start)]
+        self.assertIn('<a href="/terms/">Terms</a>', foot_nav)
+
+
+class TermsUnitTests(unittest.TestCase):
+    def test_terms_page_exists(self) -> None:
+        self.assertTrue(TERMS.is_file())
+
+    def test_terms_structure(self) -> None:
+        html = TERMS.read_text(encoding="utf-8")
+        parser = TagCollector()
+        parser.feed(html)
+        self.assertIn("Terms of Service", parser.title)
+        self.assertEqual(parser.h1.strip(), "Catilda Terms of Service")
+        self.assertIn("Aaron and His Brothers LLC", html)
+        # Seventeen numbered sections, in order, each an h2.
+        self.assertEqual(
+            [h.strip() for h in parser.h2s],
+            [
+                "1. Agreement",
+                "2. The Service",
+                "3. Your account",
+                "4. Your digital employees act for you",
+                "5. Acceptable use",
+                "6. Fees",
+                "7. Suspension and termination",
+                "8. Ownership",
+                "9. Third-party services",
+                "10. Disclaimer of warranties",
+                "11. Limitation of liability",
+                "12. Indemnity",
+                "13. Consumer rights",
+                "14. Disputes",
+                "15. Governing law",
+                "16. Changes",
+                "17. General",
+            ],
+        )
+        # The effective date line names the version the backend records.
+        effective_start = html.index('class="effective"')
+        effective = html[effective_start : html.index("</p>", effective_start)]
+        self.assertIn("2026-09-07", effective)
+
+    def test_terms_footer_nav_links_to_terms(self) -> None:
+        html = TERMS.read_text(encoding="utf-8")
+        foot_start = html.index("<footer>")
+        foot_nav = html[foot_start : html.index("</footer>", foot_start)]
+        self.assertIn('<a href="/terms/">Terms</a>', foot_nav)
+
+    def test_terms_has_no_em_dash(self) -> None:
+        # Voice rule for every public page: no em dashes anywhere.
+        html = TERMS.read_text(encoding="utf-8")
+        self.assertNotIn("—", html)
+
+    def test_terms_toc_links_read_as_ink(self) -> None:
+        # The contents list sits inside .legal, so its link rules must
+        # outrank the cobalt underlined body-link rule (.legal li a) or
+        # the list renders as seventeen underlined blue links.
+        html = TERMS.read_text(encoding="utf-8")
+        self.assertIn(".legal .toc a{color:var(--ink);text-decoration:none}", html)
+        self.assertIn(
+            ".legal .toc a:hover{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}",
+            html,
+        )
+
 
 class LandingIntegrationTests(unittest.TestCase):
     def test_self_contained_page(self) -> None:
@@ -247,6 +322,16 @@ class LandingE2ETests(unittest.TestCase):
         status, body = self._get("/brand.html")
         self.assertEqual(status, 200)
         self.assertIn("Brand Guidelines", body)
+
+    def test_terms_page_serves(self) -> None:
+        status, body = self._get("/terms/")
+        self.assertEqual(status, 200)
+        self.assertIn("Catilda Terms of Service", body)
+        self.assertIn("Aaron and His Brothers LLC", body)
+        # The landing still serves alongside the new page.
+        status, body = self._get("/")
+        self.assertEqual(status, 200)
+        self.assertIn("Meet Catilda", body)
 
 
 if __name__ == "__main__":
